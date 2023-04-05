@@ -27,7 +27,7 @@ if (environment.defaultauth === 'firebase') {
   // tslint:disable-next-line: no-unused-expression
   FakeBackendInterceptor;
 }
-
+document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
