@@ -5,6 +5,7 @@ import { getFirebaseBackend } from '../../authUtils';
 import { IUser } from '../models/auth.models';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {Router, RouterStateSnapshot} from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 
@@ -12,7 +13,7 @@ export class AuthenticationService {
 
     user: IUser;
   public baseUrl = 'http://192.168.9.18:8080/';
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
     }
 
     /**
@@ -61,9 +62,10 @@ export class AuthenticationService {
     /**
      * Logout the user
      */
-    logout() {
-        // logout the user
-        getFirebaseBackend().logout();
-    }
+  logout() {
+    localStorage.removeItem('authorization');
+    this.router.navigate(['/account/login'], );
+
+  }
 }
 
