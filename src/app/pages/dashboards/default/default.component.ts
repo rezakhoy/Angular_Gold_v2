@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../../core/services/event.service';
 
 import { ConfigService } from '../../../core/services/config.service';
+import { WebsocketService } from 'src/app/core/services/websocket.service';
 
 @Component({
   selector: 'app-default',
@@ -23,10 +24,14 @@ export class DefaultComponent implements OnInit {
   isActive: string;
 
   @ViewChild('content') content;
-  constructor(private modalService: NgbModal, private configService: ConfigService, private eventService: EventService) {
+  constructor(private modalService: NgbModal,
+              private configService: ConfigService,
+              private ws: WebsocketService,
+              private eventService: EventService) {
   }
 
   ngOnInit() {
+    this.ws.connect();
 
     /**
      * horizontal-vertical layput set

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-
 import { getFirebaseBackend } from '../../authUtils';
-
 import { IUser } from '../models/auth.models';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Router, RouterStateSnapshot} from "@angular/router";
+import {API_URL} from "../../../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 
@@ -19,8 +18,8 @@ export class AuthenticationService {
     /**
      * Returns the current user
      */
-    public currentUser(): IUser {
-        return getFirebaseBackend().getAuthenticatedUser();
+    public getUser(): Observable<HttpResponse<IUser>> {
+      return this.http.get<IUser>(`${API_URL}auth/current-user`, {observe: 'response'});
     }
 
     /**
