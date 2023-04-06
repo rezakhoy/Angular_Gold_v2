@@ -75,7 +75,7 @@ export class WebsocketService  {
 
       _this.setConnected(true);
       if (user) {
-        user.groups.forEach(group => {
+        user.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
             managePrices(JSON.parse(alert.body));

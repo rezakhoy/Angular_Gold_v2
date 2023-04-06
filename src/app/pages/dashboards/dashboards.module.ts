@@ -11,21 +11,23 @@ import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap
 import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { DefaultComponent } from './default/default.component';
+import {NgxNumberSpinnerModule} from "ngx-number-spinner";
 
 @NgModule({
   declarations: [DefaultComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DashboardsRoutingModule,
-    UIModule,
-    NgbDropdownModule,
-    NgbTooltipModule,
-    NgbNavModule,
-    WidgetModule,
-    NgApexchartsModule,
-    SimplebarAngularModule
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DashboardsRoutingModule,
+        UIModule,
+        NgbDropdownModule,
+        NgbTooltipModule,
+        NgbNavModule,
+        WidgetModule,
+        NgApexchartsModule,
+        SimplebarAngularModule,
+        NgxNumberSpinnerModule
+    ]
 })
 export class DashboardsModule { }

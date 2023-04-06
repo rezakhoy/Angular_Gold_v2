@@ -10,12 +10,10 @@ import { ExtrapagesModule } from './extrapages/extrapages.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initFirebaseBackend } from './authUtils';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
-import { FakeBackendInterceptor } from './core/helpers/fake-backend';
+import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
 import {WebsocketService} from "./core/services/websocket.service";
 
 // if (environment.defaultauth === 'firebase') {
@@ -49,6 +47,7 @@ export function createTranslateLoader(http: HttpClient): any {
     ExtrapagesModule,
     CarouselModule,
     NgbAccordionModule,
+    NgxNumberSpinnerModule,
     NgbNavModule,
     NgbTooltipModule,
     ScrollToModule.forRoot(),

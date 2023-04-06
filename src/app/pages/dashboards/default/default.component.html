@@ -60,3 +60,87 @@
     </div>
     <!-- end page title -->
 </div> <!-- container-fluid -->
+
+<div class="card">
+  <div class="card-body" >
+    <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
+      <div class="table-responsive table-hover fs-14 ">
+        <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
+          <tr>
+            <td>آبشده</td>
+            <td class="text-danger">
+              <input
+                type="checkbox"
+                [checked]="setPrice.ab" (change)="setlimit()" formControlName="ab" >
+            </td>
+            <td class="text-success">
+              <input
+                type="checkbox"
+                [checked]="setPrice.as" (change)="setlimit()" formControlName="as" >
+            </td>
+            <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="1000"></ngx-number-spinner></td>
+          </tr>
+
+        </table>
+      </div>
+    </form>
+    <div class="align-content-center">
+      <table class=" table-responsive" >
+        <tr *ngFor="let m of mas " class="pb-4 ">
+          <td class="col-sm-4 col-md-4">
+            <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.buy, 'b')">خرید{{m.buy| number}}  </button></td>
+          <td  class="col-sm-4 col-4">نرخ نقدی</td>
+          <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.sell, 's')">فروش{{m.sell| number}}  </button></td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+<!--**********************************
+                modal
+***********************************-->
+<ng-template #orderModel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'b'">درخواست خرید</h4>
+    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 's'">درخواست فروش</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveGoldOrder()" [formGroup]="orderForm">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-12">
+          <p *ngIf="orderForm.get('transaction_type').value === 'b'" class="alert alert-success">
+            <span>خرید آبشده از ما با نرخ   {{orderForm.get('fee').value| number}}</span>
+          </p>
+          <p *ngIf="orderForm.get('transaction_type').value === 's'" class="alert alert-danger">
+            <span>فروش آبشده به ما با نرخ    {{orderForm.get('fee').value| number}}</span>
+
+          </p>
+        </div>
+        <div class="col-md-12">
+          <label for="quantity" class="form-label">مقدار درخواست: </label>
+          <input type="number"  (keyup)="culcPrice()" formControlName="quantity" class="form-control" id="quantity">
+        </div>
+        <div class="col-md-12">
+          <label for="price" class="form-label">مبلغ به تومان :</label>
+          <input type="text" currencyMask (keyup)="culcQuantity()"  formControlName="price" class="form-control"
+                 id="price">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm"
+              (click)="modal.close()">انصراف
+      </button>
+      <button type="submit"
+             class="btn btn-success btn-sm"
+              (click)="modal.close()">ثبت درخواست
+      </button>
+
+    </div>
+  </form>
+</ng-template>
