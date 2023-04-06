@@ -17,14 +17,15 @@ export class WebsocketService  {
   private stompClient = null;
   disabled = true;
   user: IUser;
-  // public price: Subject<any>;
+
   price: Subject<IPrices[]> = new Subject();
 
   constructor(public authService: AuthenticationService) {
-    console.log("runconstractor in ws");
-    authService.getUser().subscribe(user => {
-      this.user = user.body;
-    });
+    // console.log("runconstractor in ws");
+    // authService.getUser().subscribe(user => {
+    //   console.log('--------',user);
+    //   this.user = user.body;
+    // });
 
   }
 
