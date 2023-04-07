@@ -3,53 +3,33 @@
     <div class="row">
         <div class="col-12">
           <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <div class="card mini-stats-wid">
                 <div class="card-body">
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
-                      <p class="text-muted mb-2">مانده طلایی</p>
-                      <h5 class="mb-0">120</h5>
+                      <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-component"></i></span>  مانده طلایی</p>
+                      <h5 class="mb-0"> <span >120.1 گرم</span>
+                      </h5>
                     </div>
-                    <div class="avatar-sm ms-auto">
-                      <div class="avatar-title bg-light rounded-circle  text-warning  font-size-20">
-                        <i class="bx bxs-component"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-4">
-              <div class="card blog-stats-wid">
-                <div class="card-body">
-                  <div class="d-flex flex-wrap">
-                    <div class="me-3">
-                      <p class="text-muted mb-2">Pages</p>
-                      <h5 class="mb-0">86</h5>
-                    </div>
-                    <div class="avatar-sm ms-auto">
-                      <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
-                        <i class="bx bxs-note"></i>
-                      </div>
+                    <div class="ms-auto mt-auto">
+                      <button class="btn btn-sm w-md btn-primary "  href="">حواله طلا </button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <div class="card blog-stats-wid">
                 <div class="card-body">
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
-                      <p class="text-muted mb-2">Comments</p>
-                      <h5 class="mb-0">4,235</h5>
+                      <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-dollar-circle"></i></span>  مانده ریالی</p>
+                      <h5 class="mb-0"> <span >750,000,000 ریال</span>
+                      </h5>
                     </div>
-                    <div class="avatar-sm ms-auto">
-                      <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
-                        <i class="bx bxs-message-square-dots"></i>
-                      </div>
+                    <div class="ms-auto mt-auto">
+                      <button class="btn btn-sm w-md btn-primary "  href="">برداشت </button>
                     </div>
                   </div>
                 </div>
@@ -58,45 +38,56 @@
           </div>
         </div>
     </div>
-    <!-- end page title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body" >
+          <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
+            <div class="table-responsive table-hover fs-14 ">
+              <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
+                <tr>
+                  <td>آبشده</td>
+                  <td class="text-danger">
+                    <input
+                      type="checkbox"
+                      [checked]="setPrice.ab" (change)="setlimit()" formControlName="ab" >
+                  </td>
+                  <td class="text-success">
+                    <input
+                      type="checkbox"
+                      [checked]="setPrice.as" (change)="setlimit()" formControlName="as" >
+                  </td>
+                  <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="1000"></ngx-number-spinner></td>
+                </tr>
+
+              </table>
+            </div>
+          </form>
+          <div class="align-content-center">
+            <table class=" table-responsive" >
+              <tr *ngFor="let m of mas " class="pb-4 ">
+                <td class="col-sm-4 col-md-4">
+                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.buy, 'b')">خرید{{m.buy| number}}  </button></td>
+                <td  class="col-sm-4 col-4">نرخ نقدی</td>
+                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.sell, 's')">فروش{{m.sell| number}}  </button></td>
+              </tr>
+
+            </table>
+            <!--      <div>-->
+            <!--        <div class="btn-group btn-group-example mb-3" role="group">-->
+            <!--          <button type="button" class="btn btn-primary w-xs">خرید آبشده</button>-->
+            <!--          <button type="button" class="btn btn-danger w-xs">فروش آبشده </button>-->
+            <!--        </div>-->
+            <!--      </div>-->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div> <!-- container-fluid -->
 
-<div class="card">
-  <div class="card-body" >
-    <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
-      <div class="table-responsive table-hover fs-14 ">
-        <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
-          <tr>
-            <td>آبشده</td>
-            <td class="text-danger">
-              <input
-                type="checkbox"
-                [checked]="setPrice.ab" (change)="setlimit()" formControlName="ab" >
-            </td>
-            <td class="text-success">
-              <input
-                type="checkbox"
-                [checked]="setPrice.as" (change)="setlimit()" formControlName="as" >
-            </td>
-            <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="1000"></ngx-number-spinner></td>
-          </tr>
 
-        </table>
-      </div>
-    </form>
-    <div class="align-content-center">
-      <table class=" table-responsive" >
-        <tr *ngFor="let m of mas " class="pb-4 ">
-          <td class="col-sm-4 col-md-4">
-            <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.buy, 'b')">خرید{{m.buy| number}}  </button></td>
-          <td  class="col-sm-4 col-4">نرخ نقدی</td>
-          <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.sell, 's')">فروش{{m.sell| number}}  </button></td>
-        </tr>
-      </table>
-    </div>
-
-  </div>
-</div>
 <!--**********************************
                 modal
 ***********************************-->

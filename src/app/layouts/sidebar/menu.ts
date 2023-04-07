@@ -13,6 +13,19 @@ export const MENU: MenuItem[] = [
     link: '/',
 
   },
+  {
+    id: 3,
+    label: 'گزارش',
+    icon: 'bx-home-circle',
+    subItems: [
+            {
+                id: 4,
+                label: 'لیست تراکنش ها',
+                link: '/transaction',
+                parentId: 2
+            },
+    ]
+  },
     // {
     //     id: 2,
     //     label: 'داشبورد',

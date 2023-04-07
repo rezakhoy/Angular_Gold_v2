@@ -20,11 +20,9 @@ export class WebsocketService  {
   price: Subject<IPrices[]> = new Subject();
 
   constructor(public authService: AuthenticationService) {
-    // console.log("runconstractor in ws");
-    // authService.getUser().subscribe(user => {
-    //   console.log('--------',user);
-    //   this.user = user.body;
-    // });
+    authService.getUser().subscribe(user => {
+      this.user = user.body;
+    });
 
   }
 
@@ -48,6 +46,7 @@ export class WebsocketService  {
     const prices = [];
 
     function managePrices(body) {
+      console.log(body);
       if (prices.length === 0) {
         prices.push(body);
       } else {
@@ -61,23 +60,22 @@ export class WebsocketService  {
       price.next(prices);
     }
     function callUser() {
-
       _this.authService.getUser().subscribe(res => {
-        console.log(res);
         user = res.body;
-      })
-      user?.groups.forEach(group => {
-        // tslint:disable-next-line:only-arrow-functions
-        _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
-          managePrices(JSON.parse(alert.body));
+        res.body.priceGroups.forEach(group => {
+          // tslint:disable-next-line:only-arrow-functions
+          _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
+            managePrices(JSON.parse(alert.body));
+          });
         });
-      });
+      })
     }
     // tslint:disable-next-line:only-arrow-functions
     this.stompClient.connect({Authorization: localStorage.getItem('authorization')}, function(frame) {
 
       _this.setConnected(true);
       if (user) {
+        console.log('------------------', user.priceGroups);
         user.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
@@ -91,6 +89,7 @@ export class WebsocketService  {
   }
 
   public setPrice(price) {
+    console.log(price);
     this.stompClient.send(
       '/app/set-price',
       {},
