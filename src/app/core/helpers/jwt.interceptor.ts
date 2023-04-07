@@ -29,7 +29,7 @@ export class JwtInterceptor implements HttpInterceptor {
           // 'Content-Type': 'multipart/form-data',
           Accept: 'application/json',
           // 'Authorization': `Token ${token}`
-          Authorization: ` Bearer ${token}`
+          Authorization: `${token}`
         });
       } else {
         headers = new HttpHeaders({

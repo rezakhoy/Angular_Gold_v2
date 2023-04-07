@@ -6,7 +6,6 @@ import {API_URL} from "../../../environments/environment";
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthenticationService} from "./auth.service";
-import {parseJson} from "@angular/cli/utilities/json-file";
 
 
 @Injectable({
@@ -63,8 +62,11 @@ export class WebsocketService  {
     }
     function callUser() {
 
-      user = parseJson(localStorage.getItem('currentUser'));
-      user.groups.forEach(group => {
+      _this.authService.getUser().subscribe(res => {
+        console.log(res);
+        user = res.body;
+      })
+      user?.groups.forEach(group => {
         // tslint:disable-next-line:only-arrow-functions
         _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
           managePrices(JSON.parse(alert.body));

@@ -9,6 +9,7 @@ import { WebsocketService } from 'src/app/core/services/websocket.service';
 import {FormBuilder, Validators} from "@angular/forms";
 import {ISetPrices} from "../../../core/models/set-price.models";
 import {IPrices} from "../../../core/models/price.models";
+import {AuthenticationService} from "../../../core/services/auth.service";
 
 @Component({
   selector: 'app-default',
@@ -54,6 +55,7 @@ export class DefaultComponent implements OnInit {
               private fb: FormBuilder,
               private configService: ConfigService,
               private ws: WebsocketService,
+              private auth: AuthenticationService,
               private eventService: EventService) {
   }
 

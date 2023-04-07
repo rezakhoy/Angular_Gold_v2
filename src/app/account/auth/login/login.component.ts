@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
       .subscribe(tokenObj => {
           console.log(tokenObj);
           if (tokenObj.authorization !== null && tokenObj.authorization !== '') {
+            localStorage.removeItem('authorization' );
             localStorage.setItem('authorization', tokenObj.authorization );
             this.router.navigate(['/']);
           }

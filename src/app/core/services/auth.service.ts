@@ -18,7 +18,9 @@ export class AuthenticationService {
     /**
      * Returns the current user
      */
-    public getUser(): Observable<HttpResponse<IUser>> {
+    public getUser(): any {
+      console.log("call getuser");
+      console.log(this.http.get<IUser>(`${API_URL}auth/current-user`, {observe: 'response'}));
       return this.http.get<IUser>(`${API_URL}auth/current-user`, {observe: 'response'});
     }
 
