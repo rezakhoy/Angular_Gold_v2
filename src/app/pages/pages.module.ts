@@ -29,6 +29,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {TransactionsComponent} from "./transactions/transactions.component";
 import {AdvancedSortableDirective} from "./transactions/advanced-sortable.directive";
+import {PriceGroupComponent} from "./price-group/price-group.component";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -37,7 +38,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
 ]);
 
 @NgModule({
-  declarations: [TransactionsComponent, AdvancedSortableDirective],
+  declarations: [
+    TransactionsComponent,
+    PriceGroupComponent,
+    AdvancedSortableDirective
+  ],
   imports: [
     CommonModule,
     FormsModule,
