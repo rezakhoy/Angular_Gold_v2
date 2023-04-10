@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { emailSentBarChart, monthlyEarningChart } from './data';
 import { ChartType } from './dashboard.model';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +10,8 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {ISetPrices} from "../../../core/models/set-price.models";
 import {IPrices} from "../../../core/models/price.models";
 import {AuthenticationService} from "../../../core/services/auth.service";
+import {ReportsService} from "../../../core/services/reports.service";
+import {IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 
 @Component({
   selector: 'app-default',
@@ -27,7 +29,8 @@ export class DefaultComponent implements OnInit {
   setPrice: ISetPrices;
   isActive: string;
   mas: IPrices[];
-
+  myBalance: IMyBalance;
+ adminBalance: IAdminBalance;
   setPriceForm = this.fb.group({
     ab: [],
     as: [],
@@ -54,6 +57,7 @@ export class DefaultComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private fb: FormBuilder,
               private configService: ConfigService,
+              private reportService: ReportsService,
               private ws: WebsocketService,
               private auth: AuthenticationService,
               private eventService: EventService) {
@@ -64,6 +68,12 @@ export class DefaultComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reportService.myBalance().subscribe(res => {
+      this.myBalance = res.body;
+    });
+    this.reportService.adminBalance().subscribe(res => {
+      this.adminBalance = res.body;
+    });
     this.ws.price.subscribe(msg => {
       this.mas = msg;
       console.log('mass log', this.mas);
@@ -79,46 +89,18 @@ export class DefaultComponent implements OnInit {
       price: 9500000
     }
     this.setPrice = setPrice;
-
     this.ws.connect();
 
-    /**
-     * horizontal-vertical layput set
-     */
-     const attribute = document.body.getAttribute('data-layout');
-
-     this.isVisible = attribute;
-     const vertical = document.getElementById('layout-vertical');
-     if (vertical != null) {
-       vertical.setAttribute('checked', 'true');
-     }
-     if (attribute == 'horizontal') {
-       const horizontal = document.getElementById('layout-horizontal');
-       if (horizontal != null) {
-         horizontal.setAttribute('checked', 'true');
-         console.log(horizontal);
-       }
-     }
-
-    /**
-     * Fetches the data
-     */
 
   }
 
   ngAfterViewInit() {
   }
 
-
-
-
-  /**
-   * Change the layout onclick
-   * @param layout Change the layout
-   */
    changeLayout(layout: string) {
     this.eventService.broadcast('changeLayout', layout);
   }
+
   setlimit() {
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }

@@ -15,13 +15,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
 import {WebsocketService} from "./core/services/websocket.service";
+import {NgxPermissionsModule} from "ngx-permissions";
 
-// if (environment.defaultauth === 'firebase') {
-//   initFirebaseBackend(environment.firebaseConfig);
-// } else {
-//   // tslint:disable-next-line: no-unused-expression
-//   FakeBackendInterceptor;
-// }
+
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -51,6 +47,7 @@ export function createTranslateLoader(http: HttpClient): any {
     NgbNavModule,
     NgbTooltipModule,
     ScrollToModule.forRoot(),
+    NgxPermissionsModule.forRoot(),
     NgbModule
   ],
   bootstrap: [AppComponent],

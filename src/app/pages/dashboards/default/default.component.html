@@ -8,7 +8,7 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-component"></i></span>  مانده طلایی</p>
-                      <h5 class="mb-0"> <span >120.1 گرم</span>
+                      <h5 class="mb-0" > <span >  {{myBalance?.balance_v}} گرم </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
@@ -24,7 +24,7 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-dollar-circle"></i></span>  مانده ریالی</p>
-                      <h5 class="mb-0"> <span >750,000,000 ریال</span>
+                      <h5 class="mb-0"> <span >{{myBalance.balance_r | number}} ریال </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
@@ -35,9 +35,66 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <p class="text-muted mb-2"><i
+                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <h5>{{adminBalance.today_sum_8x}}</h5>
+                        <h5>{{adminBalance.today_sum_9x}}</h5>
+                        <p class="text-muted text-truncate mb-0">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x }} <i
+                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div>
+                        <h5>{{adminBalance.today_avg_maz_8x}}</h5>
+                        <h5>{{adminBalance.today_avg_maz_9x}}</h5>
+                        <p class="text-muted text-truncate mb-0">{{adminBalance.today_avg_maz_9x - adminBalance.today_avg_maz_8x }} <i
+                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <p class="text-muted mb-2"><i
+                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> هفتگی </p>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <h5>{{adminBalance.week_sum_8x |  number : '.2-2'}} خ</h5>
+                        <h5>{{adminBalance.week_sum_9x | number : '.2-2'}} ف</h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.week_sum_9x - adminBalance.week_sum_8x) | number : '.2-2' }} <i
+                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div>
+                        <h5>{{adminBalance.week_avg_maz_8x | number : '.0-0'}} خ</h5>
+                        <h5>{{adminBalance.week_avg_maz_9x | number : '.0-0'}}ف</h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.week_avg_maz_9x - adminBalance.week_avg_maz_8x) | number : '.0-0' }} <i
+                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
     </div>
-  <div class="row">
+  <div class="row" >
     <div class="col-12">
       <div class="card">
         <div class="card-body" >

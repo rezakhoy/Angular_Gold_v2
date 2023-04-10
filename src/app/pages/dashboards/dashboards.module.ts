@@ -12,6 +12,7 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { DefaultComponent } from './default/default.component';
 import {NgxNumberSpinnerModule} from "ngx-number-spinner";
+import {NgxPermissionsRestrictStubModule} from "ngx-permissions";
 
 @NgModule({
   declarations: [DefaultComponent],
@@ -27,7 +28,8 @@ import {NgxNumberSpinnerModule} from "ngx-number-spinner";
         WidgetModule,
         NgApexchartsModule,
         SimplebarAngularModule,
-        NgxNumberSpinnerModule
+        NgxNumberSpinnerModule,
+        NgxPermissionsRestrictStubModule
     ]
 })
 export class DashboardsModule { }
