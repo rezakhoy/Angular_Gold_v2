@@ -8,7 +8,7 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-component"></i></span>  مانده طلایی</p>
-                      <h5 class="mb-0" > <span >  {{myBalance?.balance_v}} گرم </span>
+                      <h5 class="mb-0" > <span class="badge font-size-14 p-2" [ngClass]="myBalance.balance_v > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">  {{myBalance?.balance_v | number : '.3-3'}} گرم </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
@@ -24,7 +24,7 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-dollar-circle"></i></span>  مانده ریالی</p>
-                      <h5 class="mb-0"> <span >{{myBalance.balance_r | number}} ریال </span>
+                      <h5 class="mb-0"> <span  class="badge font-size-14 p-2" [ngClass]="myBalance.balance_v > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{myBalance.balance_r | number}} ریال </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
@@ -45,18 +45,16 @@
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5>{{adminBalance.today_sum_8x}}</h5>
-                        <h5>{{adminBalance.today_sum_9x}}</h5>
-                        <p class="text-muted text-truncate mb-0">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x }} <i
-                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                        <h5 class="text-success">{{adminBalance.today_sum_8x}}</h5>
+                        <h5 class="text-danger">{{adminBalance.today_sum_9x}}</h5>
+                        <p class="text-muted text-truncate mb-0" ><span  [ngClass]="(adminBalance.today_sum_8x - adminBalance.today_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x }} </span></p>
                       </div>
                     </div>
                     <div class="col-6">
                       <div>
-                        <h5>{{adminBalance.today_avg_maz_8x}}</h5>
-                        <h5>{{adminBalance.today_avg_maz_9x}}</h5>
-                        <p class="text-muted text-truncate mb-0">{{adminBalance.today_avg_maz_9x - adminBalance.today_avg_maz_8x }} <i
-                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                        <h5 class="text-success">{{adminBalance.today_avg_maz_8x}}</h5>
+                        <h5 class="text-danger">{{adminBalance.today_avg_maz_9x}}</h5>
+                        <p class="text-muted text-truncate mb-0">{{adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x }} </p>
                       </div>
                     </div>
                   </div>
@@ -72,18 +70,66 @@
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5>{{adminBalance.week_sum_8x |  number : '.2-2'}} خ</h5>
-                        <h5>{{adminBalance.week_sum_9x | number : '.2-2'}} ف</h5>
-                        <p class="text-muted text-truncate mb-0">{{(adminBalance.week_sum_9x - adminBalance.week_sum_8x) | number : '.2-2' }} <i
-                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                        <h5 class="text-success">{{adminBalance.week_sum_8x |  number : '.2-2'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.week_sum_9x | number : '.2-2'}} </h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.week_sum_8x - adminBalance.week_sum_9x) | number : '.2-2' }} </p>
                       </div>
                     </div>
                     <div class="col-6">
                       <div>
-                        <h5>{{adminBalance.week_avg_maz_8x | number : '.0-0'}} خ</h5>
-                        <h5>{{adminBalance.week_avg_maz_9x | number : '.0-0'}}ف</h5>
-                        <p class="text-muted text-truncate mb-0">{{(adminBalance.week_avg_maz_9x - adminBalance.week_avg_maz_8x) | number : '.0-0' }} <i
-                          class="mdi mdi-arrow-down ms-1 text-danger"></i></p>
+                        <h5 class="text-success">{{adminBalance.week_avg_maz_8x | number : '.0-0'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.week_avg_maz_9x | number : '.0-0'}}</h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.week_avg_maz_8x - adminBalance.week_avg_maz_9x) | number : '.0-0' }} </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <p class="text-muted mb-2"><i
+                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> ماهانه </p>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <h5 class="text-success">{{adminBalance.month_sum_8x |  number : '.2-2'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.month_sum_9x | number : '.2-2'}} </h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.month_sum_8x - adminBalance.month_sum_9x) | number : '.2-2' }} </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div>
+                        <h5 class="text-success">{{adminBalance.month_avg_maz_8x | number : '.0-0'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.month_avg_maz_9x | number : '.0-0'}}</h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.month_avg_maz_8x - adminBalance.week_avg_maz_9x) | number : '.0-0' }} </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <p class="text-muted mb-2"><i
+                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> سالانه </p>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <h5 class="text-success">{{adminBalance.year_sum_8x |  number : '.2-2'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.year_sum_9x | number : '.2-2'}} </h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.year_sum_8x - adminBalance.year_sum_9x) | number : '.2-2' }} </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div>
+                        <h5 class="text-success">{{adminBalance.year_avg_maz_8x | number : '.0-0'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.year_avg_maz_9x | number : '.0-0'}}</h5>
+                        <p class="text-muted text-truncate mb-0">{{(adminBalance.year_avg_maz_8x - adminBalance.year_avg_maz_9x) | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>

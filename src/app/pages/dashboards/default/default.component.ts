@@ -11,7 +11,7 @@ import {ISetPrices} from "../../../core/models/set-price.models";
 import {IPrices} from "../../../core/models/price.models";
 import {AuthenticationService} from "../../../core/services/auth.service";
 import {ReportsService} from "../../../core/services/reports.service";
-import {IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
+import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 
 @Component({
   selector: 'app-default',
@@ -29,8 +29,8 @@ export class DefaultComponent implements OnInit {
   setPrice: ISetPrices;
   isActive: string;
   mas: IPrices[];
-  myBalance: IMyBalance;
- adminBalance: IAdminBalance;
+  myBalance = new MyBalance();
+ adminBalance= new AdminBalance()
   setPriceForm = this.fb.group({
     ab: [],
     as: [],

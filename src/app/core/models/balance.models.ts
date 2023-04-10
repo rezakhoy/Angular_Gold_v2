@@ -1,4 +1,4 @@
-import { IPermission } from "./permission.models";
+import {IPermission} from "./permission.models";
 
 
 export class IMyBalance {
@@ -6,14 +6,15 @@ export class IMyBalance {
   balance_r: number;
 }
 
-export class MyBalance implements IMyBalance{
+export class MyBalance implements IMyBalance {
   constructor(
-    public balance_v: 0,
-    public balance_r: 0,
-    ) { }
+    public balance_v =0,
+    public balance_r = 0,
+  ) {
+  }
 }
 
-export  class IAdminBalance {
+export class IAdminBalance {
   today_sum_8x: number;
   today_sum_9x: number;
   today_avg_maz_8x: number;
@@ -30,4 +31,27 @@ export  class IAdminBalance {
   year_sum_9x: number;
   year_avg_maz_8x: number;
   year_avg_maz_9x: number;
+}
+
+export class AdminBalance implements IAdminBalance {
+  constructor(
+    public today_sum_8x= 0,
+    public today_sum_9x = 0,
+    public today_avg_maz_8x = 0,
+    public today_avg_maz_9x = 0,
+    public week_sum_8x = 0,
+    public week_sum_9x = 0,
+    public week_avg_maz_8x = 0,
+    public week_avg_maz_9x = 0,
+    public month_sum_8x = 0,
+    public month_sum_9x = 0,
+    public month_avg_maz_8x = 0,
+    public month_avg_maz_9x = 0,
+    public year_sum_8x = 0,
+    public year_sum_9x = 0,
+    public year_avg_maz_8x = 0,
+    public year_avg_maz_9x = 0,
+  ) {
+
+  }
 }

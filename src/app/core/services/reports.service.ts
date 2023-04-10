@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {API_URL } from 'src/environments/environment';
-import {IAdminBalance, IMyBalance} from "../models/balance.models";
+import {IAdminBalance, IMyBalance, MyBalance} from "../models/balance.models";
 import {Observable} from "rxjs";
 
 
@@ -14,7 +14,7 @@ export class ReportsService {
 
 
 
-  myBalance(): Observable<HttpResponse<IMyBalance>> {
+  myBalance(): Observable<HttpResponse<MyBalance>> {
     return this.http.get<any>(`${API_URL}my-balance`, {  observe: 'response' });
   }
   adminBalance(): Observable<HttpResponse<IAdminBalance>> {
