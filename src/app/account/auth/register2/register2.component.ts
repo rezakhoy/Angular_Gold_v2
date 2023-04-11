@@ -6,7 +6,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
 import { first } from 'rxjs/operators';
-import { UserProfileService } from '../../../core/services/user.service';
+// import { UserProfileService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-register2',
@@ -21,7 +21,7 @@ export class Register2Component implements OnInit {
   successmsg = false;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private userService: UserProfileService) { }
+   ) { }
   // set the currenr year
   year: number = new Date().getFullYear();
 
@@ -72,18 +72,18 @@ export class Register2Component implements OnInit {
             this.error = error ? error : '';
           });
       } else {
-        this.userService.register(this.signupForm.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.successmsg = true;
-              if (this.successmsg) {
-                this.router.navigate(['/account/login']);
-              }
-            },
-            error => {
-              this.error = error ? error : '';
-            });
+      //   this.userService.register(this.signupForm.value)
+      //     .pipe(first())
+      //     .subscribe(
+      //       data => {
+      //         this.successmsg = true;
+      //         if (this.successmsg) {
+      //           this.router.navigate(['/account/login']);
+      //         }
+      //       },
+      //       error => {
+      //         this.error = error ? error : '';
+      //       });
       }
     }
   }

@@ -16,6 +16,7 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
 import {WebsocketService} from "./core/services/websocket.service";
 import {NgxPermissionsModule} from "ngx-permissions";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -43,6 +44,7 @@ export function createTranslateLoader(http: HttpClient): any {
     ExtrapagesModule,
     CarouselModule,
     NgbAccordionModule,
+    NgSelectModule,
     NgxNumberSpinnerModule,
     NgbNavModule,
     NgbTooltipModule,

@@ -1,11 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-
 import { Observable } from 'rxjs';
-
-
-// import { tableData, editableTable } from './data';
-
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
 import {MyTransaction} from "../../core/models/customer-transction.models";

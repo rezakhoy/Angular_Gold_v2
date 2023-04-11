@@ -7,16 +7,15 @@ import {IPriceGroup} from "../../core/models/price-group.models";
 
 @Component({
   selector: 'app-userlist',
-  templateUrl: './userlist.component.html',
-  styleUrls: ['./userlist.component.scss']
+  templateUrl: './price-group.component.html',
+  styleUrls: ['./price-group.component.scss']
 })
 
 /**
  * Contacts user-list component
  */
 export class PriceGroupComponent implements OnInit {
-  // bread crumb items
-  breadCrumbItems: Array<{}>;
+
   groupForm = this.fb.group({
     id: [],
     name: [null, Validators.required],

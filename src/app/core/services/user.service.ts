@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 
 import { IUser } from '../models/auth.models';
+import {Observable} from "rxjs";
+import {API_URL} from "../../../environments/environment";
+import {IPerson} from "../models/person.models";
 
 @Injectable({ providedIn: 'root' })
-export class UserProfileService {
+export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
@@ -14,4 +17,7 @@ export class UserProfileService {
     register(user: IUser) {
         return this.http.post(`/users/register`, user);
     }
+  getAllPersons(): Observable<HttpResponse<IPerson[]>> {
+    return this.http.get<any>(`${API_URL}persons`, {  observe: 'response' });
+  }
 }

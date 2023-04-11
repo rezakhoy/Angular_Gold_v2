@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
 import { first } from 'rxjs/operators';
-import { UserProfileService } from '../../../core/services/user.service';
+
 
 @Component({
   selector: 'app-signup',
@@ -24,7 +24,7 @@ export class SignupComponent implements OnInit {
 
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private userService: UserProfileService) { }
+    ) { }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -58,18 +58,18 @@ export class SignupComponent implements OnInit {
             this.error = error ? error : '';
           });
       } else {
-        this.userService.register(this.signupForm.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.successmsg = true;
-              if (this.successmsg) {
-                this.router.navigate(['/account/login']);
-              }
-            },
-            error => {
-              this.error = error ? error : '';
-            });
+        // this.userService.register(this.signupForm.value)
+        //   .pipe(first())
+        //   .subscribe(
+        //     data => {
+        //       this.successmsg = true;
+        //       if (this.successmsg) {
+        //         this.router.navigate(['/account/login']);
+        //       }
+        //     },
+        //     error => {
+        //       this.error = error ? error : '';
+        //     });
       }
     }
   }

@@ -16,17 +16,24 @@ export const MENU: MenuItem[] = [
   {
     id: 3,
     label: 'گروهای قیمتی',
-    icon: 'bx-home-circle',
+    icon: 'bx bxs-dollar-circle',
     link: '/price-group',
 
   },
   {
     id: 4,
+    label: 'کاربران',
+    icon: 'bx bxs-user-detail',
+    link: '/users',
+
+  },
+  {
+    id: 5,
     label: 'گزارش',
-    icon: 'bx-home-circle',
+    icon: 'bx bxs-report',
     subItems: [
             {
-                id: 5,
+                id: 6,
                 label: 'لیست تراکنش ها',
                 link: '/transaction',
                 parentId: 2
