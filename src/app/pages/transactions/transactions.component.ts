@@ -3,12 +3,12 @@ import { DecimalPipe } from '@angular/common';
 
 import { Observable } from 'rxjs';
 
-import { Table } from './advanced.model';
 
-import { tableData, editableTable } from './data';
+// import { tableData, editableTable } from './data';
 
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
+import {MyTransaction} from "../../core/models/customer-transction.models";
 
 @Component({
   selector: 'app-advancedtable',
@@ -24,10 +24,10 @@ export class TransactionsComponent implements OnInit {
   // bread crum data
   breadCrumbItems: Array<{}>;
   // Table data
-  tableData: Table[];
+  tableData: MyTransaction[];
   public selected: any;
   hideme: boolean[] = [];
-  tables$: Observable<Table[]>;
+  tables$: Observable<MyTransaction[]>;
   total$: Observable<number>;
   editableTable: any;
 
@@ -58,28 +58,21 @@ export class TransactionsComponent implements OnInit {
           },
         },
       },
-      email: {
-        title: 'Email',
-        filter: {
-          type: 'completer',
-          config: {
-            completer: {
-              data: editableTable,
-              searchFields: 'email',
-              titleField: 'email',
-            },
-          },
-        },
-      },
+
     },
   };
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Tables' }, { label: 'Advanced Table', active: true }];
+
+
     /**
      * fetch data
      */
-    this._fetchData();
+    this.service.tables$.subscribe(res => {
+      this._fetchData();
+    })
+
   }
 
   changeValue(i) {
@@ -91,11 +84,11 @@ export class TransactionsComponent implements OnInit {
    * fetches the table value
    */
   _fetchData() {
-    this.tableData = tableData;
-    this.editableTable = editableTable;
-    for (let i = 0; i <= this.tableData.length; i++) {
-      this.hideme.push(true);
-    }
+    this.tableData = this.service.myTransaction;
+    // this.editableTable = editableTable;
+    // for (let i = 0; i <= this.tableData.length; i++) {
+    //   this.hideme.push(true);
+    // }
   }
 
   /**

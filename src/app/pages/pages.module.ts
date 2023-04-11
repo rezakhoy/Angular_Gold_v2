@@ -65,7 +65,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgbTypeaheadModule,
     NgbCollapseModule,
     FormsModule,
-    Ng2SmartTableModule
   ],
 })
 export class PagesModule { }

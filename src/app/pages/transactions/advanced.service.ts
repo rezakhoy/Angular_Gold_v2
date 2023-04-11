@@ -1,10 +1,12 @@
 import { Injectable, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import {BehaviorSubject, observable, Observable, of, Subject} from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-import { Table, SearchResult } from './advanced.model';
-import { tableData } from './data';
+
+// import { tableData } from './data';
 import { SortDirection } from './advanced-sortable.directive';
+import {IMyTransaction, MyTransaction, SearchResult} from "../../core/models/customer-transction.models";
+import {ReportsService} from "../../core/services/reports.service";
 
 interface State {
     page: number;
@@ -17,6 +19,7 @@ interface State {
     totalRecords: number;
 }
 
+
 const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 /**
@@ -25,7 +28,7 @@ const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
  * @param column Fetch the column
  * @param direction Sort direction Ascending or Descending
  */
-function sort(tables: Table[], column: string, direction: string): Table[] {
+function sort(tables: MyTransaction[], column: string, direction: string): MyTransaction[] {
     if (direction === '' || column === '') {
         return tables;
     } else {
@@ -41,32 +44,33 @@ function sort(tables: Table[], column: string, direction: string): Table[] {
  * @param tables Table field value fetch
  * @param term Search the value
  */
-function matches(tables: Table, term: string, pipe: PipeTransform) {
-    return tables.name.toLowerCase().includes(term.toLowerCase())
-        || tables.position.toLowerCase().includes(term)
-        || tables.office.toLowerCase().includes(term)
-        || pipe.transform(tables.age).includes(term)
-        || tables.date.toLowerCase().includes(term)
-        || tables.salary.toLowerCase().includes(term);
+function matches(tables: MyTransaction, term: string, pipe: PipeTransform) {
+    return pipe.transform(tables.sanad).includes(term)
+        || tables.tariz.toLowerCase().includes(term)
+
+
 }
 
 @Injectable({
     providedIn: 'root'
 })
 
+
+
 export class AdvancedService {
+    public myTransaction: IMyTransaction[];
     // tslint:disable-next-line: variable-name
     private _loading$ = new BehaviorSubject<boolean>(true);
     // tslint:disable-next-line: variable-name
     private _search$ = new Subject<void>();
     // tslint:disable-next-line: variable-name
-    private _tables$ = new BehaviorSubject<Table[]>([]);
+    private _tables$ = new BehaviorSubject<MyTransaction[]>([]);
     // tslint:disable-next-line: variable-name
     private _total$ = new BehaviorSubject<number>(0);
     // tslint:disable-next-line: variable-name
     private _state: State = {
         page: 1,
-        pageSize: 10,
+        pageSize: 50,
         searchTerm: '',
         sortColumn: '',
         sortDirection: '',
@@ -75,18 +79,23 @@ export class AdvancedService {
         totalRecords: 0
     };
 
-    constructor(private pipe: DecimalPipe) {
+    constructor(private pipe: DecimalPipe, private reportService: ReportsService) {
+      this.reportService.myTransaction().subscribe(res => {
+        this.myTransaction = res.body;
+        console.log(this.myTransaction);
         this._search$.pipe(
-            tap(() => this._loading$.next(true)),
-            debounceTime(200),
-            switchMap(() => this._search()),
-            delay(200),
-            tap(() => this._loading$.next(false))
+          tap(() => this._loading$.next(true)),
+          debounceTime(200),
+          switchMap(() => this._search()),
+          delay(200),
+          tap(() => this._loading$.next(false))
         ).subscribe(result => {
-            this._tables$.next(result.tables);
-            this._total$.next(result.total);
+          this._tables$.next(result.tables);
+          this._total$.next(result.total);
         });
         this._search$.next();
+      })
+
     }
 
     /**
@@ -134,7 +143,7 @@ export class AdvancedService {
         const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
         // 1. sort
-        let tables = sort(tableData, sortColumn, sortDirection);
+        let tables = sort(this.myTransaction, sortColumn, sortDirection);
 
         // 2. filter
         tables = tables.filter(table => matches(table, searchTerm, this.pipe));
