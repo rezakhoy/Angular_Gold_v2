@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {GroupService} from "../../core/services/price-group.service";
+import {IGroup} from "../../core/models/group.models";
 
 @Component({
   selector: 'app-userlist',
@@ -21,12 +23,17 @@ export class PriceGroupComponent implements OnInit {
     difference: [null, Validators.required],
     gap: [null, Validators.required]
   });
-  constructor( private fb: FormBuilder,  private modalService: NgbModal,) { }
+  groups: IGroup[];
+  constructor( private fb: FormBuilder,  private modalService: NgbModal,
+               private priceGroupService: GroupService) { }
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
   };
   ngOnInit() {
+    this.priceGroupService.getAllGroups().subscribe(res => {
+      this.groups = res.body;
+    })
   }
   groupModal(cgf) {
     this.modalService.open(cgf, this.ngbModalOptions);

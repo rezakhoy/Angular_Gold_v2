@@ -13,7 +13,7 @@ export class GroupService {
 
 
   getAllGroups(): any {
-    return this.http.get<any>(`${API_URL}auth/groups`, {  observe: 'response' });
+    return this.http.get<any>(`${API_URL}price-groups`, {  observe: 'response' });
   }
   public createGroup(group): any {
     console.log("im in create grope service methode");

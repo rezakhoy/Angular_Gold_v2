@@ -68,12 +68,15 @@ export class DefaultComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reportService.adminBalance().subscribe(res => {
+      console.log("----------------------");
+      this.adminBalance = res.body;
+      console.log(this.adminBalance);
+    });
     this.reportService.myBalance().subscribe(res => {
       this.myBalance = res.body;
     });
-    this.reportService.adminBalance().subscribe(res => {
-      this.adminBalance = res.body;
-    });
+
     this.ws.price.subscribe(msg => {
       this.mas = msg;
       console.log('mass log', this.mas);
