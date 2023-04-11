@@ -39,36 +39,9 @@ export class TransactionsComponent implements OnInit {
     this.total$ = service.total$;
   }
 
-  settings = {
-    columns: {
-      id: {
-        title: 'ID',
-      },
-      name: {
-        title: 'Full Name',
-        filter: {
-          type: 'list',
-          config: {
-            selectText: 'Select...',
-            list: [
-              { value: 'Glenna Reichert', title: 'Glenna Reichert' },
-              { value: 'Kurtis Weissnat', title: 'Kurtis Weissnat' },
-              { value: 'Chelsey Dietrich', title: 'Chelsey Dietrich' },
-            ],
-          },
-        },
-      },
-
-    },
-  };
-
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Tables' }, { label: 'Advanced Table', active: true }];
 
-
-    /**
-     * fetch data
-     */
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })
@@ -84,7 +57,12 @@ export class TransactionsComponent implements OnInit {
    * fetches the table value
    */
   _fetchData() {
-    this.tableData = this.service.myTransaction;
+    // this.tableData = tableData;
+    for (let i = 0; i <= this.tableData.length; i++) {
+      this.hideme.push(true);
+    }
+
+
     // this.editableTable = editableTable;
     // for (let i = 0; i <= this.tableData.length; i++) {
     //   this.hideme.push(true);

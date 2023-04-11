@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {GroupService} from "../../core/services/price-group.service";
 import {IGroup} from "../../core/models/group.models";
+import {IPriceGroup} from "../../core/models/price-group.models";
 
 @Component({
   selector: 'app-userlist',
@@ -23,7 +24,7 @@ export class PriceGroupComponent implements OnInit {
     difference: [null, Validators.required],
     gap: [null, Validators.required]
   });
-  groups: IGroup[];
+  groups: IPriceGroup[];
   constructor( private fb: FormBuilder,  private modalService: NgbModal,
                private priceGroupService: GroupService) { }
   ngbModalOptions: NgbModalOptions = {

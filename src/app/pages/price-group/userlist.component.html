@@ -20,16 +20,23 @@
                 <tr>
                   <th scope="col" style="width: 70px;">#</th>
                   <th scope="col">نام</th>
-                  <th scope="col">دسترسی</th>
+                  <th scope="col">خرید</th>
+                  <th scope="col">فروش</th>
+                  <th scope="col">محدودیت</th>
+                  <th scope="col">تفاوت</th>
+                  <th scope="col">گپ</th>
                   <th scope="col">مدیریت</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let group of groups; let i = index">
-
-                  <td>{{group.name}}</td>
                   <td>{{group.id}}</td>
-                  <td>{{group.permissions[0].name}}</td>
+                  <td>{{group.name}}</td>
+                  <td>{{group.buy}}</td>
+                  <td>{{group.sell}}</td>
+                  <td>{{group.limit}}</td>
+                  <td>{{group.difference}}</td>
+                  <td>{{group.gap}}</td>
 
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">

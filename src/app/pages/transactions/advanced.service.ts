@@ -43,10 +43,17 @@ function sort(tables: MyTransaction[], column: string, direction: string): MyTra
  * Table Data Match with Search input
  * @param tables Table field value fetch
  * @param term Search the value
+ * @param pipe
  */
 function matches(tables: MyTransaction, term: string, pipe: PipeTransform) {
     return pipe.transform(tables.sanad).includes(term)
         || tables.tariz.toLowerCase().includes(term)
+        || tables.sh.toLowerCase().includes(term)
+        || pipe.transform(tables.v_bes).includes(term)
+        || pipe.transform(tables.v_bed).includes(term)
+        || pipe.transform(tables.r_bes).includes(term)
+        || pipe.transform(tables.r_bed).includes(term)
+
 
 
 }
@@ -82,7 +89,6 @@ export class AdvancedService {
     constructor(private pipe: DecimalPipe, private reportService: ReportsService) {
       this.reportService.myTransaction().subscribe(res => {
         this.myTransaction = res.body;
-        console.log(this.myTransaction);
         this._search$.pipe(
           tap(() => this._loading$.next(true)),
           debounceTime(200),
