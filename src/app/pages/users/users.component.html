@@ -107,7 +107,7 @@
 <ng-template #createUserModal let-modal>
   <div class="modal-header">
     <!--    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'b'">درخواست خرید</h4>-->
-    <h4 class="modal-title" > ایجاد فرم جدید</h4>
+    <h4 class="modal-title" > ایجاد کاربر جدید</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -116,10 +116,9 @@
     <div class="modal-body">
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <label  class="form-label">عنوان </label>
           <ng-select [items]="persons"
-                     [isOpen] = true
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"
@@ -127,17 +126,42 @@
           </ng-select>
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
-        <div class="col-md-12">
-          <label for="gap" class="form-label">گپ </label>
-          <input type="number"  formControlName="gap" class="form-control" id="gap">
+        <div class="col-md-6">
+          <label for="dateOfBirth" class="form-label">تاریخ تولد </label>
+          <div class="input-group">
+            <input
+              id="dateOfBirth"
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              ngbDatepicker
+              #d="ngbDatepicker"
+            />
+            <button class="btn btn-primary" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt font-size-20 text-light"></i></button>
+          </div>
         </div>
-        <div class="col-md-12">
-          <label for="difference" class="form-label">تفاوت </label>
-          <input type="number"  formControlName="difference" class="form-control" id="difference">
+        <div class="col-md-6">
+          <label for="genderEnum" class="form-label">جنسیت </label>
+          <select class="form-select" id="genderEnum">
+            <option value="MALE">مرد</option>
+            <option value="FEMALE">زن </option>
+          </select>
         </div>
-        <div class="col-md-12">
-          <label for="limit" class="form-label">محدودیت معامله</label>
+        <div class="col-md-6">
+          <label for="limit" class="form-label"> ایمیل</label>
+          <input type="email"  formControlName="limit" class="form-control" id="limit">
+        </div>
+        <div class="col-md-6">
+          <label for="limit" class="form-label">موبایل</label>
           <input type="number"  formControlName="limit" class="form-control" id="limit">
+        </div>
+        <div class="col-md-6">
+          <label for="limit" class="form-label"> تلفن ثابت</label>
+          <input type="number"  formControlName="limit" class="form-control" id="limit">
+        </div>
+        <div class="col-md-12">
+          <label for="limit" class="form-label">  آدرس</label>
+          <input type="text"  formControlName="limit" class="form-control" id="limit">
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import {
   NgbTooltipModule,
   NgbCollapseModule,
   NgbPaginationModule,
-  NgbTypeaheadModule
+  NgbTypeaheadModule, NgbCalendar, NgbCalendarPersian, NgbDatepickerI18n, NgbInputDatepicker, NgbDatepickerModule, NgbDatepickerConfig
 } from '@ng-bootstrap/ng-bootstrap';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -29,6 +29,7 @@ import {PriceGroupComponent} from "./price-group/price-group.component";
 import {AdvancedSortableDirectiveUsers} from "./users/advanced-sortable.directive";
 import {UsersComponent} from "./users/users.component";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {NgbDatepickerI18nPersian, NgbDPConfig} from '../core/services/prsian-calander.service';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -45,29 +46,35 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UsersComponent,
     AdvancedSortableDirectiveUsers
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        NgbDropdownModule,
-        NgbModalModule,
-        PagesRoutingModule,
-        NgApexchartsModule,
-        ReactiveFormsModule,
-        DashboardsModule,
-        HttpClientModule,
-        UIModule,
-        WidgetModule,
-        FullCalendarModule,
-        NgbNavModule,
-        NgbTooltipModule,
-        NgbCollapseModule,
-        SimplebarAngularModule,
-        LightboxModule,
-        NgbPaginationModule,
-        NgbTypeaheadModule,
-        NgbCollapseModule,
-        FormsModule,
-        NgSelectModule,
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbDropdownModule,
+    NgbModalModule,
+    PagesRoutingModule,
+    NgApexchartsModule,
+    ReactiveFormsModule,
+    DashboardsModule,
+    HttpClientModule,
+    UIModule,
+    WidgetModule,
+    FullCalendarModule,
+    NgbNavModule,
+    NgbTooltipModule,
+    NgbCollapseModule,
+    SimplebarAngularModule,
+    LightboxModule,
+    NgbPaginationModule,
+    NgbTypeaheadModule,
+    NgbCollapseModule,
+    FormsModule,
+    NgSelectModule,
+    NgbDatepickerModule,
+  ],
+  providers: [
+    { provide: NgbCalendar, useClass: NgbCalendarPersian },
+    { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian },
+    { provide: NgbDatepickerConfig, useClass: NgbDPConfig },
+  ],
 })
 export class PagesModule { }
