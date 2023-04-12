@@ -20,10 +20,7 @@ import {IPerson} from "../../core/models/person.models";
  * Advanced table component
  */
 export class UsersComponent implements OnInit {
-  // bread crum data
-  breadCrumbItems: Array<{}>;
-  // Table data
-  tableData: MyTransaction[];
+
   public selected: any;
   hideme: boolean[] = [];
   tables$: Observable<MyTransaction[]>;
@@ -61,8 +58,6 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.loadPersons()
-    this.breadCrumbItems = [{ label: 'Tables' }, { label: 'Advanced Table', active: true }];
-
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })

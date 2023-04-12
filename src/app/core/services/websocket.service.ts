@@ -46,14 +46,17 @@ export class WebsocketService  {
     const prices = [];
 
     function managePrices(body) {
-      console.log(body);
+      console.log("in maage price", body);
       if (prices.length === 0) {
+        console.log('prisex for push', prices);
         prices.push(body);
+
       } else {
-        const mainObjectIndex = prices.findIndex((mainObject) => mainObject.groupId === body.groupId);
+        const mainObjectIndex = prices.findIndex((mainObject) => mainObject.priceGroupId === body.priceGroupId);
         if (mainObjectIndex !== -1) {
           prices[mainObjectIndex] = body;
         } else {
+          console.log("im in push");
           prices.push(body);
         }
       }
@@ -75,6 +78,7 @@ export class WebsocketService  {
 
       _this.setConnected(true);
       if (user) {
+        console.log("++++++++++++++++++",  user);
         console.log('------------------', user.priceGroups);
         user.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions

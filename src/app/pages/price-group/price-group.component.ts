@@ -26,24 +26,32 @@ export class PriceGroupComponent implements OnInit {
   groups: IPriceGroup[];
   constructor( private fb: FormBuilder,  private modalService: NgbModal,
                private priceGroupService: GroupService) { }
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
   };
+
   ngOnInit() {
     this.priceGroupService.getAllGroups().subscribe(res => {
       this.groups = res.body;
     })
   }
+
   groupModal(cgf) {
     this.modalService.open(cgf, this.ngbModalOptions);
     document.getElementById('name').focus();
   }
+
   saveGroup() {
     const group = this.groupForm.value;
-    // this.groupService.createGroup(group).subscribe(res => {
-    //   console.log(res);
-    // });
+    group.sell = true;
+    group.buy = false;
+    console.log('type ggggggggggggggggggggggg', typeof group);
+    this.priceGroupService.createGroup(group).subscribe(res => {
+      console.log(res);
+    });
     this.groupForm.reset();
   }
+
 }

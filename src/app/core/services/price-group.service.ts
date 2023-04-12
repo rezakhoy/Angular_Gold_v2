@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {API_URL } from 'src/environments/environment';
+import {IPriceGroup} from "../models/price-group.models";
 
 
 @Injectable({
@@ -15,10 +16,9 @@ export class GroupService {
   getAllGroups(): any {
     return this.http.get<any>(`${API_URL}price-groups`, {  observe: 'response' });
   }
-  public createGroup(group): any {
-    console.log("im in create grope service methode");
+   createGroup(group): any {
     console.log('gggg', group);
-    // return this.http.post<IGroup>(`${API_URL}auth/create-group`, {  observe: 'response' , group});
+    return this.http.post<any>(`${API_URL}create-price-group`, {  observe: 'response' , group});
   }
 
 }
