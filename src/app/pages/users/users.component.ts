@@ -3,11 +3,11 @@ import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirectiveUsers, SortEvent} from './advanced-sortable.directive';
-import {MyTransaction} from "../../core/models/customer-transction.models";
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../core/services/user.service";
 import {IPerson} from "../../core/models/person.models";
+import {IUser, User} from "../../core/models/auth.models";
 
 @Component({
   selector: 'app-advancedtable',
@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit {
 
   public selected: any;
   hideme: boolean[] = [];
-  tables$: Observable<MyTransaction[]>;
+  tables$: Observable<User[]>;
   total$: Observable<number>;
   editableTable: any;
   personsLoading = false;
@@ -58,6 +58,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.loadPersons()
+
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })

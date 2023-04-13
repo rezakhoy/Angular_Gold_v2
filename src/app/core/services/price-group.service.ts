@@ -16,9 +16,9 @@ export class GroupService {
   getAllGroups(): any {
     return this.http.get<any>(`${API_URL}price-groups`, {  observe: 'response' });
   }
-   createGroup(group): any {
-    console.log('gggg', group);
-    return this.http.post<any>(`${API_URL}create-price-group`, {  observe: 'response' , group});
+   createGroup(body): any {
+    console.log('gggg', body);
+    return this.http.post<any>(`${API_URL}create-price-group`, {  observe: 'response' , body});
   }
 
 }

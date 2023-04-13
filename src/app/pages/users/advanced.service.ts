@@ -7,6 +7,8 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { SortDirection } from './advanced-sortable.directive';
 import {IMyTransaction, MyTransaction, SearchResult} from "../../core/models/customer-transction.models";
 import {ReportsService} from "../../core/services/reports.service";
+import {IUser, User, UserSearchResult} from "../../core/models/auth.models";
+import {AuthenticationService} from "../../core/services/auth.service";
 
 interface State {
     page: number;
@@ -28,7 +30,7 @@ const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
  * @param column Fetch the column
  * @param direction Sort direction Ascending or Descending
  */
-function sort(tables: MyTransaction[], column: string, direction: string): MyTransaction[] {
+function sort(tables: IUser[], column: string, direction: string): User[] {
     if (direction === '' || column === '') {
         return tables;
     } else {
@@ -45,14 +47,10 @@ function sort(tables: MyTransaction[], column: string, direction: string): MyTra
  * @param term Search the value
  * @param pipe
  */
-function matches(tables: MyTransaction, term: string, pipe: PipeTransform) {
-    return pipe.transform(tables.sanad).includes(term)
-        || tables.tariz.toLowerCase().includes(term)
-        || tables.sh.toLowerCase().includes(term)
-        || pipe.transform(tables.v_bes).includes(term)
-        || pipe.transform(tables.v_bed).includes(term)
-        || pipe.transform(tables.r_bes).includes(term)
-        || pipe.transform(tables.r_bed).includes(term)
+function matches(tables: User, term: string, pipe: PipeTransform) {
+    return tables.username.toLowerCase().includes(term)
+        || tables.username.toLowerCase().includes(term)
+
 
 
 
@@ -65,13 +63,13 @@ function matches(tables: MyTransaction, term: string, pipe: PipeTransform) {
 
 
 export class AdvancedService {
-    public myTransaction: IMyTransaction[];
+    public users: IUser[];
     // tslint:disable-next-line: variable-name
     private _loading$ = new BehaviorSubject<boolean>(true);
     // tslint:disable-next-line: variable-name
     private _search$ = new Subject<void>();
     // tslint:disable-next-line: variable-name
-    private _tables$ = new BehaviorSubject<MyTransaction[]>([]);
+    private _tables$ = new BehaviorSubject<User[]>([]);
     // tslint:disable-next-line: variable-name
     private _total$ = new BehaviorSubject<number>(0);
     // tslint:disable-next-line: variable-name
@@ -86,9 +84,9 @@ export class AdvancedService {
         totalRecords: 0
     };
 
-    constructor(private pipe: DecimalPipe, private reportService: ReportsService) {
-      this.reportService.myTransaction().subscribe(res => {
-        this.myTransaction = res.body;
+    constructor(private pipe: DecimalPipe, private authService: AuthenticationService) {
+      this.authService.getAllUser().subscribe(res => {
+        this.users = res.body;
         this._search$.pipe(
           tap(() => this._loading$.next(true)),
           debounceTime(200),
@@ -113,7 +111,6 @@ export class AdvancedService {
     get page() { return this._state.page; }
     get pageSize() { return this._state.pageSize; }
     get searchTerm() { return this._state.searchTerm; }
-
     get startIndex() { return this._state.startIndex; }
     get endIndex() { return this._state.endIndex; }
     get totalRecords() { return this._state.totalRecords; }
@@ -145,11 +142,11 @@ export class AdvancedService {
     /**
      * Search Method
      */
-    private _search(): Observable<SearchResult> {
+    private _search(): Observable<UserSearchResult> {
         const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
         // 1. sort
-        let tables = sort(this.myTransaction, sortColumn, sortDirection);
+        let tables = sort(this.users, sortColumn, sortDirection);
 
         // 2. filter
         tables = tables.filter(table => matches(table, searchTerm, this.pipe));

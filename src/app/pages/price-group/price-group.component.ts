@@ -44,14 +44,14 @@ export class PriceGroupComponent implements OnInit {
   }
 
   saveGroup() {
-    const group = this.groupForm.value;
-    group.sell = true;
-    group.buy = false;
-    console.log('type ggggggggggggggggggggggg', typeof group);
-    this.priceGroupService.createGroup(group).subscribe(res => {
+    const body = this.groupForm.value;
+    body.sell = true;
+    body.buy = false;
+    console.log('type ggggggggggggggggggggggg', typeof body);
+    this.priceGroupService.createGroup(body).subscribe(res => {
       console.log(res);
     });
-    this.groupForm.reset();
+
   }
 
 }

@@ -23,8 +23,12 @@ export class AuthenticationService {
       console.log(this.http.get<IUser>(`${API_URL}auth/current-user`, {observe: 'response'}));
       return this.http.get<IUser>(`${API_URL}auth/current-user`, {observe: 'response'});
     }
+  public getAllUser(): any {
+    return this.http.get<IUser[]>(`${API_URL}auth/users`, {observe: 'response'});
+  }
 
-    /**
+
+  /**
      * Performs the auth
      * @param email email of user
      * @param password password of user

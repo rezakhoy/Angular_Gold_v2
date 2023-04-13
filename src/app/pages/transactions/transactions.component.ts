@@ -35,34 +35,23 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'Tables' }, { label: 'Advanced Table', active: true }];
+
 
     this.service.tables$.subscribe(res => {
-      this._fetchData();
+
     })
 
   }
-
-  changeValue(i) {
-    this.hideme[i] = !this.hideme[i];
-  }
-
-
-  /**
-   * fetches the table value
-   */
-  _fetchData() {
-    // this.tableData = tableData;
-    for (let i = 0; i <= this.tableData.length; i++) {
-      this.hideme.push(true);
-    }
+  //
+  // changeValue(i) {
+  //   this.hideme[i] = !this.hideme[i];
+  // }
 
 
-    // this.editableTable = editableTable;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
-  }
+
+
+
+
 
   /**
    * Sort table data

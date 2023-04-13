@@ -41,40 +41,43 @@
               class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
               <thead>
                 <tr>
-                  <th sortable="sanad" (sort)="onSort($event)">شماره سند</th>
-                  <th sortable="tariz" (sort)="onSort($event)">تاریخ</th>
-                  <th>شرح</th>
-                  <th>تاثیر ریالی </th>
-                  <th >مانده ریالی</th>
-                  <th >تاثیر وزنی</th>
-                  <th>مانده وزنی</th>
+                  <th sortable="نام " (sort)="onSort($event)">شماره سند</th>
+                  <th sortable="نام کاربری" (sort)="onSort($event)">تاریخ</th>
+                  <th>موبایل</th>
+
+                  <th> مدیریت</th>
                 </tr>
               </thead>
               <tbody *ngFor="let table of tables$ | async;let i=index">
                 <tr>
                   <td>
-                    <ngb-highlight [result]="table.sanad.toString()" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.person?.name" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.tariz" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.username" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.sh" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.person.phoneNumber" [term]="service.searchTerm"></ngb-highlight>
                   </td>
+
                   <td>
-                    <ngb-highlight *ngIf="table.r_bes> 0"  class="text-danger" [result]="table.r_bes| number" [term]="service.searchTerm"></ngb-highlight>
-                    <ngb-highlight *ngIf="table.r_bed> 0" class="text-success" [result]="table.r_bed| number" [term]="service.searchTerm"></ngb-highlight>
+                    <ul class="list-inline font-size-20 contact-links mb-0">
+                      <li class="list-inline-item px-2">
+                        <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
+                      </li>
+                      <li class="list-inline-item px-2">
+                        <a href="javascript: void(0);" ngbTooltip="ویرایش"><i class="bx  bx-edit-alt"></i></a>
+                      </li>
+                      <li class="list-inline-item px-2">
+                        <a href="javascript: void(0);" ngbTooltip="حذف "><i class="bx bx-user-minus"></i></a>
+                      </li>
+                      <li class="list-inline-item px-2">
+                        <a href="javascript: void(0);" ngbTooltip="ریست رمز ورود"><i class="bx bx-user-circle"></i></a>
+                      </li>
+                    </ul>
                   </td>
-                  <td>
-                    <ngb-highlight [result]="table.balance_r | number" [term]="service.searchTerm"></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight *ngIf="table.v_bes> 0"  class="text-danger" [result]="table.v_bes.toString() " [term]="service.searchTerm"></ngb-highlight>
-                    <ngb-highlight *ngIf="table.v_bed> 0" class="text-success" [result]="table.v_bed.toString() " [term]="service.searchTerm"></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight [result]="table.balance_v.toString()  " [term]="service.searchTerm"></ngb-highlight>
-                  </td>
+
+
                 </tr>
               </tbody>
             </table>
@@ -148,20 +151,20 @@
           </select>
         </div>
         <div class="col-md-6">
-          <label for="limit" class="form-label"> ایمیل</label>
-          <input type="email"  formControlName="limit" class="form-control" id="limit">
+          <label for="email" class="form-label"> ایمیل</label>
+          <input type="email"  formControlName="email" class="form-control" id="email">
         </div>
         <div class="col-md-6">
-          <label for="limit" class="form-label">موبایل</label>
-          <input type="number"  formControlName="limit" class="form-control" id="limit">
+          <label for="cellphone" class="form-label">موبایل</label>
+          <input type="number"  formControlName="cellphone" class="form-control" id="cellphone">
         </div>
         <div class="col-md-6">
-          <label for="limit" class="form-label"> تلفن ثابت</label>
-          <input type="number"  formControlName="limit" class="form-control" id="limit">
+          <label for="phone" class="form-label"> تلفن ثابت</label>
+          <input type="number"  formControlName="phone" class="form-control" id="phone">
         </div>
         <div class="col-md-12">
-          <label for="limit" class="form-label">  آدرس</label>
-          <input type="text"  formControlName="limit" class="form-control" id="limit">
+          <label for="address" class="form-label">  آدرس</label>
+          <input type="text"  formControlName="address" class="form-control" id="address">
         </div>
       </div>
     </div>
