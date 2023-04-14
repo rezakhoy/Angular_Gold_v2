@@ -8,6 +8,8 @@ import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../core/services/user.service";
 import {IPerson} from "../../core/models/person.models";
 import {IUser, User} from "../../core/models/auth.models";
+import {IPermission} from "../../core/models/permission.models";
+import {IPriceGroup} from "../../core/models/price-group.models";
 
 @Component({
   selector: 'app-advancedtable',
@@ -22,11 +24,12 @@ import {IUser, User} from "../../core/models/auth.models";
 export class UsersComponent implements OnInit {
 
   public selected: any;
-  hideme: boolean[] = [];
   tables$: Observable<User[]>;
   total$: Observable<number>;
   editableTable: any;
   personsLoading = false;
+  permissions: IPermission[];
+  priceGroups: IPriceGroup[];
 
   @ViewChildren(AdvancedSortableDirectiveUsers) headers: QueryList<AdvancedSortableDirectiveUsers>;
   public isCollapsed = true;
@@ -72,9 +75,7 @@ export class UsersComponent implements OnInit {
       this.personsLoading = false;
     })
   }
-  changeValue(i) {
-    this.hideme[i] = !this.hideme[i];
-  }
+
 
 
   /**

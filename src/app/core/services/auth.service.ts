@@ -26,6 +26,9 @@ export class AuthenticationService {
   public getAllUser(): any {
     return this.http.get<IUser[]>(`${API_URL}auth/users`, {observe: 'response'});
   }
+  public getPermissions(): any {
+    return this.http.get<IUser[]>(`${API_URL}auth/permissions`, {observe: 'response'});
+  }
 
 
   /**
