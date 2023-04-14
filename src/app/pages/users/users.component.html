@@ -125,7 +125,22 @@
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"
+                     formControlName="personId"
+                     bindValue="id"
                      [loading]="personsLoading">
+          </ng-select>
+<!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
+        </div>
+        <div class="col-md-6">
+          <label  class="form-label">گروه دسترسی </label>
+          <ng-select [items]="groups"
+                     autofocus="true"
+                     notFoundText = "گروه دسترسی وجود ندارد !"
+                     bindLabel="name"
+                     formControlName="groupIds"
+                     bindValue="id"
+                     multiple="true"
+                     [loading]="groupsLoading">
           </ng-select>
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
@@ -134,6 +149,7 @@
           <div class="input-group">
             <input
               id="dateOfBirth"
+              formControlName="dateOfBirth"
               class="form-control"
               placeholder="yyyy-mm-dd"
               name="dp"
@@ -145,7 +161,7 @@
         </div>
         <div class="col-md-6">
           <label for="genderEnum" class="form-label">جنسیت </label>
-          <select class="form-select" id="genderEnum">
+          <select class="form-select" formControlName="genderEnum" id="genderEnum">
             <option value="MALE">مرد</option>
             <option value="FEMALE">زن </option>
           </select>
@@ -155,16 +171,24 @@
           <input type="email"  formControlName="email" class="form-control" id="email">
         </div>
         <div class="col-md-6">
-          <label for="cellphone" class="form-label">موبایل</label>
-          <input type="number"  formControlName="cellphone" class="form-control" id="cellphone">
+          <label for="cellPhone" class="form-label">موبایل</label>
+          <input type="text"  formControlName="cellPhone" class="form-control" id="cellPhone">
         </div>
         <div class="col-md-6">
-          <label for="phone" class="form-label"> تلفن ثابت</label>
-          <input type="number"  formControlName="phone" class="form-control" id="phone">
+          <label for="phoneNumber" class="form-label"> تلفن ثابت</label>
+          <input type="text"  formControlName="phoneNumber" class="form-control" id="phoneNumber">
         </div>
         <div class="col-md-12">
           <label for="address" class="form-label">  آدرس</label>
           <input type="text"  formControlName="address" class="form-control" id="address">
+        </div>
+        <div class="col-md-6">
+          <label for="password" class="form-label">رمز ورود</label>
+          <input type="password"  formControlName="password" class="form-control" id="password">
+        </div>
+        <div class="col-md-6">
+          <label for="password1" class="form-label">تکرار رمز ورود</label>
+          <input type="password1"  formControlName="password1" class="form-control" id="password1">
         </div>
       </div>
     </div>

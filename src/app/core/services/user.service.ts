@@ -14,8 +14,8 @@ export class UserService {
         return this.http.get<IUser[]>(`/api/login`);
     }
 
-    register(user: IUser) {
-        return this.http.post(`/users/register`, user);
+    register(body) {
+        return this.http.post(`${API_URL}auth/create-user`, body);
     }
   getAllPersons(): Observable<HttpResponse<IPerson[]>> {
     return this.http.get<any>(`${API_URL}persons`, {  observe: 'response' });

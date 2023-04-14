@@ -10,6 +10,11 @@ import {IPerson} from "../../core/models/person.models";
 import {IUser, User} from "../../core/models/auth.models";
 import {IPermission} from "../../core/models/permission.models";
 import {IPriceGroup} from "../../core/models/price-group.models";
+import {GroupService} from "../../core/services/price-group.service";
+import {IGroup} from "../../core/models/group.models";
+import {PersianService} from "ngx-persian/lib/Services/persian-service";
+import {JalaliDateCalculatorService} from "ngx-persian";
+import {JalaliToGeorgian} from "../../core/services/prsian-calander.service";
 
 @Component({
   selector: 'app-advancedtable',
@@ -28,6 +33,7 @@ export class UsersComponent implements OnInit {
   total$: Observable<number>;
   editableTable: any;
   personsLoading = false;
+  groupsLoading = false;
   permissions: IPermission[];
   priceGroups: IPriceGroup[];
 
@@ -39,21 +45,31 @@ export class UsersComponent implements OnInit {
   };
 
   persons: IPerson[];
+  groups: IGroup[];
 
 
   createUserForm = this.fb.group({
-    id: [],
-    name: [null, Validators.required],
-    limit : [null, [Validators.min(0), Validators.required]],
-    difference: [null, Validators.required],
-    gap: [null, Validators.required]
+    personId: [null, Validators.required],
+    groupIds: [null, Validators.required],
+    priceGroupIds :[],
+    dateOfBirth: [null, Validators.required],
+    genderEnum: [null, Validators.required],
+    email: [null, Validators.required],
+    cellPhone: [null, Validators.required],
+    phoneNumber: [],
+    address: [],
+    description: [],
+    password: [null, Validators.required],
+    password1: [null, Validators.required],
   });
 
 
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private modalService: NgbModal,
-              private userService: UserService
+              private userService: UserService,
+              private groupService: GroupService,
+              private jalaliDateService: JalaliDateCalculatorService,
               ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
@@ -61,6 +77,8 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.loadPersons()
+
+    this.loadPermissionGroups()
 
     this.service.tables$.subscribe(res => {
       this._fetchData();
@@ -116,6 +134,24 @@ export class UsersComponent implements OnInit {
   }
 
   saveUser() {
+    let date = this.createUserForm.get('dateOfBirth').value;
+    let y = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getFullYear()
+    let m = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getMonth()
+    let d = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getDay()
+    console.log(this.createUserForm.value);
+    let body = this.createUserForm.value;
+    body.dateOfBirth = y+'-'+ m+'-'+d
+    this.userService.register(body).subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  private loadPermissionGroups() {
+    this.groupsLoading = true;
+    this.groupService.getAllGroups().subscribe(res => {
+      this.groups = res.body;
+      this.groupsLoading = false;
+    })
 
   }
 }
