@@ -1,6 +1,3 @@
-import {IPermission} from "./permission.models";
-
-
 export class IMyTransaction {
   sanad: number;
   tariz: string;
