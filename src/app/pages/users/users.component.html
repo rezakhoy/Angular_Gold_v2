@@ -145,6 +145,19 @@
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
         <div class="col-md-6">
+          <label  class="form-label">گروه دسترسی </label>
+          <ng-select [items]="priceGroups"
+                     autofocus="true"
+                     notFoundText = "گروه دسترسی وجود ندارد !"
+                     bindLabel="name"
+                     formControlName="priceGroupIds"
+                     bindValue="id"
+                     multiple="true"
+                     [loading]="priceGroupLoading">
+          </ng-select>
+<!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
+        </div>
+        <div class="col-md-6">
           <label for="dateOfBirth" class="form-label">تاریخ تولد </label>
           <div class="input-group">
             <input

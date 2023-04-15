@@ -7,7 +7,7 @@ import {IPriceGroup} from "../models/price-group.models";
 @Injectable({
   providedIn: 'root'
 })
-export class GroupService {
+export class PriceGroupService {
 
   constructor(private http: HttpClient ) { }
 

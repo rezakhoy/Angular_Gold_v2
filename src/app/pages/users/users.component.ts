@@ -10,11 +10,12 @@ import {IPerson} from "../../core/models/person.models";
 import {IUser, User} from "../../core/models/auth.models";
 import {IPermission} from "../../core/models/permission.models";
 import {IPriceGroup} from "../../core/models/price-group.models";
-import {GroupService} from "../../core/services/price-group.service";
+import { PriceGroupService} from "../../core/services/price-group.service";
 import {IGroup} from "../../core/models/group.models";
 import {PersianService} from "ngx-persian/lib/Services/persian-service";
 import {JalaliDateCalculatorService} from "ngx-persian";
 import {JalaliToGeorgian} from "../../core/services/prsian-calander.service";
+import {AuthenticationService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-advancedtable',
@@ -34,6 +35,8 @@ export class UsersComponent implements OnInit {
   editableTable: any;
   personsLoading = false;
   groupsLoading = false;
+  permissionsLoading = false;
+  priceGroupLoading = false;
   permissions: IPermission[];
   priceGroups: IPriceGroup[];
 
@@ -64,11 +67,13 @@ export class UsersComponent implements OnInit {
   });
 
 
+
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private modalService: NgbModal,
               private userService: UserService,
-              private groupService: GroupService,
+              private authService: AuthenticationService,
+              private priceGroupService: PriceGroupService,
               private jalaliDateService: JalaliDateCalculatorService,
               ) {
     this.tables$ = service.tables$;
@@ -79,7 +84,7 @@ export class UsersComponent implements OnInit {
     this.loadPersons()
 
     this.loadPermissionGroups()
-
+    this.loadPriceGroups()
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })
@@ -148,9 +153,18 @@ export class UsersComponent implements OnInit {
 
   private loadPermissionGroups() {
     this.groupsLoading = true;
-    this.groupService.getAllGroups().subscribe(res => {
+    this.authService.getPermissions().subscribe(res => {
       this.groups = res.body;
       this.groupsLoading = false;
+    })
+
+  }
+
+  private loadPriceGroups() {
+    this.priceGroupLoading = true;
+    this.priceGroupService.getAllGroups().subscribe(res => {
+      this.priceGroups = res.body;
+      this.priceGroupLoading = false;
     })
 
   }

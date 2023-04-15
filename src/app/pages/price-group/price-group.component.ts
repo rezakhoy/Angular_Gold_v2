@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {GroupService} from "../../core/services/price-group.service";
+import {PriceGroupService} from "../../core/services/price-group.service";
 import {IGroup} from "../../core/models/group.models";
 import {IPriceGroup} from "../../core/models/price-group.models";
 
@@ -25,7 +25,7 @@ export class PriceGroupComponent implements OnInit {
   });
   groups: IPriceGroup[];
   constructor( private fb: FormBuilder,  private modalService: NgbModal,
-               private priceGroupService: GroupService) { }
+               private priceGroupService: PriceGroupService) { }
 
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
