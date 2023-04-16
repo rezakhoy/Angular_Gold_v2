@@ -31,6 +31,7 @@ import {UsersComponent} from "./users/users.component";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {NgbDatepickerI18nPersian, NgbDPConfig} from '../core/services/prsian-calander.service';
 import {DemandComponent} from "./demand/demand.component";
+import {BankComponent} from "./bank/bank.component";
 // import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 
 
@@ -45,6 +46,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     TransactionsComponent,
     PriceGroupComponent,
     DemandComponent,
+    BankComponent,
     AdvancedSortableDirective,
     UsersComponent,
     AdvancedSortableDirectiveUsers,

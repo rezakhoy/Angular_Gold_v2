@@ -2,13 +2,7 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import {BehaviorSubject, observable, Observable, of, Subject} from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-
-// import { tableData } from './data';
-// import { SortDirection } from './advanced-sortable.directive';
-import {IMyTransaction, MyTransaction, SearchResult} from "../../core/models/customer-transction.models";
 import {ReportsService} from "../../core/services/reports.service";
-// import {IUser, User, UserSearchResult} from "../../core/models/auth.models";
-// import {AuthenticationService} from "../../core/services/auth.service";
 import {Demand, DemandSearchResult, IDemand} from "../../core/models/demand.models";
 import {SortDirection} from "../users/advanced-sortable.directive";
 

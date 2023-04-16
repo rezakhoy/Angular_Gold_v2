@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+
+
+
+        <div class="card-body">
+          <div class="d-flex flex-wrap mb-3">
+            <h4 class="mr-2">لیست  بانک ها</h4>
+            <div class="ms-auto ">
+                  <h5 class="badge font-size-14 p-2 badge-soft-success">{{bankBalance?.balance_r | number}}</h5>
+            </div>
+
+          </div>
+          <hr>
+          <div class="table-responsive">
+            <table class="table align-middle  table-nowrap table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">نام</th>
+                  <th scope="col">کد</th>
+                  <th scope="col">مانده </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let group of banks; let i = index">
+                  <td>{{group.name}}</td>
+                  <td>{{group.cod}}</td>
+                  <td>{{group.balance_r| number}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

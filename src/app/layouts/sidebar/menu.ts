@@ -45,6 +45,12 @@ export const MENU: MenuItem[] = [
                 link: '/transaction',
                 parentId: 2
             },
+      {
+        id: 8,
+        label: 'لیست بانک ها',
+        link: '/bank-list',
+        parentId: 2
+      },
     ]
   },
     // {

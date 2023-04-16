@@ -6,6 +6,7 @@ import {TransactionsComponent} from "./transactions/transactions.component";
 import {PriceGroupComponent} from "./price-group/price-group.component";
 import {UsersComponent} from "./users/users.component";
 import {DemandComponent} from "./demand/demand.component";
+import {BankComponent} from "./bank/bank.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'demand-list',
     component: DemandComponent
+  },
+  {
+    path: 'bank-list',
+    component: BankComponent
   },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },

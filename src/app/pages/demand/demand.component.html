@@ -24,6 +24,7 @@
                     <option [ngValue]="25">25</option>
                     <option [ngValue]="50">50</option>
                     <option [ngValue]="100">100</option>
+                    <option [ngValue]="1000">1000</option>
                   </select> سطر</label></div>
             </div>
             <!-- Search -->
@@ -53,25 +54,25 @@
                     <ngb-highlight [result]="table.name" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.balance_v " [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.balance_v.toString() " [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.balance_r| number" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.balance_r" [term]="service.searchTerm"></ngb-highlight>
                   </td>
 
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
+                        <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>
                       </li>
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="ویرایش"><i class="bx  bx-edit-alt"></i></a>
+                        <a href="javascript: void(0);" ngbTooltip="پرداخت ریالی"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
                       </li>
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="حذف "><i class="bx bx-user-minus"></i></a>
+                        <a href="javascript: void(0);" ngbTooltip="دریافت ریالی "><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>
                       </li>
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="ریست رمز ورود"><i class="bx bx-user-circle"></i></a>
+                        <a href="javascript: void(0);"  ngbTooltip="درخواست طلا"><span class="text text-warning"><i class="bx bxs-component"></i></span></a>
                       </li>
                     </ul>
                   </td>

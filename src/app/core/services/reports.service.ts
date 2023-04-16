@@ -4,7 +4,8 @@ import {API_URL } from 'src/environments/environment';
 import {IAdminBalance, IMyBalance, MyBalance} from "../models/balance.models";
 import {Observable} from "rxjs";
 import {MyTransaction} from "../models/customer-transction.models";
-import {Demand} from "../models/demand.models";
+import {Demand, IAdminDemand} from "../models/demand.models";
+import {IAdminBanks, IBank} from "../models/bank.models";
 
 
 @Injectable({
@@ -27,6 +28,17 @@ export class ReportsService {
   adminDemandList(): Observable<HttpResponse<Demand[]>> {
     return this.http.get<any>(`${API_URL}admin-demands-list`, {  observe: 'response' });
   }
+  adminDemand(): Observable<HttpResponse<IAdminDemand>> {
+    return this.http.get<any>(`${API_URL}admin-demands`, {  observe: 'response' });
+  }
+
+  bankBalanceList(): Observable<HttpResponse<IBank[]>> {
+    return this.http.get<any>(`${API_URL}admin-banks-list`, {  observe: 'response' });
+  }
+  bankBalance(): Observable<HttpResponse<IAdminBanks>> {
+    return this.http.get<any>(`${API_URL}admin-banks`, {  observe: 'response' });
+  }
+
 
   adminBalance(): Observable<HttpResponse<IAdminBalance>> {
     return this.http.get<any>(`${API_URL}admin-balance`, {  observe: 'response' });

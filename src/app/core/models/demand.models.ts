@@ -19,3 +19,8 @@ export interface DemandSearchResult {
   tables: Demand[];
   total: number;
 }
+
+export class IAdminDemand {
+  demands_v: number;
+  demands_r: number;
+}

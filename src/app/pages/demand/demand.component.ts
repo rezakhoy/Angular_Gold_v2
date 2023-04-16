@@ -13,7 +13,8 @@ import {IGroup} from "../../core/models/group.models";
 import {JalaliDateCalculatorService} from "ngx-persian";
 import {AuthenticationService} from "../../core/services/auth.service";
 import {AdvancedSortableDirectiveUsers, SortEvent} from "../users/advanced-sortable.directive";
-import {Demand} from "../../core/models/demand.models";
+import {Demand, IAdminDemand} from "../../core/models/demand.models";
+import {ReportsService} from "../../core/services/reports.service";
 
 @Component({
   selector: 'app-advancedtable',
@@ -31,12 +32,7 @@ export class DemandComponent implements OnInit {
   tables$: Observable<Demand[]>;
   total$: Observable<number>;
   editableTable: any;
-  personsLoading = false;
-  groupsLoading = false;
-  permissionsLoading = false;
-  priceGroupLoading = false;
-  permissions: IPermission[];
-  priceGroups: IPriceGroup[];
+  adminDemands: IAdminDemand;
 
   @ViewChildren(AdvancedSortableDirectiveUsers) headers: QueryList<AdvancedSortableDirectiveUsers>;
   public isCollapsed = true;
@@ -45,58 +41,26 @@ export class DemandComponent implements OnInit {
     keyboard : false
   };
 
-  // persons: IPerson[];
-  // groups: IGroup[];
-
-
-  // createUserForm = this.fb.group({
-  //   personId: [null, Validators.required],
-  //   groupIds: [null, Validators.required],
-  //   priceGroupIds :[],
-  //   dateOfBirth: [null, Validators.required],
-  //   genderEnum: [null, Validators.required],
-  //   email: [null, Validators.required],
-  //   cellPhone: [null, Validators.required],
-  //   phoneNumber: [],
-  //   address: [],
-  //   description: [],
-  //   password: [null, Validators.required],
-  //   password1: [null, Validators.required],
-  // });
-
-
 
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private modalService: NgbModal,
-              private userService: UserService,
-              private authService: AuthenticationService,
-              private priceGroupService: PriceGroupService,
-              private jalaliDateService: JalaliDateCalculatorService,
+              private reportService: ReportsService,
               ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
+    this.service.pageSize = 1000
   }
 
   ngOnInit() {
-    // this.loadPersons()
-    //
-    // this.loadPermissionGroups()
-    // this.loadPriceGroups()
+    this.reportService.adminDemand().subscribe(res => {
+        this.adminDemands = res.body;
+    })
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })
 
   }
-  // private loadPersons() {
-  //   this.personsLoading = true;
-  //   this.userService.getAllPersons().subscribe(res => {
-  //     this.persons = res.body;
-  //     console.log(this.persons);
-  //     this.personsLoading = false;
-  //   })
-  // }
-
 
 
   /**
@@ -121,7 +85,6 @@ export class DemandComponent implements OnInit {
    *
    */
   onSort({ column, direction }: SortEvent) {
-    console.log(column);
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
