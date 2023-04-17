@@ -18,6 +18,7 @@ export class WebsocketService  {
   user: IUser;
 
   price: Subject<IPrices[]> = new Subject();
+  order: Subject<IPrices[]> = new Subject();
 
   constructor(public authService: AuthenticationService) {
     authService.getUser().subscribe(user => {
@@ -65,6 +66,12 @@ export class WebsocketService  {
     function callUser() {
       _this.authService.getUser().subscribe(res => {
         user = res.body;
+        if (user.username === 'admin'){
+          console.log("im admin user");
+          _this.stompClient.subscribe('/gold/order/' , function(alert) {
+            console.log(alert.body);
+          });
+        }
         res.body.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
@@ -80,6 +87,11 @@ export class WebsocketService  {
       if (user) {
         console.log("++++++++++++++++++",  user);
         console.log('------------------', user.priceGroups);
+        if (user.username === 'admin'){
+          _this.stompClient.subscribe('/gold/order/' , function(alert) {
+            console.log(alert.body);
+          });
+        }
         user.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {

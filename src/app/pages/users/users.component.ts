@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirectiveUsers, SortEvent} from './advanced-sortable.directive';
@@ -73,6 +73,7 @@ export class UsersComponent implements OnInit {
               private authService: AuthenticationService,
               private priceGroupService: PriceGroupService,
               private jalaliDateService: JalaliDateCalculatorService,
+              private datePipe: DatePipe
               ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
@@ -141,9 +142,12 @@ export class UsersComponent implements OnInit {
     let y = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getFullYear()
     let m = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getMonth()
     let d = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getDay()
-    console.log(this.createUserForm.value);
+
     let body = this.createUserForm.value;
+
     body.dateOfBirth = y+'-'+ m+'-'+d
+    body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
+    console.log(body);
     this.userService.register(body).subscribe(res => {
       console.log(res);
     })

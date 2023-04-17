@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
@@ -78,6 +78,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgbDatepickerModule,
   ],
   providers: [
+    DatePipe,
     { provide: NgbCalendar, useClass: NgbCalendarPersian },
     { provide: NgbDatepickerI18n, useClass: NgbDatepickerI18nPersian },
     { provide: NgbDatepickerConfig, useClass: NgbDPConfig },
