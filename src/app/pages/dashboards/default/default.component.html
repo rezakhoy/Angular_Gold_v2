@@ -171,9 +171,9 @@
             <table class=" table-responsive" >
               <tr *ngFor="let m of mas " class="pb-4 ">
                 <td class="col-sm-4 col-md-4">
-                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.groupId, 'b')">خرید{{m.buy| number}}  </button></td>
+                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.groupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
                 <td  class="col-sm-4 col-4">نرخ نقدی</td>
-                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.groupId, 's')">فروش{{m.sell| number}}  </button></td>
+                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.groupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
               </tr>
             </table>
           </div>
@@ -190,8 +190,8 @@
 ***********************************-->
 <ng-template #orderModel let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'b'">درخواست خرید</h4>
-    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 's'">درخواست فروش</h4>
+    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'BUY'">درخواست خرید</h4>
+    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'SELL'">درخواست فروش</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -201,10 +201,10 @@
 
       <div class="row">
         <div class="col-md-12">
-          <p *ngIf="orderForm.get('transaction_type').value === 'b'" class="alert alert-success">
+          <p *ngIf="orderForm.get('transaction_type').value === 'BUY'" class="alert alert-success">
             <span>خرید آبشده از ما با نرخ   {{orderForm.get('fee').value| number}}</span>
           </p>
-          <p *ngIf="orderForm.get('transaction_type').value === 's'" class="alert alert-danger">
+          <p *ngIf="orderForm.get('transaction_type').value === 'SELL'" class="alert alert-danger">
             <span>فروش آبشده به ما با نرخ    {{orderForm.get('fee').value| number}}</span>
 
           </p>

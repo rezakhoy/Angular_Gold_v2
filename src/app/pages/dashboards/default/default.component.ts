@@ -110,7 +110,7 @@ export class DefaultComponent implements OnInit {
   }
   makeOrder(form, gid, s) {
     let obj = this.mas.findIndex(x => x.groupId === gid)
-    if(s === 's') {
+    if(s === 'SELL') {
       this.orderForm.patchValue({
         transaction_type: s,
         comment: '',
@@ -120,7 +120,7 @@ export class DefaultComponent implements OnInit {
         quantity: ''
       });
     }
-    if(s === 'b') {
+    if(s === 'BUY') {
       this.orderForm.patchValue({
         transaction_type: s,
         comment: '',
@@ -134,12 +134,12 @@ export class DefaultComponent implements OnInit {
    this.ws.price.subscribe(res => {
      let prices = res;
      let obj = prices.findIndex(x => x.groupId === gid)
-     if(s === 's') {
+     if(s === 'SELL') {
        this.orderForm.patchValue({
          fee: prices[obj].sell,
        });
      }
-     if(s === 'b') {
+     if(s === 'BUY') {
        this.orderForm.patchValue({
          fee: prices[obj].buy,
        });
@@ -153,7 +153,13 @@ export class DefaultComponent implements OnInit {
   }
 
   saveGoldOrder() {
-    console.log(this.orderForm.value);
+    const order =JSON.stringify({
+      'price': this.orderForm.get('fee').value,
+       'type': this.orderForm.get('transaction_type').value,
+      'amount': this.orderForm.get('quantity').value,
+      'baseProductId': 1
+    })
+    this.ws.sendOrder(order);
   }
   culcPrice() {
     console.log("culc price ab");

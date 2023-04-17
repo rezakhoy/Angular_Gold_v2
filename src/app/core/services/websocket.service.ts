@@ -103,6 +103,13 @@ export class WebsocketService  {
       })
     );
   }
-
+ public sendOrder(order) {
+   console.log(order);
+   this.stompClient.send(
+     '/app/send-order-request',
+     {},
+     order,
+   )
+ }
 
 }
