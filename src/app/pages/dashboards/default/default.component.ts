@@ -29,6 +29,7 @@ export class DefaultComponent implements OnInit {
   setPrice: ISetPrices;
   isActive: string;
   mas: IPrices[];
+  selectedPrice : IPrices;
   myBalance = new MyBalance();
  adminBalance= new AdminBalance()
   setPriceForm = this.fb.group({
@@ -107,21 +108,52 @@ export class DefaultComponent implements OnInit {
   setlimit() {
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }
-  makeOrder(form, price, s) {
-    this.orderForm.patchValue({
-      transaction_type: s,
-      comment: '',
-      status: 'w',
-      fee: price,
-      price: '',
-      quantity: ''
-    });
+  makeOrder(form, gid, s) {
+    let obj = this.mas.findIndex(x => x.groupId === gid)
+    if(s === 's') {
+      this.orderForm.patchValue({
+        transaction_type: s,
+        comment: '',
+        status: 'w',
+        fee: this.mas[obj].sell,
+        price: '',
+        quantity: ''
+      });
+    }
+    if(s === 'b') {
+      this.orderForm.patchValue({
+        transaction_type: s,
+        comment: '',
+        status: 'w',
+        fee: this.mas[obj].buy,
+        price: '',
+        quantity: ''
+      });
+    }
+
+   this.ws.price.subscribe(res => {
+     let prices = res;
+     let obj = prices.findIndex(x => x.groupId === gid)
+     if(s === 's') {
+       this.orderForm.patchValue({
+         fee: prices[obj].sell,
+       });
+     }
+     if(s === 'b') {
+       this.orderForm.patchValue({
+         fee: prices[obj].buy,
+       });
+     }
+
+
+    this.culcPrice()
+   })
     this.modalService.open(form, this.ngbModalOptions);
     document.getElementById('quantity').focus();
   }
 
   saveGoldOrder() {
-    console.log(this.goldOrderForm.value);
+    console.log(this.orderForm.value);
   }
   culcPrice() {
     console.log("culc price ab");
@@ -134,12 +166,10 @@ export class DefaultComponent implements OnInit {
 
   culcQuantity() {
     if (this.orderForm.get('transaction_type').value === 's') {
-      if (this.orderForm.get('coin_type').value === 'a') {
-        const quantity = this.orderForm.get('price').value / this.mas[0].buy * 4.3317;
+        const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3317;
         this.orderForm.patchValue({
           quantity
         });
-      }
     }
   }
 }

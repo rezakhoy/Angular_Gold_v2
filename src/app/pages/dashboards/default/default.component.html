@@ -171,18 +171,11 @@
             <table class=" table-responsive" >
               <tr *ngFor="let m of mas " class="pb-4 ">
                 <td class="col-sm-4 col-md-4">
-                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.buy, 'b')">خرید{{m.buy| number}}  </button></td>
+                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.groupId, 'b')">خرید{{m.buy| number}}  </button></td>
                 <td  class="col-sm-4 col-4">نرخ نقدی</td>
-                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.sell, 's')">فروش{{m.sell| number}}  </button></td>
+                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.groupId, 's')">فروش{{m.sell| number}}  </button></td>
               </tr>
-
             </table>
-            <!--      <div>-->
-            <!--        <div class="btn-group btn-group-example mb-3" role="group">-->
-            <!--          <button type="button" class="btn btn-primary w-xs">خرید آبشده</button>-->
-            <!--          <button type="button" class="btn btn-danger w-xs">فروش آبشده </button>-->
-            <!--        </div>-->
-            <!--      </div>-->
           </div>
 
         </div>
