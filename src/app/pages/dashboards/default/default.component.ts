@@ -13,6 +13,7 @@ import {AuthenticationService} from "../../../core/services/auth.service";
 import {ReportsService} from "../../../core/services/reports.service";
 import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 import {IOrder} from "../../../core/models/order.models";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-default',
@@ -30,7 +31,7 @@ export class DefaultComponent implements OnInit {
   setPrice: ISetPrices;
   isActive: string;
   mas: IPrices[];
-  orders: IOrder[];
+  orders:  IOrder[];
   selectedPrice: IPrices;
   myBalance = new MyBalance();
   adminBalance = new AdminBalance()
@@ -75,7 +76,6 @@ export class DefaultComponent implements OnInit {
   ngOnInit() {
     this.reportService.adminBalance().subscribe(res => {
       this.adminBalance = res.body;
-      console.log(this.adminBalance);
     });
     this.reportService.myBalance().subscribe(res => {
       this.myBalance = res.body;
@@ -86,6 +86,7 @@ export class DefaultComponent implements OnInit {
     });
 
     this.ws.orders.subscribe(ord => {
+      console.log('ooooooooooooooooooooooooooo',ord);
       this.orders = ord;
     });
     this.setPriceForm.patchValue({
