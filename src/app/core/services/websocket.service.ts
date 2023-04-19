@@ -6,6 +6,7 @@ import {API_URL} from "../../../environments/environment";
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthenticationService} from "./auth.service";
+import {IOrder} from "../models/order.models";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class WebsocketService  {
   user: IUser;
 
   price: Subject<IPrices[]> = new Subject();
-  order: Subject<IPrices[]> = new Subject();
+  orders: Subject<IOrder[]> = new Subject();
 
   constructor(public authService: AuthenticationService) {
     authService.getUser().subscribe(user => {
@@ -33,6 +34,7 @@ export class WebsocketService  {
 
   public connect() {
     const price = this.price;
+    const order = this.orders;
     let user = this.user;
     // @ts-ignore
     // tslint:disable-next-line:only-arrow-functions
@@ -45,6 +47,7 @@ export class WebsocketService  {
     // tslint:disable-next-line:variable-name
     const _this = this;
     const prices = [];
+    const orders = [];
 
     function managePrices(body) {
       console.log("in maage price", body);
@@ -63,20 +66,35 @@ export class WebsocketService  {
       }
       price.next(prices);
     }
+    function manageOrder(body) {
+      if (orders.length === 0) {
+        orders.push(body);
+
+      } else {
+        const mainObjectIndex = orders.findIndex((mainObject) => mainObject.id === body.id);
+        if (mainObjectIndex !== -1) {
+          orders[mainObjectIndex] = body;
+        } else {
+          console.log("im in push ordrr");
+          orders.push(body);
+        }
+      }
+      console.log(order);
+      console.log(orders);
+      order.next(orders);
+    }
     function callUser() {
       _this.authService.getUser().subscribe(res => {
         user = res.body;
-        if (user.username === 'admin'){
-          console.log("im admin user");
-          _this.stompClient.subscribe('/gold/order/' , function(alert) {
-            console.log(alert.body);
-          });
-        }
         res.body.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {
             managePrices(JSON.parse(alert.body));
           });
+        });
+        _this.stompClient.subscribe('/gold/order' , function(alert) {
+          console.log(JSON.parse(alert.body));
+          manageOrder(JSON.parse(alert.body))
         });
       })
     }
@@ -85,13 +103,15 @@ export class WebsocketService  {
 
       _this.setConnected(true);
       if (user) {
-        console.log("++++++++++++++++++",  user);
-        console.log('------------------', user.priceGroups);
-        if (user.username === 'admin'){
-          _this.stompClient.subscribe('/gold/order/' , function(alert) {
-            console.log(alert.body);
+        // console.log("++++++++++++++++++",  user);
+        // console.log('------------------', user.priceGroups);
+        // if (user.username === 'admin'){
+        //   console.log('user is admin');
+          _this.stompClient.subscribe('/gold/order' , function(alert) {
+            console.log(JSON.parse(alert.body));
+            manageOrder(JSON.parse(alert.body))
           });
-        }
+        // }
         user.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function(alert) {

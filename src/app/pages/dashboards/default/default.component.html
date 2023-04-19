@@ -146,38 +146,45 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body" >
-          <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
-            <div class="table-responsive table-hover fs-14 ">
-              <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
-                <tr>
-                  <td>آبشده</td>
-                  <td class="text-danger">
-                    <input
-                      type="checkbox"
-                      [checked]="setPrice.ab" (change)="setlimit()" formControlName="ab" >
-                  </td>
-                  <td class="text-success">
-                    <input
-                      type="checkbox"
-                      [checked]="setPrice.as" (change)="setlimit()" formControlName="as" >
-                  </td>
-                  <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="1000"></ngx-number-spinner></td>
-                </tr>
+          <div class="row">
+            <div class="col-md-6">
+              <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
+                <div class="table-responsive table-hover fs-14 ">
+                  <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
+                    <tr>
 
-              </table>
+                      <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="1000"></ngx-number-spinner></td>
+                    </tr>
+
+                  </table>
+                </div>
+              </form>
             </div>
-          </form>
-          <div class="align-content-center">
-            <table class=" table-responsive" >
-              <tr *ngFor="let m of mas " class="pb-4 ">
-                <td class="col-sm-4 col-md-4">
-                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.groupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
-                <td  class="col-sm-4 col-4">نرخ نقدی</td>
-                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.groupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
-              </tr>
-            </table>
-          </div>
 
+            <div class="col-md-6">
+              <div class="align-content-center">
+                <table class=" table-responsive" >
+                  <tr *ngFor="let m of mas " class="pb-4 ">
+                    <td class="col-sm-4 col-md-4">
+                      <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
+                    <td  class="col-sm-4 col-4">sdfsdfsd</td>
+                    <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+            <div class="row">
+              <table class=" table-responsive" >
+                <tr *ngFor="let order of orders" class="pb-4 ">
+                  <td>{{order.name}}</td>
+                  <td>{{order.amount}}</td>
+                  <td>{{order.price}}</td>
+                  <td>{{order.status}}</td>
+                </tr>
+              </table>
+
+            </div>
         </div>
       </div>
     </div>
