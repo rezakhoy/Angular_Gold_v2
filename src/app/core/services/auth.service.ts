@@ -11,7 +11,7 @@ import {API_URL} from "../../../environments/environment";
 export class AuthenticationService {
     permissions: string[];
     user: IUser;
-  public baseUrl = 'http://192.168.9.18:8080/';
+  public baseUrl = 'http://localhost:8080/';
     constructor(private http: HttpClient, private router: Router) {
     }
 

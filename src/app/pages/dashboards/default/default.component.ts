@@ -85,6 +85,7 @@ export class DefaultComponent implements OnInit {
 
     this.ws.price.subscribe(msg => {
       this.mas = msg;
+      console.log(this.mas);
     });
 
     this.ws.orders.subscribe(ord => {
@@ -94,7 +95,7 @@ export class DefaultComponent implements OnInit {
     this.setPriceForm.patchValue({
       ab: false,
       as: false,
-      price: 9500000,
+      price: 112500000,
     });
     let setPrice = {
       ab: false,

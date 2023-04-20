@@ -45,18 +45,18 @@
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.today_sum_8x}}</h5>
-                        <h5 class="text-danger">{{adminBalance.today_sum_9x}}</h5>
-                        <p  ><span  class="badge font-size-14" [ngClass]="(adminBalance.today_sum_8x - adminBalance.today_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x }} </span></p>
+                        <h5 class="text-success">{{adminBalance.today_sum_8x | number : '.2-2'}}</h5>
+                        <h5 class="text-danger">{{adminBalance.today_sum_9x | number : '.2-2'}}</h5>
+                        <p  ><span  class="badge font-size-14" [ngClass]="(adminBalance.today_sum_8x - adminBalance.today_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x | number : '.2-2' }} </span></p>
                       </div>
                     </div>
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.today_avg_maz_8x}}</h5>
-                        <h5 class="text-danger">{{adminBalance.today_avg_maz_9x}}</h5>
+                        <h5 class="text-success">{{adminBalance.today_avg_maz_8x | number : '.0-0'}}</h5>
+                        <h5 class="text-danger">{{adminBalance.today_avg_maz_9x | number : '.0-0'}}</h5>
                         <p  class="badge font-size-14 "
                             [ngClass]="(adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'"
-                        >{{adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x }} </p>
+                        >{{adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>
@@ -148,17 +148,20 @@
         <div class="card-body" >
           <div class="row">
             <div class="col-md-6">
-              <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
-                <div class="table-responsive table-hover fs-14 ">
-                  <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
-                    <tr>
+              <div class="">
+                <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
+                  <div class="table-responsive table-hover fs-14 ">
+                    <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
+                      <tr>
 
-                      <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="1000"></ngx-number-spinner></td>
-                    </tr>
+                        <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="5000"></ngx-number-spinner></td>
+                      </tr>
 
-                  </table>
-                </div>
-              </form>
+                    </table>
+                  </div>
+                </form>
+              </div>
+
             </div>
 
             <div class="col-md-6">
@@ -167,7 +170,7 @@
                   <tr *ngFor="let m of mas " class="pb-4 ">
                     <td class="col-sm-4 col-md-4">
                       <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
-                    <td  class="col-sm-4 col-4">sdfsdfsd</td>
+                    <td  class="col-sm-4 col-4">{{m.priceGroupName}}</td>
                     <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
                   </tr>
                 </table>
