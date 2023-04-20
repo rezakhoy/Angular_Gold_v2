@@ -30,8 +30,10 @@ export class DefaultComponent implements OnInit {
   isVisible: string;
   setPrice: ISetPrices;
   isActive: string;
+  rejectComment: '';
   mas: IPrices[];
   orders:  IOrder[];
+  rejectedOrder : IOrder;
   selectedPrice: IPrices;
   myBalance = new MyBalance();
   adminBalance = new AdminBalance()
@@ -204,6 +206,17 @@ export class DefaultComponent implements OnInit {
   }
 
   confirmOrder(order: IOrder) {
+    order.description = this.rejectComment;
     this.ws.orderToConfirm(order)
+  }
+
+  rejectOrder(order: IOrder, reject) {
+    this.rejectedOrder = order;
+    this.modalService.open(reject);
+  }
+  unconfirmOrder(comment) {
+    this.rejectedOrder.description = comment;
+    this.ws.orderToUnconfirm(this.rejectedOrder)
+    this.rejectComment = ''
   }
 }
