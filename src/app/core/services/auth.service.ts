@@ -9,7 +9,7 @@ import {API_URL} from "../../../environments/environment";
 @Injectable({ providedIn: 'root' })
 
 export class AuthenticationService {
-
+    permissions: string[];
     user: IUser;
   public baseUrl = 'http://192.168.9.18:8080/';
     constructor(private http: HttpClient, private router: Router) {
@@ -25,7 +25,7 @@ export class AuthenticationService {
     return this.http.get<IUser[]>(`${API_URL}auth/users`, {observe: 'response'});
   }
   public getPermissions(): any {
-    return this.http.get<IUser[]>(`${API_URL}auth/permissions`, {observe: 'response'});
+    return this.http.get<string[]>(`${API_URL}auth/permissions`, {observe: 'response'});
   }
 
 
@@ -73,5 +73,6 @@ export class AuthenticationService {
     this.router.navigate(['/account/login'], );
 
   }
+
 }
 

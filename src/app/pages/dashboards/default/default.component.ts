@@ -202,4 +202,8 @@ export class DefaultComponent implements OnInit {
       });
     }
   }
+
+  confirmOrder(order: IOrder) {
+    this.ws.orderToConfirm(order)
+  }
 }

@@ -138,5 +138,13 @@ export class WebsocketService {
       order,
     )
   }
+  public orderToConfirm(order) {
+    console.log(order);
+    this.stompClient.send(
+      '/app/send-order-confirm',
+      {},
+      JSON.stringify(order),
+    )
+  }
 
 }

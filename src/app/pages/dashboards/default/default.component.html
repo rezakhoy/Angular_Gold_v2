@@ -181,6 +181,10 @@
                   <td>{{order.amount}}</td>
                   <td>{{order.price}}</td>
                   <td>{{order.status}}</td>
+                  <td>{{order.type}}</td>
+                  <td>
+                    <button class="tn btn-primary" (click)="confirmOrder(order)"> تایید</button>
+                  </td>
                 </tr>
               </table>
 
