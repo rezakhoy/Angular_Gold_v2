@@ -1,20 +1,15 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import {Component, OnInit, ViewChildren, QueryList, TemplateRef} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {UserService} from "../../core/services/user.service";
-import {IPerson} from "../../core/models/person.models";
-import {IPermission} from "../../core/models/permission.models";
-import {IPriceGroup} from "../../core/models/price-group.models";
-import { PriceGroupService} from "../../core/services/price-group.service";
-import {IGroup} from "../../core/models/group.models";
-import {JalaliDateCalculatorService} from "ngx-persian";
-import {AuthenticationService} from "../../core/services/auth.service";
-import {AdvancedSortableDirectiveUsers, SortEvent} from "../users/advanced-sortable.directive";
-import {Demand, IAdminDemand} from "../../core/models/demand.models";
+import {Demand, IAdminDemand, IDemand} from "../../core/models/demand.models";
 import {ReportsService} from "../../core/services/reports.service";
+import {AdvancedSortableDirectiveDemands, SortEvent} from "./advanced-sortable.directive";
+import {ICommand} from "../../core/models/command.models";
+import {IPerson} from "../../core/models/person.models";
+import {UserService} from "../../core/services/user.service";
 
 @Component({
   selector: 'app-advancedtable',
@@ -34,18 +29,35 @@ export class DemandComponent implements OnInit {
   editableTable: any;
   adminDemands: IAdminDemand;
 
-  @ViewChildren(AdvancedSortableDirectiveUsers) headers: QueryList<AdvancedSortableDirectiveUsers>;
-  public isCollapsed = true;
+  @ViewChildren(AdvancedSortableDirectiveDemands) headers: QueryList<AdvancedSortableDirectiveDemands>;
+
+
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
   };
 
 
+  public isCollapsed = true;
+  command: ICommand;
+  selectedDemand: IDemand;
+
+
+  commandForm = this.fb.group({
+    id: [],
+    person:[],
+    amount: [null, [Validators.min(10000)]],
+    accountNumber: [null, Validators.required],
+    bankName: [null, Validators.required],
+    accountOwnerName: [null, Validators.required]
+  });
+
+
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private modalService: NgbModal,
               private reportService: ReportsService,
+              // private userService: UserService
               ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
@@ -55,13 +67,20 @@ export class DemandComponent implements OnInit {
   ngOnInit() {
     this.reportService.adminDemand().subscribe(res => {
         this.adminDemands = res.body;
+      console.log(this.adminDemands);
     })
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })
-
+    // this.loadPersons()
   }
-
+  // private loadPersons() {
+  //   this.personsLoading = true;
+  //   this.userService.getAllPersons().subscribe(res => {
+  //     this.persons = res.body;
+  //     this.personsLoading = false;
+  //   })
+  // }
 
   /**
    * fetches the table value
@@ -85,7 +104,6 @@ export class DemandComponent implements OnInit {
    *
    */
   onSort({ column, direction }: SortEvent) {
-    // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
         header.direction = '';
@@ -97,37 +115,21 @@ export class DemandComponent implements OnInit {
 
   createUserFunc(cgf) {
     this.modalService.open(cgf, this.ngbModalOptions);
-    document.getElementById('name').focus();
+      // document.getElementById('amount').focus();
+
   }
 
-  // saveUser() {
-  //   let date = this.createUserForm.get('dateOfBirth').value;
-  //   let y = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getFullYear()
-  //   let m = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getMonth()
-  //   let d = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getDay()
-  //   console.log(this.createUserForm.value);
-  //   let body = this.createUserForm.value;
-  //   body.dateOfBirth = y+'-'+ m+'-'+d
-  //   this.userService.register(body).subscribe(res => {
-  //     console.log(res);
-  //   })
-  // }
+  saveCommand() {
+    console.log(this.selectedDemand);
+    console.log(this.commandForm.value);
+  }
 
-  // private loadPermissionGroups() {
-  //   this.groupsLoading = true;
-  //   this.authService.getPermissions().subscribe(res => {
-  //     this.groups = res.body;
-  //     this.groupsLoading = false;
-  //   })
-  //
-  // }
-  //
-  // private loadPriceGroups() {
-  //   this.priceGroupLoading = true;
-  //   this.priceGroupService.getAllGroups().subscribe(res => {
-  //     this.priceGroups = res.body;
-  //     this.priceGroupLoading = false;
-  //   })
-  //
-  // }
+  makeCommand(table: Demand, commandModal, pay: string) {
+
+    this.selectedDemand = table;
+    this.modalService.open(commandModal, this.ngbModalOptions);
+    const status = pay
+
+
+  }
 }

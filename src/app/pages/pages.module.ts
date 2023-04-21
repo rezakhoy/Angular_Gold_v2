@@ -32,6 +32,8 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {NgbDatepickerI18nPersian, NgbDPConfig} from '../core/services/prsian-calander.service';
 import {DemandComponent} from "./demand/demand.component";
 import {BankComponent} from "./bank/bank.component";
+import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
+import {CurrencyMaskModule} from "ng2-currency-mask";
 // import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 
 
@@ -50,6 +52,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AdvancedSortableDirective,
     UsersComponent,
     AdvancedSortableDirectiveUsers,
+    AdvancedSortableDirectiveDemands
     // AdvancedSortableDirectiveDemands
   ],
   imports: [
@@ -76,6 +79,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FormsModule,
     NgSelectModule,
     NgbDatepickerModule,
+    CurrencyMaskModule,
   ],
   providers: [
     DatePipe,

@@ -57,7 +57,7 @@
                     <ngb-highlight [result]="table.balance_v.toString() " [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.balance_r" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.balance_r| number " [term]="service.searchTerm"></ngb-highlight>
                   </td>
 
                   <td>
@@ -65,14 +65,11 @@
                       <li class="list-inline-item px-2">
                         <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>
                       </li>
-                      <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="پرداخت ریالی"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
+                      <li class="list-inline-item px-2"  *ngIf="table.balance_r>0">
+                        <a ngbTooltip="پرداخت ریالی" (click)="makeCommand(table, commandModal, 'PAY')"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
                       </li>
-                      <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="دریافت ریالی "><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>
-                      </li>
-                      <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);"  ngbTooltip="درخواست طلا"><span class="text text-warning"><i class="bx bxs-component"></i></span></a>
+                      <li class="list-inline-item px-2" *ngIf="table.balance_r<0" >
+                        <a  ngbTooltip="دریافت ریالی "><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>
                       </li>
                     </ul>
                   </td>
@@ -106,113 +103,48 @@
   </div>
 </div>
 
-<!--==================================================================-->
-<!--<ng-template #createUserModal let-modal>-->
-<!--  <div class="modal-header">-->
-<!--    &lt;!&ndash;    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'b'">درخواست خرید</h4>&ndash;&gt;-->
-<!--    <h4 class="modal-title" > ایجاد کاربر جدید</h4>-->
-<!--    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
-<!--      <span aria-hidden="true">&times;</span>-->
-<!--    </button>-->
-<!--  </div>-->
-<!--  <form name="editForm" role="form" novalidate (ngSubmit)="saveUser()" [formGroup]="createUserForm">-->
-<!--    <div class="modal-body">-->
+<!--**********************************
+                modal
+***********************************-->
+<ng-template #commandModal let-modal>
+  <div class="modal-header">
 
-<!--      <div class="row">-->
-<!--        <div class="col-md-6">-->
-<!--          <label  class="form-label">عنوان </label>-->
-<!--          <ng-select [items]="persons"-->
-<!--                     autofocus="true"-->
-<!--                     notFoundText = "مشتری با این نام وجود ندارد!"-->
-<!--                     bindLabel="name"-->
-<!--                     formControlName="personId"-->
-<!--                     bindValue="id"-->
-<!--                     [loading]="personsLoading">-->
-<!--          </ng-select>-->
-<!--&lt;!&ndash;          <input  type="text" formControlName="name" class="form-control" id="name">&ndash;&gt;-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label  class="form-label">گروه دسترسی </label>-->
-<!--          <ng-select [items]="groups"-->
-<!--                     autofocus="true"-->
-<!--                     notFoundText = "گروه دسترسی وجود ندارد !"-->
-<!--                     bindLabel="name"-->
-<!--                     formControlName="groupIds"-->
-<!--                     bindValue="id"-->
-<!--                     multiple="true"-->
-<!--                     [loading]="groupsLoading">-->
-<!--          </ng-select>-->
-<!--&lt;!&ndash;          <input  type="text" formControlName="name" class="form-control" id="name">&ndash;&gt;-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label  class="form-label">گروه دسترسی </label>-->
-<!--          <ng-select [items]="priceGroups"-->
-<!--                     autofocus="true"-->
-<!--                     notFoundText = "گروه دسترسی وجود ندارد !"-->
-<!--                     bindLabel="name"-->
-<!--                     formControlName="priceGroupIds"-->
-<!--                     bindValue="id"-->
-<!--                     multiple="true"-->
-<!--                     [loading]="priceGroupLoading">-->
-<!--          </ng-select>-->
-<!--&lt;!&ndash;          <input  type="text" formControlName="name" class="form-control" id="name">&ndash;&gt;-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="dateOfBirth" class="form-label">تاریخ تولد </label>-->
-<!--          <div class="input-group">-->
-<!--            <input-->
-<!--              id="dateOfBirth"-->
-<!--              formControlName="dateOfBirth"-->
-<!--              class="form-control"-->
-<!--              placeholder="yyyy-mm-dd"-->
-<!--              name="dp"-->
-<!--              ngbDatepicker-->
-<!--              #d="ngbDatepicker"-->
-<!--            />-->
-<!--            <button class="btn btn-primary" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt font-size-20 text-light"></i></button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="genderEnum" class="form-label">جنسیت </label>-->
-<!--          <select class="form-select" formControlName="genderEnum" id="genderEnum">-->
-<!--            <option value="MALE">مرد</option>-->
-<!--            <option value="FEMALE">زن </option>-->
-<!--          </select>-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="email" class="form-label"> ایمیل</label>-->
-<!--          <input type="email"  formControlName="email" class="form-control" id="email">-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="cellPhone" class="form-label">موبایل</label>-->
-<!--          <input type="text"  formControlName="cellPhone" class="form-control" id="cellPhone">-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="phoneNumber" class="form-label"> تلفن ثابت</label>-->
-<!--          <input type="text"  formControlName="phoneNumber" class="form-control" id="phoneNumber">-->
-<!--        </div>-->
-<!--        <div class="col-md-12">-->
-<!--          <label for="address" class="form-label">  آدرس</label>-->
-<!--          <input type="text"  formControlName="address" class="form-control" id="address">-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="password" class="form-label">رمز ورود</label>-->
-<!--          <input type="password"  formControlName="password" class="form-control" id="password">-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="password1" class="form-label">تکرار رمز ورود</label>-->
-<!--          <input type="password1"  formControlName="password1" class="form-control" id="password1">-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="modal-footer">-->
-<!--      <button class="btn btn-danger btn-sm"-->
-<!--              (click)="modal.close()">انصراف-->
-<!--      </button>-->
-<!--      <button type="submit"  class="btn btn-success btn-sm"-->
-<!--              (click)="modal.close()">ثبت درخواست-->
-<!--      </button>-->
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommand()" [formGroup]="commandForm">
+    <div class="modal-body">
 
-<!--    </div>-->
-<!--  </form>-->
-<!--</ng-template>-->
+      <div class="row">
+        <div class="col-md-6">
+          <label for="amount" class="form-label">مبلغ درخواست: </label>
+          <input type="text" formControlName="amount" currencyMask ngbAutofocus  class="form-control" id="amount">
+        </div>
+
+      <div class="col-md-6">
+        <label for="accountNumber" class="form-label">شماره حساب: </label>
+        <input type="text" formControlName="accountNumber" class="form-control" id="accountNumber">
+      </div>
+      <div class="col-md-6">
+        <label for="bankName" class="form-label">بانک: </label>
+        <input type="text" formControlName="bankName" class="form-control" id="bankName">
+      </div>
+      <div class="col-md-6">
+        <label for="accountOwnerName" class="form-label">صاحب حساب: </label>
+        <input type="text" formControlName="accountOwnerName" class="form-control" id="accountOwnerName">
+      </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="modal.close()">انصراف
+      </button>
+      <button type="submit"
+              class="btn btn-success btn-sm"
+              (click)="modal.close()">ثبت درخواست
+      </button>
+
+    </div>
+  </form>
+</ng-template>

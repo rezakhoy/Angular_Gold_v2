@@ -17,12 +17,23 @@ import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
 import {WebsocketService} from "./core/services/websocket.service";
 import {NgxPermissionsModule} from "ngx-permissions";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule} from "ng2-currency-mask";
 
 
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  decimal: ",",
+  precision: 0,
+  prefix: "",
+  suffix: " ریال",
+  thousands: ","
+};
 
 @NgModule({
   declarations: [
@@ -43,6 +54,7 @@ export function createTranslateLoader(http: HttpClient): any {
     AppRoutingModule,
     ExtrapagesModule,
     CarouselModule,
+    CurrencyMaskModule,
     NgbAccordionModule,
     NgSelectModule,
     NgxNumberSpinnerModule,
@@ -56,6 +68,7 @@ export function createTranslateLoader(http: HttpClient): any {
   providers: [
     WebsocketService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],
 })
 export class AppModule { }

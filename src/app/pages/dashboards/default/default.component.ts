@@ -198,12 +198,11 @@ export class DefaultComponent implements OnInit {
 
 
   culcQuantity() {
-    if (this.orderForm.get('transaction_type').value === 's') {
       const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3317;
       this.orderForm.patchValue({
         quantity
       });
-    }
+
   }
 
   confirmOrder(order: IOrder) {

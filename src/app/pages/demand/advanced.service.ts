@@ -2,9 +2,11 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import {BehaviorSubject, observable, Observable, of, Subject} from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-import {ReportsService} from "../../core/services/reports.service";
+
 import {Demand, DemandSearchResult, IDemand} from "../../core/models/demand.models";
-import {SortDirection} from "../users/advanced-sortable.directive";
+import {SortDirection} from "./advanced-sortable.directive";
+import {ReportsService} from "../../core/services/reports.service";
+
 
 interface State {
     page: number;
@@ -46,10 +48,6 @@ function sort(tables: IDemand[], column: string, direction: string): Demand[] {
 function matches(tables: Demand, term: string, pipe: PipeTransform) {
     return tables.name.toLowerCase().includes(term)
         || tables.cod.toLowerCase().includes(term)
-
-
-
-
 }
 
 @Injectable({
@@ -83,6 +81,7 @@ export class AdvancedService {
     constructor(private pipe: DecimalPipe, private service: ReportsService) {
       this.service.adminDemandList().subscribe(res => {
         this.demands = res.body;
+        console.log(this.demands);
         this._search$.pipe(
           tap(() => this._loading$.next(true)),
           debounceTime(200),
