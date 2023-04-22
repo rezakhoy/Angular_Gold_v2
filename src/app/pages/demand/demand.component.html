@@ -69,7 +69,7 @@
                         <a ngbTooltip="پرداخت ریالی" (click)="makeCommand(table, commandModal, 'PAY')"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
                       </li>
                       <li class="list-inline-item px-2" *ngIf="table.balance_r<0" >
-                        <a  ngbTooltip="دریافت ریالی "><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>
+                        <a  ngbTooltip="دریافت ریالی " (click)="makeCommand(table, commandModal, 'RECEIVE')"><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>
                       </li>
                     </ul>
                   </td>

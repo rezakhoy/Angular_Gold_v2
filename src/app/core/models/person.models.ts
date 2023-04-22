@@ -13,6 +13,7 @@ export class IPerson {
   cellPhone: string;
   phoneNumber: string;
   address: string;
+  city: string;
   description: string;
   pCode: string;
   gender: Gender;
@@ -26,6 +27,7 @@ export class Person implements IPerson {
     public email = '',
     public cellPhone = '',
     public phoneNumber = '',
+    public city = '',
     public address = '',
     public description = '',
     public pCode = '',

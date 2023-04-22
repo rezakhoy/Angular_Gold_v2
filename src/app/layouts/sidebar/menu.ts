@@ -35,6 +35,13 @@ export const MENU: MenuItem[] = [
 
   },
   {
+    id: 12,
+    label: 'دریافت پرداخت',
+    icon: 'bx bxs-user-detail',
+    link: '/command-list',
+
+  },
+  {
     id: 5,
     label: 'گزارش',
     icon: 'bx bxs-report',

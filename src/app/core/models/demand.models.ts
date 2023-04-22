@@ -3,6 +3,8 @@ export class IDemand {
   name: string;
   balance_v: number;
   balance_r: number;
+  audienceId: number;
+
 }
 
 export class Demand implements IDemand {
@@ -11,6 +13,7 @@ export class Demand implements IDemand {
   public name: string,
   public balance_v = 0,
   public balance_r = 0,
+  public audienceId = 0,
   ) {
   }
 }

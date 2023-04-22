@@ -7,7 +7,6 @@ import { AuthfakeauthenticationService } from '../../../core/services/authfake.s
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { environment } from '../../../../environments/environment';
 import {NgxPermissionsService, NgxRolesService} from "ngx-permissions";
 
 @Component({
@@ -31,7 +30,7 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private roleService: NgxRolesService
+              private roleService: NgxPermissionsService
               ) { }
 
   ngOnInit() {
@@ -62,12 +61,14 @@ export class LoginComponent implements OnInit {
       .subscribe(tokenObj => {
           console.log(tokenObj);
           if (tokenObj.authorization !== null && tokenObj.authorization !== '') {
-            // this.permissionService.addRole(tokenObj.groups)
+            const roles = tokenObj.user.groups.map(function(a) {return a.name;});
+            console.log("roooooooooooooles", roles);
+            this.roleService.addPermission(roles)
 
             localStorage.removeItem('authorization' );
             localStorage.removeItem('refreshToken' );
             localStorage.setItem('authorization', tokenObj.authorization );
-            localStorage.setItem('refreshToken', tokenObj.authorization );
+            localStorage.setItem('refreshToken', tokenObj.refreshToken );
             this.router.navigate(['/']);
           }
         },

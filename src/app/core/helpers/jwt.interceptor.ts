@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
+    constructor(private router: Router, private authService: AuthenticationService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       const token = localStorage.getItem('authorization');
@@ -41,12 +41,16 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(requestChange).pipe(
         map((event: HttpEvent<any>) => event), // pass further respone
         catchError((error: HttpErrorResponse) => {
-          // here will be catched error from response, just check if its 401
+          console.log('----------------------------------------------------', error);
           if (error && error.status === 401) {
             localStorage.removeItem('authorization');
             this.router.navigate(['/account/login']);
             return throwError(error);
           }
+            localStorage.removeItem('authorization');
+            this.router.navigate(['/account/login']);
+            return throwError(error);
+
         }));
     }
 }

@@ -4,31 +4,32 @@ import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {Demand, IAdminDemand, IDemand} from "../../core/models/demand.models";
-import {ReportsService} from "../../core/services/reports.service";
-import {AdvancedSortableDirectiveDemands, SortEvent} from "./advanced-sortable.directive";
-import {ICommand} from "../../core/models/command.models";
+
+import {Command, ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
+
+import {AdvancedSortableDirective} from "../transactions/advanced-sortable.directive";
+import {SortEvent} from "../users/advanced-sortable.directive";
 
 @Component({
   selector: 'app-advancedtable',
-  templateUrl: './demand.component.html',
-  styleUrls: ['./demand.component.scss'],
+  templateUrl: './command.component.html',
+  styleUrls: ['./command.component.scss'],
   providers: [AdvancedService, DecimalPipe]
 })
 
 /**
  * Advanced table component
  */
-export class DemandComponent implements OnInit {
+export class CommandComponent implements OnInit {
 
   public selected: any;
-  tables$: Observable<Demand[]>;
+  tables$: Observable<Command[]>;
   total$: Observable<number>;
   editableTable: any;
-  adminDemands: IAdminDemand;
 
-  @ViewChildren(AdvancedSortableDirectiveDemands) headers: QueryList<AdvancedSortableDirectiveDemands>;
+
+  @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
 
 
   ngbModalOptions: NgbModalOptions = {
@@ -39,7 +40,7 @@ export class DemandComponent implements OnInit {
 
   public isCollapsed = true;
   command: ICommand;
-  selectedDemand: IDemand;
+  selectedDemand: ICommand;
 
 
   commandForm = this.fb.group({
@@ -57,7 +58,7 @@ export class DemandComponent implements OnInit {
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private modalService: NgbModal,
-              private reportService: ReportsService,
+              private reportService: CommandsService,
               private commandService: CommandsService
               ) {
     this.tables$ = service.tables$;
@@ -66,10 +67,7 @@ export class DemandComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.reportService.adminDemand().subscribe(res => {
-        this.adminDemands = res.body;
-      console.log(this.adminDemands);
-    })
+
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })
@@ -123,24 +121,24 @@ export class DemandComponent implements OnInit {
 
   }
 
-  saveCommand() {
-    let command = this.commandForm.value;
-    if (command.type === 'PAY'){
-      this.commandService.createPayCommand(command).subscribe(res => {
-        console.log(res);
-      })
-    }else if (command.type === 'RECEIVE')
-    this.commandService.createReceiveCommand(command).subscribe(res => {
-      console.log(res);
-    })
-  }
+  // saveCommand() {
+  //   let command = this.commandForm.value;
+  //   if (command.type === 'PAY'){
+  //     this.commandService.createPayCommand(command).subscribe(res => {
+  //       console.log(res);
+  //     })
+  //   }else if (command.type === 'RECEIVE')
+  //   this.commandService.createReceiveCommand(command).subscribe(res => {
+  //     console.log(res);
+  //   })
+  // }
 
-  makeCommand(table: Demand, commandModal, pay: string) {
-    this.selectedDemand = table;
-    this.modalService.open(commandModal, this.ngbModalOptions);
-    this.commandForm.patchValue({
-      audienceId: table.audienceId,
-      type: pay
-    })
-  }
+  // makeCommand(table: Command, commandModal, pay: string) {
+  //   this.selectedDemand = table;
+  //   this.modalService.open(commandModal, this.ngbModalOptions);
+  //   this.commandForm.patchValue({
+  //     audienceId: table.audienceId,
+  //     type: pay
+  //   })
+  // }
 }
