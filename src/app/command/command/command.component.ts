@@ -6,11 +6,11 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Command, ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
-import {AdvancedSortableDirective} from "../transactions/advanced-sortable.directive";
-import {SortEvent} from "../users/advanced-sortable.directive";
 import {AudiencesService} from "../../core/services/audiences.service";
 import {IAudiences} from "../../core/models/audiences.models";
 import {ICommandChild} from "../../core/models/command-child.models";
+import {API_URL} from "../../../environments/environment";
+import {AdvancedSortableDirective, SortEvent} from "../../pages/transactions/advanced-sortable.directive";
 
 @Component({
   selector: 'app-advancedtable',
@@ -147,14 +147,17 @@ export class CommandComponent implements OnInit {
   }
 
   getListChildCommand(id: number, modal) {
-    this.commandService.getCommandChild(id).subscribe(res => {
-      this.commandChildren = res.body;
-      console.log(this.commandChildren);
-      this.modalService.open(modal, {
-        backdrop: 'static',
-        keyboard: false,
-        size: 'xl'
-      })
-    })
+    const url = `${API_URL}persons`;
+    window.open(url, '_blank');
   }
+  //   this.commandService.getCommandChild(id).subscribe(res => {
+  //     this.commandChildren = res.body;
+  //     console.log(this.commandChildren);
+  //     this.modalService.open(modal, {
+  //       backdrop: 'static',
+  //       keyboard: false,
+  //       size: 'xl'
+  //     })
+  //   })
+  // }
 }

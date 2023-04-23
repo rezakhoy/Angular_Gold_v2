@@ -17,6 +17,7 @@ import {WebsocketService} from "./core/services/websocket.service";
 import {NgxPermissionsModule} from "ngx-permissions";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule} from "ng2-currency-mask";
+import {CommandModule} from "./command/command.module";
 
 
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -52,6 +53,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     LayoutsModule,
     AppRoutingModule,
     ExtrapagesModule,
+    CommandModule,
     CarouselModule,
     CurrencyMaskModule,
     NgbAccordionModule,
