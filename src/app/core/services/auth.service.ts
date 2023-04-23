@@ -28,7 +28,13 @@ export class AuthenticationService {
     return this.http.get<string[]>(`${API_URL}auth/groups`, {observe: 'response'});
   }
 
+  public getCurrentUserPrice(): any {
+    return this.http.get<any>(`${API_URL}auth/current-user-price`, {observe: 'response'});
+  }
 
+  public getLastPriceList(): any {
+    return this.http.get<any>(`${API_URL}get-last-price-list`, {observe: 'response'});
+  }
   /**
      * Performs the auth
      * @param email email of user

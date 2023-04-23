@@ -8,10 +8,9 @@ import {Command, ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
 import {AdvancedSortableDirective} from "../transactions/advanced-sortable.directive";
 import {SortEvent} from "../users/advanced-sortable.directive";
-import {IPerson} from "../../core/models/person.models";
-import {UserService} from "../../core/services/user.service";
 import {AudiencesService} from "../../core/services/audiences.service";
 import {IAudiences} from "../../core/models/audiences.models";
+import {ICommandChild} from "../../core/models/command-child.models";
 
 @Component({
   selector: 'app-advancedtable',
@@ -36,7 +35,8 @@ export class CommandComponent implements OnInit {
 
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
-    keyboard : false
+    keyboard : false,
+    size: 'xl'
   };
 
 
@@ -45,6 +45,7 @@ export class CommandComponent implements OnInit {
   selectedDemand: ICommand;
   audiences: IAudiences[];
   audiencesLoading = false;
+  commandChildren: ICommandChild[];
 
   commandForm = this.fb.group({
     id: [],
@@ -130,28 +131,12 @@ export class CommandComponent implements OnInit {
 
   }
 
-  // saveCommand() {
-  //   let command = this.commandForm.value;
-  //   if (command.type === 'PAY'){
-  //     this.commandService.createPayCommand(command).subscribe(res => {
-  //       console.log(res);
-  //     })
-  //   }else if (command.type === 'RECEIVE')
-  //   this.commandService.createReceiveCommand(command).subscribe(res => {
-  //     console.log(res);
-  //   })
-  // }
 
-  // makeCommand(table: Command, commandModal, pay: string) {
-  //   this.selectedDemand = table;
-  //   this.modalService.open(commandModal, this.ngbModalOptions);
-  //   this.commandForm.patchValue({
-  //     audienceId: table.audienceId,
-  //     type: pay
-  //   })
-  // }
   saveCommandChild() {
-    console.log(this.commandChildForm.value);
+    let commandChild = this.commandChildForm.value
+    this.commandService.createReceiveCommandChild(commandChild).subscribe(res => {
+      console.log(res);
+    })
   }
 
   makeCommandChild(table, commandChildModal) {
@@ -159,5 +144,17 @@ export class CommandComponent implements OnInit {
       commandId: table.id
     })
     this.modalService.open(commandChildModal, this.ngbModalOptions);
+  }
+
+  getListChildCommand(id: number, modal) {
+    this.commandService.getCommandChild(id).subscribe(res => {
+      this.commandChildren = res.body;
+      console.log(this.commandChildren);
+      this.modalService.open(modal, {
+        backdrop: 'static',
+        keyboard: false,
+        size: 'xl'
+      })
+    })
   }
 }

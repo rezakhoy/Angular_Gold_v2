@@ -10,6 +10,7 @@ export class IPayInformation {
   amount: number;
   receiptNumber: string;
   status: Status;
-  image: string
+  image: string;
+  commandChildId: number
 }
 

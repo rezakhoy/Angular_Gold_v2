@@ -5,4 +5,5 @@ export interface IPrices {
   sell?: number;
   buy?: number;
   time?: string;
+  base?: number;
 }

@@ -27,10 +27,10 @@ export class IAdminBalance {
   month_sum_9x: number;
   month_avg_maz_8x: number;
   month_avg_maz_9x: number;
-  year_sum_8x: number;
-  year_sum_9x: number;
-  year_avg_maz_8x: number;
-  year_avg_maz_9x: number;
+  total_sum_8x: number;
+  total_sum_9x: number;
+  total_avg_maz_8x: number;
+  total_avg_maz_9x: number;
 }
 
 export class AdminBalance implements IAdminBalance {
@@ -47,10 +47,10 @@ export class AdminBalance implements IAdminBalance {
     public month_sum_9x = 0,
     public month_avg_maz_8x = 0,
     public month_avg_maz_9x = 0,
-    public year_sum_8x = 0,
-    public year_sum_9x = 0,
-    public year_avg_maz_8x = 0,
-    public year_avg_maz_9x = 0,
+    public total_sum_8x = 0,
+    public total_sum_9x = 0,
+    public total_avg_maz_8x = 0,
+    public total_avg_maz_9x = 0,
   ) {
 
   }

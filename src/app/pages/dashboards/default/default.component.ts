@@ -1,9 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {emailSentBarChart, monthlyEarningChart} from './data';
-import {ChartType} from './dashboard.model';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import {EventService} from '../../../core/services/event.service';
-
 import {ConfigService} from '../../../core/services/config.service';
 import {WebsocketService} from 'src/app/core/services/websocket.service';
 import {FormBuilder, Validators} from "@angular/forms";
@@ -13,7 +10,6 @@ import {AuthenticationService} from "../../../core/services/auth.service";
 import {ReportsService} from "../../../core/services/reports.service";
 import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 import {IOrder} from "../../../core/models/order.models";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-default',
@@ -76,6 +72,7 @@ export class DefaultComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ws.connect();
     this.reportService.adminBalance().subscribe(res => {
       this.adminBalance = res.body;
     });
@@ -103,12 +100,20 @@ export class DefaultComponent implements OnInit {
       price: 9500000
     }
     this.setPrice = setPrice;
-    this.ws.connect();
 
 
+    this.auth.getLastPriceList().subscribe(res => {
+      console.log(res.body);
+      this.mas = res.body;
+      console.log(this.mas);
+      this.setPriceForm.patchValue({
+        price: this.mas[0].base,
+      });
+    })
   }
 
   ngAfterViewInit() {
+
   }
 
   changeLayout(layout: string) {
@@ -175,6 +180,7 @@ export class DefaultComponent implements OnInit {
   }
 
   saveGoldOrder() {
+    console.log(this.orderForm.value);
     const order = JSON.stringify({
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,

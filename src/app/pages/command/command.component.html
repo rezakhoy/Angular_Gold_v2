@@ -46,7 +46,8 @@
                   <th sortable="amount" (sort)="onSort($event)">  قابل پرداخت</th>
                   <th sortable="accountOwnerName" (sort)="onSort($event)"> پرداخت شده به </th>
                   <th sortable="bankName" (sort)="onSort($event)">   بانک </th>
-                  <th sortable="balance" (sort)="onSort($event)">   مانده از پرداخت </th>
+                  <th sortable="balance" (sort)="onSort($event)">     خرج نشده  </th>
+                  <th sortable="balance" (sort)="onSort($event)">    پرداخت تایید شده  </th>
 
                 </tr>
               </thead>
@@ -68,11 +69,14 @@
                   <td>
                     <ngb-highlight [result]="table.balance| number " [term]="service.searchTerm"></ngb-highlight>
                   </td>
+                  <td>
+                    <ngb-highlight [result]="table.cleared| number " [term]="service.searchTerm"></ngb-highlight>
+                  </td>
 
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>
+                        <a  (click)="getListChildCommand(table.id, commandChildInformation)" ngbTooltip="لیست پرداخت ها "><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>
                       </li>
                       <li class="list-inline-item px-2" >
                         <a ngbTooltip="خرد کردن" (click)="makeCommandChild(table, commandChildModal)"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
@@ -82,8 +86,6 @@
 <!--                      </li>-->
                     </ul>
                   </td>
-
-
                 </tr>
               </tbody>
             </table>
@@ -122,19 +124,18 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandForm">
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
     <div class="modal-body">
 
       <div class="row">
         <div class="col-md-6">
           <label  class="form-label">طرف حساب: </label>
-          <ng-select [items]="audiences"
+          <ng-select
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
-                     bindLabel="name"
-                     formControlName="id"
-                     bindValue="id"
-                     [loading]="audiences">
+                     formControlName="audienceId"
+                     >
+            <ng-option *ngFor="let aud of audiences "  [value]="aud.id">{{aud.name}} {{aud.balanceR | number}}</ng-option>
           </ng-select>
         </div>
         <div class="col-md-6">
@@ -151,6 +152,27 @@
               class="btn btn-success btn-sm"
               (click)="modal.close()">ثبت درخواست
       </button>
+
+    </div>
+  </form>
+</ng-template>
+<ng-template #commandChildInformation let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
+    <div class="modal-body">
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="modal.close()">بستن
+      </button>
+
 
     </div>
   </form>

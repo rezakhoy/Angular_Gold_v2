@@ -122,16 +122,16 @@
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.year_sum_8x |  number : '.2-2'}} </h5>
-                        <h5 class="text-danger">{{adminBalance.year_sum_9x | number : '.2-2'}} </h5>
-                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.year_sum_8x - adminBalance.year_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.year_sum_8x - adminBalance.year_sum_9x) | number : '.2-2' }} </p>
+                        <h5 class="text-success">{{adminBalance.total_sum_8x |  number : '.2-2'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.total_sum_9x | number : '.2-2'}} </h5>
+                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.total_sum_8x - adminBalance.total_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_sum_8x - adminBalance.total_sum_9x) | number : '.2-2' }} </p>
                       </div>
                     </div>
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.year_avg_maz_8x | number : '.0-0'}} </h5>
-                        <h5 class="text-danger">{{adminBalance.year_avg_maz_9x | number : '.0-0'}}</h5>
-                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.year_avg_maz_8x - adminBalance.year_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.year_avg_maz_8x - adminBalance.year_avg_maz_9x) | number : '.0-0' }} </p>
+                        <h5 class="text-success">{{adminBalance.total_avg_maz_8x | number : '.0-0'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.total_avg_maz_9x | number : '.0-0'}}</h5>
+                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>

@@ -19,6 +19,7 @@ export class ICommand {
   pCode: string;
   amount: number;
   balance: number;
+  cleared: number;
   type: Type;
   status: Status;
   accountNumber: string;
@@ -34,6 +35,7 @@ export class Command implements ICommand {
   public person: IPerson,
   public pCode: string,
   public amount: number,
+  public cleared: number,
   public balance: number,
   public type: Type,
   public status: Status,
