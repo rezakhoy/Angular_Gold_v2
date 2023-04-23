@@ -1,47 +1,37 @@
-import {Component, OnInit, ViewChildren, QueryList, TemplateRef} from '@angular/core';
+import {Component, OnInit, ViewChildren, QueryList, TemplateRef, ViewChild} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import { AdvancedService } from './advanced.service';
+// import { AdvancedService } from './advanced.service';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Demand, IAdminDemand, IDemand} from "../../core/models/demand.models";
 import {ReportsService} from "../../core/services/reports.service";
-import {AdvancedSortableDirectiveDemands, SortEvent} from "./advanced-sortable.directive";
 import {ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
+import {ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-advancedtable',
   templateUrl: './demand.component.html',
   styleUrls: ['./demand.component.scss'],
-  providers: [AdvancedService, DecimalPipe]
 })
 
-/**
- * Advanced table component
- */
 export class DemandComponent implements OnInit {
-
-  public selected: any;
-  tables$: Observable<Demand[]>;
-  total$: Observable<number>;
-  editableTable: any;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
+  columns = [{ prop: 'name' }, { name: 'balance_v' }, { prop: 'balance_r' }, ];
+  SelectionType = SelectionType;
+  ColumnMode = ColumnMode;
   adminDemands: IAdminDemand;
 
-  @ViewChildren(AdvancedSortableDirectiveDemands) headers: QueryList<AdvancedSortableDirectiveDemands>;
-
-
+  selected = [];
+  temp = [];
+  demands: IDemand[];
+  selectedDemand: IDemand;
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false
   };
-
-
-  public isCollapsed = true;
   command: ICommand;
-  selectedDemand: IDemand;
-
-
   commandForm = this.fb.group({
     id: [],
     audienceId:[],
@@ -54,74 +44,43 @@ export class DemandComponent implements OnInit {
   });
 
 
-  constructor(public service: AdvancedService,
+  constructor(
               private fb: FormBuilder,
               private modalService: NgbModal,
               private reportService: ReportsService,
               private commandService: CommandsService
               ) {
-    this.tables$ = service.tables$;
-    this.total$ = service.total$;
-    this.service.pageSize = 1000
+
   }
 
   ngOnInit() {
+    this.reportService.adminDemandList().subscribe(res => {
+      this.demands = res.body;
+      console.log(this.demands);
+    })
     this.reportService.adminDemand().subscribe(res => {
         this.adminDemands = res.body;
-      console.log(this.adminDemands);
     })
-    this.service.tables$.subscribe(res => {
-      this._fetchData();
-    })
-    this.commandService.getAllCommand().subscribe(res => {
-      console.log(res);
-    })
-    // this.loadPersons()
-  }
-  // private loadPersons() {
-  //   this.personsLoading = true;
-  //   this.userService.getAllPersons().subscribe(res => {
-  //     this.persons = res.body;
-  //     this.personsLoading = false;
-  //   })
-  // }
-
-  /**
-   * fetches the table value
-   */
-  _fetchData() {
-    // this.tableData = tableData;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
-
-
-    // this.editableTable = editableTable;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
   }
 
-  /**
-   * Sort table data
-   * @param param0 sort the column
-   *
-   */
-  onSort({ column, direction }: SortEvent) {
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
+  onSelect({ selected }) {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    const temp = this.temp.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
+    // update the rows
+    this.demands = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
   }
 
-  createUserFunc(cgf) {
-    this.modalService.open(cgf, this.ngbModalOptions);
-      // document.getElementById('amount').focus();
 
-  }
 
   saveCommand() {
     let command = this.commandForm.value;

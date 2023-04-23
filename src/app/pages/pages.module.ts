@@ -35,6 +35,7 @@ import {BankComponent} from "./bank/bank.component";
 import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 import {CurrencyMaskModule} from "ng2-currency-mask";
 import {CommandComponent} from "./command/command.component";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 // import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 
 
@@ -82,6 +83,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgSelectModule,
     NgbDatepickerModule,
     CurrencyMaskModule,
+    NgxDatatableModule,
   ],
   providers: [
     DatePipe,
