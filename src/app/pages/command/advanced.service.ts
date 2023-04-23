@@ -2,7 +2,6 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import {BehaviorSubject, observable, Observable, of, Subject} from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-
 import {ICommand, Command, CommandSearchResult} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
 import {SortDirection} from "../users/advanced-sortable.directive";
@@ -45,9 +44,9 @@ function sort(tables: ICommand[], column: string, direction: string): Command[] 
  * @param term Search the value
  * @param pipe
  */
-function matches(tables: Command, term: string, pipe: PipeTransform) {
-    return tables.accountOwnerName.toLowerCase().includes(term)
-        || tables.audienceName.toLowerCase().includes(term)
+function matches(tables: ICommand, term: string, pipe: PipeTransform) {
+    return tables.accountOwnerName?.toLowerCase().includes(term)
+        || tables.audienceName?.toLowerCase().includes(term)
 }
 
 @Injectable({

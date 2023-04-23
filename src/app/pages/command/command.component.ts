@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-
 import {Command, ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
-
 import {AdvancedSortableDirective} from "../transactions/advanced-sortable.directive";
 import {SortEvent} from "../users/advanced-sortable.directive";
+import {IPerson} from "../../core/models/person.models";
+import {UserService} from "../../core/services/user.service";
+import {AudiencesService} from "../../core/services/audiences.service";
+import {IAudiences} from "../../core/models/audiences.models";
 
 @Component({
   selector: 'app-advancedtable',
@@ -41,7 +43,8 @@ export class CommandComponent implements OnInit {
   public isCollapsed = true;
   command: ICommand;
   selectedDemand: ICommand;
-
+  audiences: IAudiences[];
+  audiencesLoading = false;
 
   commandForm = this.fb.group({
     id: [],
@@ -53,13 +56,18 @@ export class CommandComponent implements OnInit {
     bankName: [null, Validators.required],
     accountOwnerName: [null, Validators.required]
   });
-
+  commandChildForm = this.fb.group({
+    audienceId:[],
+    amount: [null, [Validators.min(10000)]],
+    commandId: [null, Validators.required],
+  });
 
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private modalService: NgbModal,
               private reportService: CommandsService,
-              private commandService: CommandsService
+              private commandService: CommandsService,
+              private audiencesService: AudiencesService
               ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
@@ -74,15 +82,16 @@ export class CommandComponent implements OnInit {
     this.commandService.getAllCommand().subscribe(res => {
       console.log(res);
     })
-    // this.loadPersons()
+    this.loadPersons()
   }
-  // private loadPersons() {
-  //   this.personsLoading = true;
-  //   this.userService.getAllPersons().subscribe(res => {
-  //     this.persons = res.body;
-  //     this.personsLoading = false;
-  //   })
-  // }
+
+  private loadPersons() {
+    this.audiencesLoading = true;
+    this.audiencesService.getAllAudiences().subscribe(res => {
+      this.audiences = res.body;
+      this.audiencesLoading = false;
+    })
+  }
 
   /**
    * fetches the table value
@@ -141,4 +150,14 @@ export class CommandComponent implements OnInit {
   //     type: pay
   //   })
   // }
+  saveCommandChild() {
+    console.log(this.commandChildForm.value);
+  }
+
+  makeCommandChild(table, commandChildModal) {
+    this.commandChildForm.patchValue({
+      commandId: table.id
+    })
+    this.modalService.open(commandChildModal, this.ngbModalOptions);
+  }
 }

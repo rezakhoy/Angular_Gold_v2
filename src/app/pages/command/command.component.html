@@ -60,10 +60,10 @@
                     <ngb-highlight [result]="table.amount| number " [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.accountOwnerName.toString() " [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.accountOwnerName?.toString() " [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.bankName.toString() " [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.bankName?.toString() " [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
                     <ngb-highlight [result]="table.balance| number " [term]="service.searchTerm"></ngb-highlight>
@@ -74,9 +74,9 @@
                       <li class="list-inline-item px-2">
                         <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>
                       </li>
-<!--                      <li class="list-inline-item px-2"  *ngIf="table.balance_r>0">-->
-<!--                        <a ngbTooltip="پرداخت ریالی" (click)="makeCommand(table, commandModal, 'PAY')"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>-->
-<!--                      </li>-->
+                      <li class="list-inline-item px-2" >
+                        <a ngbTooltip="خرد کردن" (click)="makeCommandChild(table, commandChildModal)"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
+                      </li>
 <!--                      <li class="list-inline-item px-2" *ngIf="table.balance_r<0" >-->
 <!--                        <a  ngbTooltip="دریافت ریالی " (click)="makeCommand(table, commandModal, 'RECEIVE')"><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>-->
 <!--                      </li>-->
@@ -115,45 +115,43 @@
 <!--**********************************
                 modal
 ***********************************-->
-<!--<ng-template #commandModal let-modal>-->
-<!--  <div class="modal-header">-->
+<ng-template #commandChildModal let-modal>
+  <div class="modal-header">
 
-<!--    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
-<!--      <span aria-hidden="true">&times;</span>-->
-<!--    </button>-->
-<!--  </div>-->
-<!--  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommand()" [formGroup]="commandForm">-->
-<!--    <div class="modal-body">-->
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandForm">
+    <div class="modal-body">
 
-<!--      <div class="row">-->
-<!--        <div class="col-md-6">-->
-<!--          <label for="amount" class="form-label">مبلغ درخواست: </label>-->
-<!--          <input type="text" formControlName="amount" currencyMask ngbAutofocus  class="form-control" id="amount">-->
-<!--        </div>-->
+      <div class="row">
+        <div class="col-md-6">
+          <label  class="form-label">طرف حساب: </label>
+          <ng-select [items]="audiences"
+                     autofocus="true"
+                     notFoundText = "مشتری با این نام وجود ندارد!"
+                     bindLabel="name"
+                     formControlName="id"
+                     bindValue="id"
+                     [loading]="audiences">
+          </ng-select>
+        </div>
+        <div class="col-md-6">
+          <label for="amount" class="form-label">مبلغ درخواست: </label>
+          <input type="text" formControlName="amount" currencyMask   class="form-control" id="amount">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="modal.close()">انصراف
+      </button>
+      <button type="submit"
+              class="btn btn-success btn-sm"
+              (click)="modal.close()">ثبت درخواست
+      </button>
 
-<!--      <div class="col-md-6">-->
-<!--        <label for="accountNumber" class="form-label">شماره حساب: </label>-->
-<!--        <input type="text" formControlName="accountNumber" class="form-control" id="accountNumber">-->
-<!--      </div>-->
-<!--      <div class="col-md-6">-->
-<!--        <label for="bankName" class="form-label">بانک: </label>-->
-<!--        <input type="text" formControlName="bankName" class="form-control" id="bankName">-->
-<!--      </div>-->
-<!--      <div class="col-md-6">-->
-<!--        <label for="accountOwnerName" class="form-label">صاحب حساب: </label>-->
-<!--        <input type="text" formControlName="accountOwnerName" class="form-control" id="accountOwnerName">-->
-<!--      </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="modal-footer">-->
-<!--      <button type="button" class="btn btn-danger btn-sm"-->
-<!--              (click)="modal.close()">انصراف-->
-<!--      </button>-->
-<!--      <button type="submit"-->
-<!--              class="btn btn-success btn-sm"-->
-<!--              (click)="modal.close()">ثبت درخواست-->
-<!--      </button>-->
-
-<!--    </div>-->
-<!--  </form>-->
-<!--</ng-template>-->
+    </div>
+  </form>
+</ng-template>
