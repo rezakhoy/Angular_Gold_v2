@@ -34,7 +34,8 @@ import {DemandComponent} from "./demand/demand.component";
 import {BankComponent} from "./bank/bank.component";
 import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 import {CurrencyMaskModule} from "ng2-currency-mask";
-
+import {CommandComponent} from "./command/command.component";
+// import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -51,6 +52,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     BankComponent,
     AdvancedSortableDirective,
     UsersComponent,
+    CommandComponent,
     AdvancedSortableDirectiveUsers,
     AdvancedSortableDirectiveDemands
     // AdvancedSortableDirectiveDemands

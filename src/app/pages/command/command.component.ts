@@ -10,7 +10,7 @@ import {AudiencesService} from "../../core/services/audiences.service";
 import {IAudiences} from "../../core/models/audiences.models";
 import {ICommandChild} from "../../core/models/command-child.models";
 import {API_URL} from "../../../environments/environment";
-import {AdvancedSortableDirective, SortEvent} from "../../pages/transactions/advanced-sortable.directive";
+import {AdvancedSortableDirective, SortEvent} from "../transactions/advanced-sortable.directive";
 
 @Component({
   selector: 'app-advancedtable',

@@ -4,7 +4,7 @@ import {BehaviorSubject, observable, Observable, of, Subject} from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import {ICommand, Command, CommandSearchResult} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
-import {SortDirection} from "../../pages/users/advanced-sortable.directive";
+import {SortDirection} from "../users/advanced-sortable.directive";
 
 
 
