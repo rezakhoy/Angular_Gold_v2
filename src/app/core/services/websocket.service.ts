@@ -64,6 +64,7 @@ export class WebsocketService {
     }
 
     function manageOrder(body) {
+      console.log(body);
       if (orders.length === 0) {
         orders.push(body);
       } else {

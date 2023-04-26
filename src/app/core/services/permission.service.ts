@@ -20,8 +20,8 @@ export class PermissionService {
 
   }
 
- seRole(role){
-   this.roleStore.defineRoles(role, function () {
+ seRole(roles){
+   this.roleStore.defineRoles(roles, function () {
      return true;
    });
  }

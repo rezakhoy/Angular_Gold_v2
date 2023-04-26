@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import {PermissionService} from "../../core/services/permission.service";
 
 @Component({
   selector: 'app-topbar',
@@ -25,11 +26,19 @@ export class TopbarComponent implements OnInit {
   countryName;
   valueset;
 
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
-              private authFackservice: AuthfakeauthenticationService,
+  constructor(@Inject(DOCUMENT) private document: any,
+              private router: Router,
+              private authService: AuthenticationService,
+              private permissionService: PermissionService,
               public languageService: LanguageService,
               public translate: TranslateService,
               public _cookiesService: CookieService) {
+    authService.getUser().subscribe(res => {
+      console.log("usssssssssssssssssser", res.body);
+      const roles = res.body.groups.map(function(a) {return a.name;});
+      console.log("roooooooooooooles", roles);
+      this.permissionService.seRole(roles)
+    });
   }
 
   listLang = [

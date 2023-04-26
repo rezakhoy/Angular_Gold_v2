@@ -35,8 +35,8 @@
               </div>
             </div>
           </div>
-          <div class="row"  *permissionIf="'user'">
-            <div class="col-sm-3">
+          <div class="row text-center "  *permissionIf="'admin'">
+            <div class="col-sm-3 text-center">
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i
@@ -117,7 +117,7 @@
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i
-                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> سالانه </p>
+                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> کل </p>
 
                   <div class="row">
                     <div class="col-6">
@@ -142,13 +142,11 @@
           </div>
         </div>
     </div>
-  <div class="row" >
-    <div class="col-12">
+  <div class="row" *permissionIf="'admin'">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body" >
-          <div class="row">
-            <div class="col-md-6">
-              <div class="">
+              <div class="row">
                 <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
                   <div class="table-responsive table-hover fs-14 ">
                     <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
@@ -161,10 +159,26 @@
                   </div>
                 </form>
               </div>
-
+          <div class="row">
+            <div class="align-content-center">
+              <table class=" table-responsive" >
+                <tr *ngFor="let m of mas " class="pb-4 ">
+                  <td class="col-sm-4 col-md-4">
+                    <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
+                  <td  class="col-sm-4 col-4">{{m.priceGroupName}}</td>
+                  <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
+                </tr>
+              </table>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
             <div class="col-md-6">
+              <div class="card">
+                <div class="card-body text-center" >
               <div class="align-content-center">
                 <table class=" table-responsive" >
                   <tr *ngFor="let m of mas " class="pb-4 ">
@@ -175,7 +189,6 @@
                   </tr>
                 </table>
               </div>
-            </div>
           </div>
           <div class="row" *ngIf="orders"  >
             <div class="table-responsive table-hover fs-14  " *ngIf="orders?.length > 0">
@@ -219,7 +232,7 @@
       </div>
     </div>
   </div>
-</div> <!-- container-fluid -->
+
 
 
 <!--**********************************
@@ -233,7 +246,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="saveGoldOrder()" [formGroup]="orderForm">
+  <form name="editForm" role="form" novalidate  [formGroup]="orderForm">
     <div class="modal-body">
 
       <div class="row">
@@ -262,8 +275,10 @@
               (click)="modal.close()">انصراف
       </button>
       <button type="submit"
+              (click)="saveGoldOrder()"
              class="btn btn-success btn-sm"
-              (click)="modal.close()">ثبت درخواست
+              (click)="modal.close()"
+      >ثبت درخواست
       </button>
 
     </div>

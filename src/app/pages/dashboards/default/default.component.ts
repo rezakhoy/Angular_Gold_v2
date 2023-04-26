@@ -66,10 +66,6 @@ export class DefaultComponent implements OnInit {
               private ws: WebsocketService,
               private auth: AuthenticationService,
               private eventService: EventService) {
-    auth.getUser().subscribe(user => {
-      console.log(user.body);
-    });
-
   }
 
   ngOnInit() {
