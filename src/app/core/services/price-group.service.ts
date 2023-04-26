@@ -18,7 +18,7 @@ export class PriceGroupService {
   }
    createGroup(body): any {
     console.log('gggg', body);
-     return this.http.post(`${API_URL}auth/create-user`, body);
+     return this.http.post(`${API_URL}price-groups`, body);
     // return this.http.post(`${API_URL}create-price-group`, {  observe: 'response' , body});
   }
 

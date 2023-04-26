@@ -133,8 +133,8 @@ export class UsersComponent implements OnInit {
   }
 
   createUserFunc(cgf) {
+
     this.modalService.open(cgf, this.ngbModalOptions);
-    document.getElementById('name').focus();
   }
 
   saveUser() {
@@ -149,7 +149,9 @@ export class UsersComponent implements OnInit {
     body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
     console.log(body);
     this.userService.register(body).subscribe(res => {
-      console.log(res);
+      this.userService.getAll().subscribe(res => {
+        this.tables$ = this.service.tables$;
+      })
     })
   }
 

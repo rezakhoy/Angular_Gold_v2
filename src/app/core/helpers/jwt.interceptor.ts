@@ -47,10 +47,15 @@ export class JwtInterceptor implements HttpInterceptor {
             this.router.navigate(['/account/login']);
             return throwError(error);
           }
+          if (error && error.status === 403) {
             localStorage.removeItem('authorization');
             this.router.navigate(['/account/login']);
             return throwError(error);
-
+          }
+          if (error && error.status === 404) {
+            this.router.navigate(['/404']);
+            return throwError(error);
+          }
         }));
     }
 }

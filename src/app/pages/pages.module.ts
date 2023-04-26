@@ -36,6 +36,7 @@ import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.direc
 import {CurrencyMaskModule} from "ng2-currency-mask";
 import {CommandComponent} from "./command/command.component";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {NgxPermissionsModule} from "ngx-permissions";
 // import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 
 
@@ -84,6 +85,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgbDatepickerModule,
     CurrencyMaskModule,
     NgxDatatableModule,
+    NgxPermissionsModule.forChild({
+      permissionsIsolate: true,
+      rolesIsolate: true}),
   ],
   providers: [
     DatePipe,

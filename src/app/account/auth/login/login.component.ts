@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-
 import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
-
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import {PermissionService} from "../../../core/services/permission.service";
 
-import {NgxPermissionsService, NgxRolesService} from "ngx-permissions";
 
 @Component({
   selector: 'app-login',
@@ -30,7 +26,7 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private roleService: NgxPermissionsService
+              private roleService: PermissionService
               ) { }
 
   ngOnInit() {
@@ -63,8 +59,7 @@ export class LoginComponent implements OnInit {
           if (tokenObj.authorization !== null && tokenObj.authorization !== '') {
             const roles = tokenObj.user.groups.map(function(a) {return a.name;});
             console.log("roooooooooooooles", roles);
-            this.roleService.addPermission(roles)
-
+            this.roleService.seRole(roles)
             localStorage.removeItem('authorization' );
             localStorage.removeItem('refreshToken' );
             localStorage.setItem('authorization', tokenObj.authorization );

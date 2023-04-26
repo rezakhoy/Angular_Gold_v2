@@ -14,6 +14,7 @@ import { DefaultComponent } from './default/default.component';
 import {NgxNumberSpinnerModule} from "ngx-number-spinner";
 import {NgxPermissionsRestrictStubModule} from "ngx-permissions";
 import {CurrencyMaskModule} from "ng2-currency-mask";
+import {PermissionModule} from "ng2-permission";
 
 @NgModule({
   declarations: [DefaultComponent],
@@ -31,7 +32,8 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
         SimplebarAngularModule,
         NgxNumberSpinnerModule,
         NgxPermissionsRestrictStubModule,
-        CurrencyMaskModule
+        CurrencyMaskModule,
+        PermissionModule
     ]
 })
 export class DashboardsModule { }

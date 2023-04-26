@@ -13,7 +13,7 @@ export class AppComponent implements OnInit  {
   }
 
   ngOnInit() {
-    this.permService.loadPermissions([permission])
+    // this.permService.loadPermissions([permission])
     // document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
   }
 }

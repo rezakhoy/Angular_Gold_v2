@@ -14,9 +14,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
 import {WebsocketService} from "./core/services/websocket.service";
-import {NgxPermissionsModule} from "ngx-permissions";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule} from "ng2-currency-mask";
+import {PermissionModule} from "ng2-permission";
 
 
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -59,8 +59,8 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     NgxNumberSpinnerModule,
     NgbNavModule,
     NgbTooltipModule,
+    PermissionModule,
     ScrollToModule.forRoot(),
-    NgxPermissionsModule.forRoot(),
     NgbModule
   ],
   bootstrap: [AppComponent],
