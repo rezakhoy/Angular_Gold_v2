@@ -12,7 +12,7 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { DefaultComponent } from './default/default.component';
 import {NgxNumberSpinnerModule} from "ngx-number-spinner";
-import {NgxPermissionsRestrictStubModule} from "ngx-permissions";
+
 import {CurrencyMaskModule} from "ng2-currency-mask";
 import {PermissionModule} from "ng2-permission";
 
@@ -31,7 +31,6 @@ import {PermissionModule} from "ng2-permission";
         NgApexchartsModule,
         SimplebarAngularModule,
         NgxNumberSpinnerModule,
-        NgxPermissionsRestrictStubModule,
         CurrencyMaskModule,
         PermissionModule
     ]

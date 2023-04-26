@@ -10,7 +10,7 @@ import {AuthenticationService} from "../../../core/services/auth.service";
 import {ReportsService} from "../../../core/services/reports.service";
 import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 import {IOrder} from "../../../core/models/order.models";
-import {NgxPermissionsService} from "ngx-permissions";
+
 
 @Component({
   selector: 'app-default',
@@ -64,7 +64,6 @@ export class DefaultComponent implements OnInit {
               private configService: ConfigService,
               private reportService: ReportsService,
               private ws: WebsocketService,
-              private roleService: NgxPermissionsService,
               private auth: AuthenticationService,
               private eventService: EventService) {
     auth.getUser().subscribe(user => {
@@ -74,9 +73,7 @@ export class DefaultComponent implements OnInit {
   }
 
   ngOnInit() {
-    const perm = ["ADMIN", "EDITOR"];
-    this.roleService.loadPermissions(perm);
-    console.log('rooooooooooooole', this.roleService.getPermissions());
+
     this.ws.connect();
     this.reportService.adminBalance().subscribe(res => {
       this.adminBalance = res.body;

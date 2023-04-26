@@ -1,5 +1,5 @@
 import { Component , OnInit} from '@angular/core';
-import {NgxPermissionsService} from "ngx-permissions";
+
 import {permission} from "../environments/environment";
 
 @Component({
@@ -9,7 +9,7 @@ import {permission} from "../environments/environment";
 })
 export class AppComponent implements OnInit  {
 
-  constructor(private permService: NgxPermissionsService) {
+  constructor() {
   }
 
   ngOnInit() {
