@@ -94,11 +94,13 @@ export class DemandComponent implements OnInit {
     })
   }
 
-  makeCommand(table: Demand, commandModal, pay: string) {
-    this.selectedDemand = table;
+  makeCommand(index, commandModal, pay: string) {
+    console.log(index);
+    this.selectedDemand = this.demands[index];
+    console.log(this.selectedDemand);
     this.modalService.open(commandModal, this.ngbModalOptions);
     this.commandForm.patchValue({
-      audienceId: table.audienceId,
+      audienceId: this.selectedDemand.audienceId,
       type: pay
     })
   }

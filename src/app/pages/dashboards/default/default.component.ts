@@ -10,6 +10,7 @@ import {AuthenticationService} from "../../../core/services/auth.service";
 import {ReportsService} from "../../../core/services/reports.service";
 import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 import {IOrder} from "../../../core/models/order.models";
+import {OrderService} from "../../../core/services/order.service";
 
 
 @Component({
@@ -29,7 +30,7 @@ export class DefaultComponent implements OnInit {
   isActive: string;
   rejectComment: '';
   mas: IPrices[];
-  orders:  IOrder[];
+  orders:  IOrder[]= [];
   rejectedOrder : IOrder;
   selectedPrice: IPrices;
   myBalance = new MyBalance();
@@ -64,6 +65,7 @@ export class DefaultComponent implements OnInit {
               private configService: ConfigService,
               private reportService: ReportsService,
               private ws: WebsocketService,
+              private orderService: OrderService,
               private auth: AuthenticationService,
               private eventService: EventService) {
   }
@@ -85,7 +87,8 @@ export class DefaultComponent implements OnInit {
 
     this.ws.orders.subscribe(ord => {
       console.log('ooooooooooooooooooooooooooo',ord);
-      this.orders = ord;
+      // this.orders = ord;
+      this.manageOrders(ord)
     });
     this.setPriceForm.patchValue({
       ab: false,
@@ -108,8 +111,32 @@ export class DefaultComponent implements OnInit {
         price: this.mas[0].base,
       });
     })
-  }
 
+    this.orderService.getOrderToday().subscribe(res => {
+      this.manageOrders(res.body)
+    })
+  }
+  manageOrders(ords) {
+    var self = this;
+      ords.forEach(function (ord) {
+
+          if (self.orders.length === 0) {
+            self.orders.push(ord);
+          } else {
+            const mainObjectIndex = self.orders.findIndex((mainObject) => mainObject.id === ord.id);
+            if (mainObjectIndex !== -1 ) {
+              self.orders[mainObjectIndex] = ord;
+            } else {
+              self.orders.push(ord);
+              if (self.orders.length>5){
+                self.orders.shift()
+              }
+            }
+          }
+      })
+
+
+  }
   ngAfterViewInit() {
 
   }

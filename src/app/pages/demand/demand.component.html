@@ -38,6 +38,19 @@
         <span class="mobile-hidden ">{{ value |number }}</span>
       </ng-template>
     </ngx-datatable-column>
+    <ngx-datatable-column name="Actions" prop='balance_r'>
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                   let-row="row">
+        <button type="button" *ngIf="value>0"class="btn btn-sm btn-danger"
+                (click)="makeCommand(rowIndex, commandModal, 'PAY')"> <i class="bx bxs-minus-square font-size-16 align-middle me-2"></i> پرداخت</button>
+        <button type="button" *ngIf="value<0"class="btn  btn-sm btn-success"
+                (click)="makeCommand(rowIndex, commandModal, 'RECEIVE')"><i class="bx bxs-plus-square  font-size-16 align-middle me-2"></i> دریافت </button>
+<!--        <button type="button" class="btn btn-outline-danger"-->
+<!--                (click)='delete(value)'>Danger</button>-->
+
+
+      </ng-template>
+    </ngx-datatable-column>
 
   </ngx-datatable>
           </div>
@@ -187,6 +200,7 @@
               (click)="modal.close()">انصراف
       </button>
       <button type="submit"
+              (click)="saveCommand()"
               class="btn btn-success btn-sm"
               (click)="modal.close()">ثبت درخواست
       </button>

@@ -190,47 +190,52 @@
                 </table>
               </div>
           </div>
-          <div class="row" *ngIf="orders"  >
-            <div class="table-responsive table-hover fs-14  " *ngIf="orders?.length > 0">
-              <table class="table display mb-4 dataTablesCard dataTable border-no font-w600  card-table text-black">
 
-                <tr class="align-middle">
-                  <td> نوع درخواست</td>
-                  <td></td>
-                  <td>مقدار</td>
-                  <td>نرخ </td>
-                  <td>وضعیت</td>
-                  <td>توضیحات</td>
-                  <td >عملیات</td>
-                </tr>
-                <tr *ngFor="let order of orders; let i = index">
-<!--                  <td  *permissionIf="'admin'"> {{order.user.name}}</td>-->
-                  <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
-                  <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
-
-                  <td>{{order.amount | number : '1.0-3'}}</td>
-                  <td>{{order.price | number}}</td>
-                  <td >
-                    <span *ngIf="order.status === 'REQUEST'" class="badge bg-info " > در انتظار </span>
-                    <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-10 bg-danger">تایید نشده</span>
-                    <span *ngIf="order.status === 'REJECT'" class="badge font-size-10 bg-warning">بدون پاسخ </span>
-                    <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-10 bg-success">تایید شده</span>
-                  </td>
-                  <td>{{order.description}}</td>
-                  <td >
-                    <div class="btn-group btn-group-sm" role="group">
-                      <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'" (click)="confirmOrder(order)">تایید</button>
-                      <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
-                    </div>
-
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
         </div>
       </div>
     </div>
+  <div class="row" *ngIf="orders"  >
+    <div class="card">
+      <div class="card-body">
+    <div class="table-responsive table-hover fs-14  " *ngIf="orders?.length > 0">
+      <table class="table display mb-4 dataTablesCard dataTable border-no font-w600  card-table text-black">
+
+        <tr class="align-middle">
+          <td> نوع درخواست</td>
+          <td></td>
+          <td>مقدار</td>
+          <td>نرخ </td>
+          <td>وضعیت</td>
+          <td>توضیحات</td>
+          <td >عملیات</td>
+        </tr>
+        <tr *ngFor="let order of orders; let i = index">
+          <!--                  <td  *permissionIf="'admin'"> {{order.user.name}}</td>-->
+          <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
+          <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
+
+          <td>{{order.amount | number : '1.0-3'}}</td>
+          <td>{{order.price | number}}</td>
+          <td >
+            <span *ngIf="order.status === 'REQUEST'" class="badge bg-info " > در انتظار </span>
+            <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-10 bg-danger">تایید نشده</span>
+            <span *ngIf="order.status === 'REJECT'" class="badge font-size-10 bg-warning">بدون پاسخ </span>
+            <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-10 bg-success">تایید شده</span>
+          </td>
+          <td>{{order.description}}</td>
+          <td >
+            <div class="btn-group btn-group-sm" role="group">
+              <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'" (click)="confirmOrder(order)">تایید</button>
+              <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
+            </div>
+
+          </td>
+        </tr>
+      </table>
+    </div>
+      </div>
+    </div>
+  </div>
   </div>
 
 
