@@ -8,6 +8,7 @@ import {UsersComponent} from "./users/users.component";
 import {DemandComponent} from "./demand/demand.component";
 import {BankComponent} from "./bank/bank.component";
 import {CommandComponent} from "./command/command.component";
+import {CommandChildComponent} from "./command-child/command-child.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'command-list',
     component: CommandComponent
+  },
+  {
+    path: 'command/:id',
+    component: CommandChildComponent
   },
   {
     path: 'bank-list',

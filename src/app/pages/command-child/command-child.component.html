@@ -1,0 +1,69 @@
+<div class="container-fluid">
+
+<h1>hild</h1>
+</div>
+
+<!--**********************************
+                modal
+***********************************-->
+<ng-template #commandChildModal let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-6">
+          <label  class="form-label">طرف حساب: </label>
+          <ng-select
+                     autofocus="true"
+                     notFoundText = "مشتری با این نام وجود ندارد!"
+                     formControlName="audienceId"
+                     >
+            <ng-option *ngFor="let aud of audiences "  [value]="aud.id">{{aud.name}} {{aud.balanceR | number}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="col-md-6">
+          <label for="amount" class="form-label">مبلغ درخواست: </label>
+          <input type="text" formControlName="amount" currencyMask   class="form-control" id="amount">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="modal.close()">انصراف
+      </button>
+      <button type="submit"
+              (click)="saveCommandChild()"
+              class="btn btn-success btn-sm"
+              (click)="modal.close()">ثبت درخواست
+      </button>
+
+    </div>
+  </form>
+</ng-template>
+<ng-template #commandChildInformation let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
+    <div class="modal-body">
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="modal.close()">بستن
+      </button>
+
+
+    </div>
+  </form>
+</ng-template>

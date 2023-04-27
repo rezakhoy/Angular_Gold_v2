@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChildren, QueryList, TemplateRef} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import { AdvancedService } from './advanced.service';
+
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Command, ICommand} from "../../core/models/command.models";
@@ -9,20 +9,21 @@ import {CommandsService} from "../../core/services/command.service";
 import {AudiencesService} from "../../core/services/audiences.service";
 import {IAudiences} from "../../core/models/audiences.models";
 import {ICommandChild} from "../../core/models/command-child.models";
-import {API_URL} from "../../../environments/environment";
-import {AdvancedSortableDirective, SortEvent} from "../transactions/advanced-sortable.directive";
+import {ActivatedRoute} from "@angular/router";
+import {map} from "rxjs/operators";
+
+
 
 @Component({
   selector: 'app-advancedtable',
-  templateUrl: './command.component.html',
-  styleUrls: ['./command.component.scss'],
-  providers: [AdvancedService, DecimalPipe]
+  templateUrl: './command-child.component.html',
+  styleUrls: ['./command-child.component.scss'],
 })
 
 /**
  * Advanced table component
  */
-export class CommandComponent implements OnInit {
+export class CommandChildComponent implements OnInit {
 
   public selected: any;
   tables$: Observable<Command[]>;
@@ -30,7 +31,7 @@ export class CommandComponent implements OnInit {
   editableTable: any;
 
 
-  @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
+
 
 
   ngbModalOptions: NgbModalOptions = {
@@ -63,25 +64,24 @@ export class CommandComponent implements OnInit {
     commandId: [null, Validators.required],
   });
 
-  constructor(public service: AdvancedService,
+  constructor(private route: ActivatedRoute,
               private fb: FormBuilder,
               private modalService: NgbModal,
-              private reportService: CommandsService,
               private commandService: CommandsService,
               private audiencesService: AudiencesService
               ) {
-    this.tables$ = service.tables$;
-    this.total$ = service.total$;
-    this.service.pageSize = 1000
+
   }
 
   ngOnInit() {
-
-    this.service.tables$.subscribe(res => {
-      this._fetchData();
-    })
-    this.commandService.getAllCommand().subscribe(res => {
-      console.log(res);
+    console.log('this.route.params');
+    this.route.paramMap.subscribe(params => {
+      let id = params.get('id');
+      console.log(id);
+      this.commandService.getCommandChild(+id).subscribe(res => {
+        this.commandChildren = res.body;
+        console.log(this.commandChildren);
+      })
     })
     this.loadPersons()
   }
@@ -94,36 +94,6 @@ export class CommandComponent implements OnInit {
     })
   }
 
-  /**
-   * fetches the table value
-   */
-  _fetchData() {
-    // this.tableData = tableData;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
-
-
-    // this.editableTable = editableTable;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
-  }
-
-  /**
-   * Sort table data
-   * @param param0 sort the column
-   *
-   */
-  onSort({ column, direction }: SortEvent) {
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
-  }
 
   createUserFunc(cgf) {
     this.modalService.open(cgf, this.ngbModalOptions);

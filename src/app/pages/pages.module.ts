@@ -36,6 +36,7 @@ import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.direc
 import {CurrencyMaskModule} from "ng2-currency-mask";
 import {CommandComponent} from "./command/command.component";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {CommandChildComponent} from "./command-child/command-child.component";
 
 // import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
 
@@ -53,6 +54,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DemandComponent,
     BankComponent,
     AdvancedSortableDirective,
+    CommandChildComponent,
     UsersComponent,
     CommandComponent,
     AdvancedSortableDirectiveUsers,
