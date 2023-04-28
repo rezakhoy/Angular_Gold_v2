@@ -9,11 +9,11 @@ import {CommandsService} from "../../core/services/command.service";
 import {AudiencesService} from "../../core/services/audiences.service";
 import {IAudiences} from "../../core/models/audiences.models";
 import {ICommandChild} from "../../core/models/command-child.models";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {map} from "rxjs/operators";
 import {API_URL} from "../../../environments/environment";
 import {Lightbox} from "ngx-lightbox";
-import {HttpClient, HttpEventType} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpEventType} from "@angular/common/http";
 import {DomSanitizer} from "@angular/platform-browser";
 
 
@@ -41,7 +41,7 @@ export class CommandChildComponent implements OnInit {
   selectedImageIndex: number = -1;
   currentIndex: 0;
   imageObject: Array<object> =[];
-
+  percentDone: any = 0;
   command: ICommand;
   preview: string;
   audiences: IAudiences[];
@@ -62,6 +62,7 @@ export class CommandChildComponent implements OnInit {
               private fb: FormBuilder,
               private http: HttpClient,
               private modalService: NgbModal,
+              public router: Router,
               private commandService: CommandsService,
               private audiencesService: AudiencesService
               ) {
@@ -131,5 +132,27 @@ export class CommandChildComponent implements OnInit {
       this.preview = reader.result as string;
     }
     reader.readAsDataURL(file)
+  }
+
+  submitForm() {
+    var formData: any = new FormData();
+    this.commandService.createPayInfo(formData).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+          this.percentDone = Math.round(event.loaded / event.total * 100);
+          console.log(`Uploaded! ${this.percentDone}%`);
+          break;
+        case HttpEventType.Response:
+          console.log('User successfully created!', event.body);
+          this.percentDone = false;
+          this.router.navigate(['users-list'])
+      }
+    })
   }
 }
