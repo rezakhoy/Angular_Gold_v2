@@ -37,8 +37,11 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
 import {CommandComponent} from "./command/command.component";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {CommandChildComponent} from "./command-child/command-child.component";
+import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
 
-// import {AdvancedSortableDirectiveDemands} from "./demand/advanced-sortable.directive";
+
+
+
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -87,6 +90,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgbDatepickerModule,
     CurrencyMaskModule,
     NgxDatatableModule,
+    NgImageFullscreenViewModule,
   ],
   providers: [
     DatePipe,

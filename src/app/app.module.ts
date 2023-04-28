@@ -17,6 +17,8 @@ import {WebsocketService} from "./core/services/websocket.service";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule} from "ng2-currency-mask";
 import {PermissionModule} from "ng2-permission";
+import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
+
 
 
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -55,6 +57,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     CarouselModule,
     CurrencyMaskModule,
     NgbAccordionModule,
+    NgImageFullscreenViewModule,
     NgSelectModule,
     NgxNumberSpinnerModule,
     NgbNavModule,

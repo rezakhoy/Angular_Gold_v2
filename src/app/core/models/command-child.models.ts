@@ -14,10 +14,11 @@ enum Type {
 export class ICommandChild {
   id: number;
   person: number;
+  name: string;
   amount: number;
   type: Type;
   status: Status;
-  payInformation: IPayInformation[];
+  payInformationList: IPayInformation[];
 
 }
 

@@ -11,6 +11,7 @@ import {IAudiences} from "../../core/models/audiences.models";
 import {ICommandChild} from "../../core/models/command-child.models";
 import {API_URL} from "../../../environments/environment";
 import {AdvancedSortableDirective, SortEvent} from "../transactions/advanced-sortable.directive";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-advancedtable',
@@ -65,6 +66,7 @@ export class CommandComponent implements OnInit {
 
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
+              private route: Router,
               private modalService: NgbModal,
               private reportService: CommandsService,
               private commandService: CommandsService,
@@ -147,17 +149,23 @@ export class CommandComponent implements OnInit {
   }
 
   getListChildCommand(id: number, modal) {
-    // const url = `${API_URL}persons`;
+    // const url = `command/`+id;
     // window.open(url, '_blank');
-  // }
-    this.commandService.getCommandChild(id).subscribe(res => {
-      this.commandChildren = res.body;
-      console.log(this.commandChildren);
-      this.modalService.open(modal, {
-        backdrop: 'static',
-        keyboard: false,
-        size: 'xl'
-      })
-    })
+
+
+    const url = this.route.serializeUrl(
+      this.route.createUrlTree(['/command/']));
+
+    window.open( url+'/'+id , '_blank');
+
+    // this.commandService.getCommandChild(id).subscribe(res => {
+    //   this.commandChildren = res.body;
+    //   console.log(this.commandChildren);
+    //   this.modalService.open(modal, {
+    //     backdrop: 'static',
+    //     keyboard: false,
+    //     size: 'xl'
+    //   })
+    // })
   }
 }

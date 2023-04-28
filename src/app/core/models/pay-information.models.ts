@@ -1,3 +1,5 @@
+
+
 enum Status {
   REQUEST = "request",
   CONFIRM  = "receive",
@@ -10,7 +12,7 @@ export class IPayInformation {
   amount: number;
   receiptNumber: string;
   status: Status;
-  image: string;
+  image: any;
   commandChildId: number
 }
 
