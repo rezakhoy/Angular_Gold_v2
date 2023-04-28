@@ -32,6 +32,12 @@ export class CommandsService {
   public createReceiveCommandChild(command): any {
     return this.http.post(`${API_URL}create-receive-command-child`, command);
   }
+  public createPayInfo(payInfo){
+    return this.http.post(`${API_URL}create-receive-command-child`, payInfo ,{
+      reportProgress: true,
+        observe: 'events',
+    });
 
+  }
 }
 

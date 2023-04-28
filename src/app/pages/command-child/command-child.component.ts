@@ -28,20 +28,6 @@ import {DomSanitizer} from "@angular/platform-browser";
  * Advanced table component
  */
 export class CommandChildComponent implements OnInit {
-  @Input()
-  requiredFileType:string;
-
-  fileName = '';
-  uploadProgress:number;
-  uploadSub: Subscription;
-
-
-  public selected: any;
-  tables$: Observable<Command[]>;
-  total$: Observable<number>;
-  editableTable: any;
-
-
 
 
 
@@ -55,17 +41,19 @@ export class CommandChildComponent implements OnInit {
   selectedImageIndex: number = -1;
   currentIndex: 0;
   imageObject: Array<object> =[];
-  public isCollapsed = true;
+
   command: ICommand;
-  selectedDemand: ICommand;
+  preview: string;
   audiences: IAudiences[];
   audiencesLoading = false;
   commandChildren: ICommandChild[];
 
-  commandChildForm = this.fb.group({
-    audienceId:[],
+  payInfoForm = this.fb.group({
+    payImage:[],
+    description:[],
     amount: [null, [Validators.min(10000)]],
-    commandId: [null, Validators.required],
+    commandChildId: [null, Validators.required],
+    receiptNumber: [null, Validators.required],
   });
 
   constructor(private route: ActivatedRoute,
@@ -81,13 +69,10 @@ export class CommandChildComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('this.route.params');
     this.route.paramMap.subscribe(params => {
       let id = params.get('id');
-      console.log(id);
       this.commandService.getCommandChild(+id).subscribe(res => {
         this.commandChildren = res.body;
-        console.log(this.commandChildren);
       })
     })
 
@@ -103,29 +88,6 @@ export class CommandChildComponent implements OnInit {
       this.audiencesLoading = false;
     })
   }
-
-
-  createUserFunc(cgf) {
-    this.modalService.open(cgf, this.ngbModalOptions);
-      // document.getElementById('amount').focus();
-
-  }
-
-
-  saveCommandChild() {
-    let commandChild = this.commandChildForm.value
-    this.commandService.createReceiveCommandChild(commandChild).subscribe(res => {
-      console.log(res);
-    })
-  }
-
-  makeCommandChild(table, commandChildModal) {
-    this.commandChildForm.patchValue({
-      commandId: table.id
-    })
-    this.modalService.open(commandChildModal, this.ngbModalOptions);
-  }
-
   getListChildCommand(id: number, modal) {
     const url = `${API_URL}command/`+id;
     window.open(url, '_blank');
@@ -140,7 +102,6 @@ export class CommandChildComponent implements OnInit {
   //     })
   //   })
   // }
-
   showLightbox(index) {
     const image = {
       image: 'data:image/jpeg;base64,' + index,
@@ -151,42 +112,24 @@ export class CommandChildComponent implements OnInit {
     this.selectedImageIndex = 0;
     this.showFlag = true;
   }
-  closeEventHandler() {
-    console.log("clooooosssssss");
+  onclick($event: MouseEvent) {
     this.showFlag = false;
-
   }
 
-  onFileSelected(event) {
-    const file:File = event.target.files[0];
-
-    if (file) {
-      this.fileName = file.name;
-      const formData = new FormData();
-      formData.append("thumbnail", file);
-      console.log(formData);
-
-      const upload$ = this.http.post("/api/thumbnail-upload", formData, {
-        reportProgress: true,
-        observe: 'events'
-      })
 
 
-      this.uploadSub = upload$.subscribe(event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          this.uploadProgress = Math.round(100 * (event.loaded / event.total));
-        }
-      })
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    console.log(file);
+    this.payInfoForm.patchValue({
+      avatar: file
+    });
+    this.payInfoForm.get('avatar').updateValueAndValidity()
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
     }
-  }
-
-  cancelUpload() {
-    this.uploadSub.unsubscribe();
-    this.reset();
-  }
-
-  reset() {
-    this.uploadProgress = null;
-    this.uploadSub = null;
+    reader.readAsDataURL(file)
   }
 }

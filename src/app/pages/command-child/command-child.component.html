@@ -1,58 +1,45 @@
 <div class="container-fluid">
 
-  <input type="file" class="file-input"
-         [accept]="requiredFileType"
-         (change)="onFileSelected($event)" #fileUpload>
-
-  <div class="file-upload">
-
-    {{fileName || "No file uploaded yet."}}
-
-    <button class=" btn upload-btn"
-            (click)="fileUpload.click()">
-
-
-    </button>
-
-  </div>
-
-  <div class="progress">
-
-    <!--    <mat-progress-bar class="progress-bar" mode="determinate"-->
-    <!--                      [value]="uploadProgress" *ngIf="uploadProgress">-->
-
-    <!--    </mat-progress-bar>-->
-
-    <!--    <mat-icon class="cancel-upload" (click)="cancelUpload()"-->
-    <!--              *ngIf="uploadProgress">delete_forever</mat-icon>-->
-
-  </div>
   <div class="row" *ngFor="let child of commandChildren ">
     <div class="card">
-      {{child.name }} -- {{child.amount}}
-    </div>
+      <div class="card-body">
+        <div class="row">
 
-    <div class="row">
-      <div *ngFor="let pay of child.payInformationList ">
-        <img [src]="transform(pay.image)"  width="145"/>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Single image lightbox</h4>
-              <p class="card-title-desc">Three simple popups with different scaling settings.</p>
-              <div class="row">
-                <div class="col-6">
-                  <div>
-                    <h5 class="font-size-14">Fits (Horz/Vert)</h5>
+          <h4> {{child.name }} -- {{child.amount}}</h4>
 
-                    <div class="img-fluid">
-                      <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145"/>
+          <button class="btn btn-sm btn-secondary">ثبت فیش</button>
+        </div>
+
+
+        <div class="row">
+          <div *ngFor="let pay of child.payInformationList ">
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">{{pay.amount}}</h4>
+                  <p class="card-title-desc">{{pay.description}}</p>
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <span class="bg bg-danger">{{pay.status}}</span>
+
+                        <div class="img-fluid">
+                          <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145"/>
+                        </div>
+
+                        <div>
+                          <button class="btn btn-sm btn-success"> تایید</button>
+                          <button class="btn btn-sm btn-danger"> رد</button>
+                        </div>
+                        <ng-image-fullscreen-view
+                          [images]="imageObject"
+                          [show]="showFlag"
+                          [direction]="'rtl'"
+                          [closeText]="'بستن'"
+                          (click)="onclick($event)"
+                        ></ng-image-fullscreen-view>
+                      </div>
                     </div>
-                    <ng-image-fullscreen-view
-                      [images]="imageObject"
-                      [show]="showFlag"
-                        [direction]="'rtl'"
-                     ></ng-image-fullscreen-view>
                   </div>
                 </div>
               </div>
@@ -62,69 +49,70 @@
       </div>
     </div>
   </div>
+</div>
 
-    <!--**********************************
-                    modal
-    ***********************************-->
-    <ng-template #commandChildModal let-modal>
-      <div class="modal-header">
+<!--**********************************
+                modal
+***********************************-->
+<!--    <ng-template #commandChildModal let-modal>-->
+<!--      <div class="modal-header">-->
 
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
-        <div class="modal-body">
+<!--        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">-->
+<!--        <div class="modal-body">-->
 
-          <div class="row">
-            <div class="col-md-6">
-              <label class="form-label">طرف حساب: </label>
-              <ng-select
-                autofocus="true"
-                notFoundText="مشتری با این نام وجود ندارد!"
-                formControlName="audienceId"
-              >
-                <ng-option *ngFor="let aud of audiences "
-                           [value]="aud.id">{{aud.name}} {{aud.balanceR | number}}</ng-option>
-              </ng-select>
-            </div>
-            <div class="col-md-6">
-              <label for="amount" class="form-label">مبلغ درخواست: </label>
-              <input type="text" formControlName="amount" currencyMask class="form-control" id="amount">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm"
-                  (click)="modal.close()">انصراف
-          </button>
-          <button type="submit"
-                  (click)="saveCommandChild()"
-                  class="btn btn-success btn-sm"
-                  (click)="modal.close()">ثبت درخواست
-          </button>
+<!--          <div class="row">-->
+<!--            <div class="col-md-6">-->
+<!--              <label class="form-label">طرف حساب: </label>-->
+<!--              <ng-select-->
+<!--                autofocus="true"-->
+<!--                notFoundText="مشتری با این نام وجود ندارد!"-->
+<!--                formControlName="audienceId"-->
+<!--              >-->
+<!--                <ng-option *ngFor="let aud of audiences "-->
+<!--                           [value]="aud.id">{{aud.name}} {{aud.balanceR | number}}</ng-option>-->
+<!--              </ng-select>-->
+<!--            </div>-->
+<!--            <div class="col-md-6">-->
+<!--              <label for="amount" class="form-label">مبلغ درخواست: </label>-->
+<!--              <input type="text" formControlName="amount" currencyMask class="form-control" id="amount">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button type="button" class="btn btn-danger btn-sm"-->
+<!--                  (click)="modal.close()">انصراف-->
+<!--          </button>-->
+<!--          <button type="submit"-->
+<!--                  (click)="saveCommandChild()"-->
+<!--                  class="btn btn-success btn-sm"-->
+<!--                  (click)="modal.close()">ثبت درخواست-->
+<!--          </button>-->
 
-        </div>
-      </form>
-    </ng-template>
-    <ng-template #commandChildInformation let-modal>
-      <div class="modal-header">
+<!--        </div>-->
+<!--      </form>-->
+<!--    </ng-template>-->
+<!--    <ng-template #commandChildInformation let-modal>-->
+<!--      <div class="modal-header">-->
 
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
-        <div class="modal-body">
-
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-sm"
-                  (click)="modal.close()">بستن
-          </button>
+<!--        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">-->
+<!--        <div class="modal-body">-->
 
 
-        </div>
-      </form>
-    </ng-template>
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button type="button" class="btn btn-danger btn-sm"-->
+<!--                  (click)="modal.close()">بستن-->
+<!--          </button>-->
+
+
+<!--        </div>-->
+<!--      </form>-->
+<!--    </ng-template>-->
