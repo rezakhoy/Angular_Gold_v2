@@ -7,7 +7,7 @@
 
           <h4> {{child.name }} -- {{child.amount}}</h4>
 
-          <button class="btn btn-sm btn-secondary">ثبت فیش</button>
+          <button class="btn btn-sm btn-secondary"  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
         </div>
 
 
@@ -72,44 +72,30 @@
                [style.width.%]="percentDone">
           </div>
         </div>
-        <!-- Image Preview -->
+        <div class="col-md-6">
+          <label for="amount" class="form-label">مبلغ درخواست: </label>
+          <input type="text" formControlName="amount" currencyMask   class="form-control" id="amount">
+        </div>
+        <div class="col-md-6">
+          <label for="receiptNumber" class="form-label">شماره فیش: </label>
+          <input type="text" formControlName="receiptNumber"    class="form-control" id="receiptNumber">
+        </div>
+        <div class="col-md-12">
+          <label for="description" class="form-label"> توضیحات: </label>
+          <input type="text" formControlName="description"    class="form-control" id="description">
+        </div>
         <div class="form-group">
-          <div class="preview" *ngIf="preview && preview !== null">
-            <img [src]="preview" [alt]="payInfoForm.value.name">
+          <div class="preview " *ngIf="preview && preview !== null">
+            <img [src]="preview" [alt]="payInfoForm.value.name" width="150">
           </div>
         </div>
-        <!-- File Input -->
+
         <div class="form-group">
           <input type="file" (change)="uploadFile($event)">
         </div>
-        <!-- Name -->
-        <div class="form-group input-group-lg">
-          <input class="form-control" placeholder="Name" formControlName="name">
-        </div>
-        <!-- Submit -->
-        <div class="form-group">
-          <button class="btn btn-danger btn-block btn-lg">Create User</button>
-        </div>
+
+
+          <button class="btn btn-danger btn-block btn-lg" (click)="submitForm()">Create User</button>
+
       </form>
     </ng-template>
-<!--    <ng-template #commandChildInformation let-modal>-->
-<!--      <div class="modal-header">-->
-
-<!--        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
-<!--          <span aria-hidden="true">&times;</span>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--      <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">-->
-<!--        <div class="modal-body">-->
-
-
-<!--        </div>-->
-<!--        <div class="modal-footer">-->
-<!--          <button type="button" class="btn btn-danger btn-sm"-->
-<!--                  (click)="modal.close()">بستن-->
-<!--          </button>-->
-
-
-<!--        </div>-->
-<!--      </form>-->
-<!--    </ng-template>-->

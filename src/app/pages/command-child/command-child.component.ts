@@ -34,7 +34,6 @@ export class CommandChildComponent implements OnInit {
   ngbModalOptions: NgbModalOptions = {
     backdrop : 'static',
     keyboard : false,
-    size: 'xl'
   };
 
   showFlag: boolean = false;
@@ -49,7 +48,7 @@ export class CommandChildComponent implements OnInit {
   commandChildren: ICommandChild[];
 
   payInfoForm = this.fb.group({
-    payImage:[],
+    payImage:[null],
     description:[],
     amount: [null, [Validators.min(10000)]],
     commandChildId: [null, Validators.required],
@@ -121,11 +120,14 @@ export class CommandChildComponent implements OnInit {
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
+    const read = new FileReader();
     console.log(file);
+    read.readAsDataURL(file)
     this.payInfoForm.patchValue({
-      avatar: file
+      payImage: read.result
     });
-    this.payInfoForm.get('avatar').updateValueAndValidity()
+    console.log('befooooooooor', this.payInfoForm.value);
+    this.payInfoForm.get('payImage').updateValueAndValidity()
     // File Preview
     const reader = new FileReader();
     reader.onload = () => {
@@ -136,6 +138,15 @@ export class CommandChildComponent implements OnInit {
 
   submitForm() {
     var formData: any = new FormData();
+    console.log(this.payInfoForm.value);
+    const payInfo = {
+      amount: this.payInfoForm.get('amount').value,
+      description: this.payInfoForm.get('description').value,
+      receiptNumber: this.payInfoForm.get('receiptNumber').value,
+    }
+    formData.append('payInfo', payInfo)
+    formData.append('payImage',  this.payInfoForm.value.payImage)
+
     this.commandService.createPayInfo(formData).subscribe((event: HttpEvent<any>) => {
       switch (event.type) {
         case HttpEventType.Sent:
@@ -154,5 +165,9 @@ export class CommandChildComponent implements OnInit {
           this.router.navigate(['users-list'])
       }
     })
+  }
+  makePayInfo(child, modal){
+    console.log(child);
+    this.modalService.open(modal, this.ngbModalOptions);
   }
 }

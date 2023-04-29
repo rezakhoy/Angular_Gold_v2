@@ -33,6 +33,7 @@ export class CommandsService {
     return this.http.post(`${API_URL}create-receive-command-child`, command);
   }
   public createPayInfo(payInfo){
+    console.log("befor send pay info ", payInfo);
     return this.http.post(`${API_URL}create-receive-command-child`, payInfo ,{
       reportProgress: true,
         observe: 'events',
