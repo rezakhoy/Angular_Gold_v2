@@ -66,12 +66,12 @@
       </div>
 
       <form [formGroup]="payInfoForm" (ngSubmit)="submitForm()">
-        Progress Bar
-        <div class="progress form-group" *ngIf="percentDone">
-          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
-               [style.width.%]="percentDone">
-          </div>
-        </div>
+<!--        Progress Bar-->
+<!--        <div class="progress form-group" *ngIf="percentDone">-->
+<!--          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"-->
+<!--               [style.width.%]="percentDone">-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="col-md-6">
           <label for="amount" class="form-label">مبلغ درخواست: </label>
           <input type="text" formControlName="amount" currencyMask   class="form-control" id="amount">
@@ -94,8 +94,6 @@
           <input type="file" (change)="uploadFile($event)">
         </div>
 
-
-          <button class="btn btn-danger btn-block btn-lg" (click)="submitForm()">Create User</button>
-
+          <button class="btn btn-info btn-block btn-lg" (click)="submitForm()">ثبت فیش</button>
       </form>
     </ng-template>

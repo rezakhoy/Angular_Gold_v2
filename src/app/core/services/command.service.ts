@@ -34,7 +34,7 @@ export class CommandsService {
   }
   public createPayInfo(payInfo){
     console.log("befor send pay info ", payInfo);
-    return this.http.post(`${API_URL}create-receive-command-child`, payInfo ,{
+    return this.http.post(`${API_URL}send-pay-info`, payInfo ,{
       reportProgress: true,
         observe: 'events',
     });

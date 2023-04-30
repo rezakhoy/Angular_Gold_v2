@@ -50,7 +50,7 @@ export class CommandChildComponent implements OnInit {
   payInfoForm = this.fb.group({
     payImage:[null],
     description:[],
-    amount: [null, [Validators.min(10000)]],
+    amount: [null, Validators.required],
     commandChildId: [null, Validators.required],
     receiptNumber: [null, Validators.required],
   });
@@ -71,6 +71,9 @@ export class CommandChildComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let id = params.get('id');
+      this.payInfoForm.patchValue({
+        commandChildId: +id
+      })
       this.commandService.getCommandChild(+id).subscribe(res => {
         this.commandChildren = res.body;
       })
@@ -120,11 +123,9 @@ export class CommandChildComponent implements OnInit {
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
-    const read = new FileReader();
     console.log(file);
-    read.readAsDataURL(file)
     this.payInfoForm.patchValue({
-      payImage: read.result
+      payImage: file
     });
     console.log('befooooooooor', this.payInfoForm.value);
     this.payInfoForm.get('payImage').updateValueAndValidity()
@@ -142,9 +143,11 @@ export class CommandChildComponent implements OnInit {
     const payInfo = {
       amount: this.payInfoForm.get('amount').value,
       description: this.payInfoForm.get('description').value,
-      receiptNumber: this.payInfoForm.get('receiptNumber').value,
+      receiptNumber:this.payInfoForm.get('receiptNumber').value,
+      commandChildId:this.payInfoForm.get('commandChildId').value,
     }
-    formData.append('payInfo', payInfo)
+    // @ts-ignore
+    formData.append('payInfo', JSON.stringify(payInfo) )
     formData.append('payImage',  this.payInfoForm.value.payImage)
 
     this.commandService.createPayInfo(formData).subscribe((event: HttpEvent<any>) => {

@@ -124,7 +124,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommandChild()" [formGroup]="commandChildForm">
+  <form name="editForm" role="form" novalidate  [formGroup]="commandChildForm">
     <div class="modal-body">
 
       <div class="row">
@@ -148,7 +148,7 @@
       <button type="button" class="btn btn-danger btn-sm"
               (click)="modal.close()">انصراف
       </button>
-      <button type="submit"
+      <button type="button"
               (click)="saveCommandChild()"
               class="btn btn-success btn-sm"
               (click)="modal.close()">ثبت درخواست
