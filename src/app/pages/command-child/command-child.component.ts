@@ -69,18 +69,19 @@ export class CommandChildComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.callCommands()
+    this.loadPersons()
+  }
+
+  callCommands() {
     this.route.paramMap.subscribe(params => {
       let id = params.get('id');
-      this.payInfoForm.patchValue({
-        commandChildId: +id
-      })
       this.commandService.getCommandChild(+id).subscribe(res => {
         this.commandChildren = res.body;
       })
     })
-
-    this.loadPersons()
   }
+
   transform(image){
     return this._sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${image}`);
   }
@@ -91,20 +92,12 @@ export class CommandChildComponent implements OnInit {
       this.audiencesLoading = false;
     })
   }
+
   getListChildCommand(id: number, modal) {
     const url = `${API_URL}command/`+id;
     window.open(url, '_blank');
   }
-  //   this.commandService.getCommandChild(id).subscribe(res => {
-  //     this.commandChildren = res.body;
-  //     console.log(this.commandChildren);
-  //     this.modalService.open(modal, {
-  //       backdrop: 'static',
-  //       keyboard: false,
-  //       size: 'xl'
-  //     })
-  //   })
-  // }
+
   showLightbox(index) {
     const image = {
       image: 'data:image/jpeg;base64,' + index,
@@ -127,7 +120,6 @@ export class CommandChildComponent implements OnInit {
     this.payInfoForm.patchValue({
       payImage: file
     });
-    console.log('befooooooooor', this.payInfoForm.value);
     this.payInfoForm.get('payImage').updateValueAndValidity()
     // File Preview
     const reader = new FileReader();
@@ -165,12 +157,27 @@ export class CommandChildComponent implements OnInit {
         case HttpEventType.Response:
           console.log('User successfully created!', event.body);
           this.percentDone = false;
-          this.router.navigate(['users-list'])
+         this.callCommands();
+         break;
       }
     })
   }
   makePayInfo(child, modal){
-    console.log(child);
+
+    this.payInfoForm.patchValue({
+      commandChildId: child.id
+    })
     this.modalService.open(modal, this.ngbModalOptions);
+  }
+
+  confirmPay(id) {
+    this.commandService.confirmPayInfo(id).subscribe(res => {
+      this.callCommands();
+    })
+
+  }
+
+  unConfirmPay(id: number) {
+
   }
 }

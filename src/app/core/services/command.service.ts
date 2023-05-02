@@ -40,5 +40,8 @@ export class CommandsService {
     });
 
   }
+  public confirmPayInfo(id): any {
+    return this.http.post(`${API_URL}confirm-pay-info/`+id , id);
+  }
 }
 

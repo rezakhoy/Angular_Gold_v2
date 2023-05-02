@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {PriceGroupService} from "../../core/services/price-group.service";
-import {IGroup} from "../../core/models/group.models";
 import {IPriceGroup} from "../../core/models/price-group.models";
+
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-userlist',
@@ -24,7 +25,9 @@ export class PriceGroupComponent implements OnInit {
     gap: [null, Validators.required]
   });
   groups: IPriceGroup[];
-  constructor( private fb: FormBuilder,  private modalService: NgbModal,
+  constructor( private fb: FormBuilder,
+               private titleService: Title,
+               private modalService: NgbModal,
                private priceGroupService: PriceGroupService) { }
 
   ngbModalOptions: NgbModalOptions = {
@@ -33,6 +36,7 @@ export class PriceGroupComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.titleService.setTitle("گروههای قیمتی")
     this.priceGroupService.getAllGroups().subscribe(res => {
       this.groups = res.body;
     })
@@ -47,9 +51,10 @@ export class PriceGroupComponent implements OnInit {
     const body = this.groupForm.value;
     body.sell = true;
     body.buy = false;
-    console.log('type ggggggggggggggggggggggg', typeof body);
     this.priceGroupService.createGroup(body).subscribe(res => {
-      console.log(res);
+      this.priceGroupService.getAllGroups().subscribe(res => {
+        this.groups = res.body;
+      });
     });
 
   }

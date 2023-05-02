@@ -3,33 +3,39 @@
   <div class="row" *ngFor="let child of commandChildren ">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-
+        <div class="d-flex flex-wrap border-bottom pb-2">
           <h4> {{child.name }} -- {{child.amount}}</h4>
+          <div class="ms-auto mt-auto">
+          <button class="btn  btn-primary"  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
+          </div>
 
-          <button class="btn btn-sm btn-secondary"  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
+
         </div>
-
-
         <div class="row">
-          <div *ngFor="let pay of child.payInformationList ">
-            <div class="col-md-3">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">{{pay.amount}}</h4>
-                  <p class="card-title-desc">{{pay.description}}</p>
-                  <div class="row">
+
+            <div class="col-md-3"  *ngFor="let pay of child.payInformationList ">
+              <div class="card ">
+                <div class="card-body ">
+                  <h4 class="card-title"> مبلغ : {{pay.amount}}  </h4>
+                  <p class="card-title-desc">  شرح : {{pay.description}}  </p>
+                  <div class="row text-center ">
                     <div class="col-6">
                       <div>
-                        <span class="bg bg-danger">{{pay.status}}</span>
+                        <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>
+                        <span *ngIf="pay.status === 'UNCONFIRM'" class="badge font-size-14 bg-danger  mb-1">تایید نشده</span>
+                        <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>
 
                         <div class="img-fluid">
                           <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145"/>
                         </div>
 
                         <div>
-                          <button class="btn btn-sm btn-success"> تایید</button>
-                          <button class="btn btn-sm btn-danger"> رد</button>
+                          <div class="btn-group btn-group-example mt-2" role="group">
+                            <button type="button" class="btn btn-primary w-xs" (click)="confirmPay(pay.id)"><i
+                              class="mdi mdi-thumb-up" ></i></button>
+                            <button type="button" class="btn btn-danger w-xs" (click)="unConfirmPay(pay.id)"><i
+                              class="mdi mdi-thumb-down"></i></button>
+                          </div>
                         </div>
                         <ng-image-fullscreen-view
                           [images]="imageObject"
@@ -45,7 +51,7 @@
               </div>
             </div>
           </div>
-        </div>
+
       </div>
     </div>
   </div>
@@ -64,36 +70,42 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+   <div class="modal-body">
+     <form [formGroup]="payInfoForm" >
+       <!--        Progress Bar-->
+       <!--        <div class="progress form-group" *ngIf="percentDone">-->
+       <!--          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"-->
+       <!--               [style.width.%]="percentDone">-->
+       <!--          </div>-->
+       <!--        </div>-->
+       <div class="row mb-5">
+         <div class="col-md-6">
+           <label for="amount" class="form-label">مبلغ درخواست: </label>
+           <input type="text" formControlName="amount" autocomplete="off" currencyMask  ngbAutofocus class="form-control" id="amount">
+         </div>
+         <div class="col-md-6">
+           <label for="receiptNumber" class="form-label">شماره فیش: </label>
+           <input type="text" formControlName="receiptNumber"    class="form-control" id="receiptNumber">
+         </div>
+         <div class="col-md-12">
+           <label for="description" class="form-label"> توضیحات: </label>
+           <input type="text" formControlName="description"    class="form-control" id="description">
+         </div>
+       </div>
+       <div class="form-group">
+         <div class="preview " *ngIf="preview && preview !== null">
+           <img [src]="preview" [alt]="payInfoForm.value.name" width="150">
+         </div>
+       </div>
 
-      <form [formGroup]="payInfoForm" (ngSubmit)="submitForm()">
-<!--        Progress Bar-->
-<!--        <div class="progress form-group" *ngIf="percentDone">-->
-<!--          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"-->
-<!--               [style.width.%]="percentDone">-->
-<!--          </div>-->
-<!--        </div>-->
-        <div class="col-md-6">
-          <label for="amount" class="form-label">مبلغ درخواست: </label>
-          <input type="text" formControlName="amount" currencyMask   class="form-control" id="amount">
-        </div>
-        <div class="col-md-6">
-          <label for="receiptNumber" class="form-label">شماره فیش: </label>
-          <input type="text" formControlName="receiptNumber"    class="form-control" id="receiptNumber">
-        </div>
-        <div class="col-md-12">
-          <label for="description" class="form-label"> توضیحات: </label>
-          <input type="text" formControlName="description"    class="form-control" id="description">
-        </div>
-        <div class="form-group">
-          <div class="preview " *ngIf="preview && preview !== null">
-            <img [src]="preview" [alt]="payInfoForm.value.name" width="150">
-          </div>
-        </div>
+       <div class="form-group">
+         <input type="file" (change)="uploadFile($event)">
+       </div>
 
-        <div class="form-group">
-          <input type="file" (change)="uploadFile($event)">
-        </div>
+       <div class="row">
+         <button class="btn btn-info btn-block mt-5" (click)="submitForm(); modal.close() ">ثبت فیش</button>
+       </div>
+     </form>
+   </div>
 
-          <button class="btn btn-info btn-block btn-lg" (click)="submitForm()">ثبت فیش</button>
-      </form>
     </ng-template>
