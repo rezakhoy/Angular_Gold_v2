@@ -142,6 +142,29 @@
           </div>
         </div>
     </div>
+  <div class="card d-flex">
+    <div class="">
+    <div class="card-body  align-items-center d-flex justify-content-center ">
+      <div class="text-center">
+        <div class="row ">
+          <div class="align-content-center">
+            <table class=" table-responsive" >
+              <tr *ngFor="let m of mas " class="pb-4 ">
+                <td class="col-sm-4 col-md-4">
+                  <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
+                <td  class="col-sm-4 col-4">{{m.priceGroupName}}</td>
+                <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+
   <div class="row" *permissionIf="'admin'">
     <div class="col-md-6">
       <div class="card">
@@ -159,28 +182,11 @@
                   </div>
                 </form>
               </div>
-          <div class="row">
-            <div class="align-content-center">
-              <table class=" table-responsive" >
-                <tr *ngFor="let m of mas " class="pb-4 ">
-                  <td class="col-sm-4 col-md-4">
-                    <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
-                  <td  class="col-sm-4 col-4">{{m.priceGroupName}}</td>
-                  <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-body text-center" >
+          <div class="text-center">
+            <div class="row">
               <div class="align-content-center">
                 <table class=" table-responsive" >
+                  <p>قیمت</p>
                   <tr *ngFor="let m of mas " class="pb-4 ">
                     <td class="col-sm-4 col-md-4">
                       <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
@@ -189,10 +195,13 @@
                   </tr>
                 </table>
               </div>
+            </div>
           </div>
 
         </div>
       </div>
+    </div>
+
     </div>
   <div class="row" *ngIf="orders"  >
     <div class="card">
