@@ -80,6 +80,7 @@
     "ngx-number-spinner": "^2.2.1",
     "ngx-owl-carousel-o": "^6.0.0",
     "ngx-persian": "^2.0.1",
+    "ngx-toastr": "^14.3.0",
     "ngx-ui-switch": "^10.0.2",
     "ngx-youtube-player": "^9.1.0",
     "resize-observer-polyfill": "^1.5.1",

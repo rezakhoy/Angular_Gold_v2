@@ -14,6 +14,9 @@ import { PriceGroupService} from "../../core/services/price-group.service";
 import {IGroup} from "../../core/models/group.models";
 import {JalaliDateCalculatorService} from "ngx-persian";
 import {AuthenticationService} from "../../core/services/auth.service";
+import {Title} from "@angular/platform-browser";
+import {ToastrService} from "ngx-toastr";
+import {API_URL} from "../../../environments/environment";
 
 @Component({
   selector: 'app-advancedtable',
@@ -68,8 +71,10 @@ export class UsersComponent implements OnInit {
 
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
+              private titleService: Title,
               private modalService: NgbModal,
               private userService: UserService,
+              private toastr: ToastrService,
               private authService: AuthenticationService,
               private priceGroupService: PriceGroupService,
               private jalaliDateService: JalaliDateCalculatorService,
@@ -80,14 +85,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(" کاربران")
     this.loadPersons()
-
     this.loadPermissionGroups()
     this.loadPriceGroups()
-    this.service.tables$.subscribe(res => {
-      this._fetchData();
-    })
-
   }
   private loadPersons() {
     this.personsLoading = true;
@@ -99,22 +100,6 @@ export class UsersComponent implements OnInit {
   }
 
 
-
-  /**
-   * fetches the table value
-   */
-  _fetchData() {
-    // this.tableData = tableData;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
-
-
-    // this.editableTable = editableTable;
-    // for (let i = 0; i <= this.tableData.length; i++) {
-    //   this.hideme.push(true);
-    // }
-  }
 
   /**
    * Sort table data
@@ -133,7 +118,6 @@ export class UsersComponent implements OnInit {
   }
 
   createUserFunc(cgf) {
-
     this.modalService.open(cgf, this.ngbModalOptions);
   }
 
@@ -149,6 +133,7 @@ export class UsersComponent implements OnInit {
     body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
     console.log(body);
     this.userService.register(body).subscribe(res => {
+      this.toastr.success(` کاربر${res.body.person.name}  با موقت ایجاد شد`)
       this.userService.getAll().subscribe(res => {
         this.tables$ = this.service.tables$;
       })

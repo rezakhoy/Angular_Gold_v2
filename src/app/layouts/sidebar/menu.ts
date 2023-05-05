@@ -4,42 +4,42 @@ export const MENU: MenuItem[] = [
     {
         id: 1,
         label: 'menu',
-        isTitle: true
+        isTitle: true,
+        per: ['admin', 'user']
     },
   {
     id: 2,
     label: 'داشبورد',
     icon: 'bx-home-circle',
     link: '/',
-
   },
   {
     id: 3,
     label: 'گروهای قیمتی',
     icon: 'bx bxs-dollar-circle',
     link: '/price-group',
-
+    per: ['admin']
   },
   {
     id: 4,
     label: 'کاربران',
     icon: 'bx bxs-user-detail',
     link: '/users',
-
+    per: ['admin']
   },
   {
     id: 7,
     label: 'مطالبات',
     icon: 'bx bxs-user-detail',
     link: '/demand-list',
-
+    per: ['admin', 'acc']
   },
   {
     id: 12,
     label: 'دریافت پرداخت',
     icon: 'bx bxs-user-detail',
     link: '/command-list',
-
+    per: ['admin', 'acc']
   },
   {
     id: 5,
@@ -50,13 +50,15 @@ export const MENU: MenuItem[] = [
                 id: 6,
                 label: 'لیست تراکنش ها',
                 link: '/transaction',
-                parentId: 2
+                parentId: 2,
+              per: ['user']
             },
       {
         id: 8,
         label: 'لیست بانک ها',
         link: '/bank-list',
-        parentId: 2
+        parentId: 2,
+        per: ['admin', 'acc']
       },
     ]
   },

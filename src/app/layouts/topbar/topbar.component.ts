@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import {PermissionService} from "../../core/services/permission.service";
+import {IUser} from "../../core/models/auth.models";
 
 @Component({
   selector: 'app-topbar',
@@ -19,7 +20,7 @@ import {PermissionService} from "../../core/services/permission.service";
  * Topbar component
  */
 export class TopbarComponent implements OnInit {
-
+  user: IUser;
   element;
   cookieValue;
   flagvalue;
@@ -34,7 +35,7 @@ export class TopbarComponent implements OnInit {
               public translate: TranslateService,
               public _cookiesService: CookieService) {
     authService.getUser().subscribe(res => {
-      console.log("usssssssssssssssssser", res.body);
+      this.user = res.body;
       const roles = res.body.groups.map(function(a) {return a.name;});
       console.log("roooooooooooooles", roles);
       this.permissionService.seRole(roles)

@@ -8,41 +8,40 @@
     <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
       <!-- {{menuItems}} -->
       <ng-container *ngFor="let item of menuItems">
-        <li class="menu-title" *ngIf="item.isTitle">{{ item.label  }}</li>
-        <li *ngIf="!item.isTitle && !item.isLayout">
-          <a *ngIf="hasItems(item)" href="javascript:void(0);" class="is-parent"
-            [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}">
+        <ng-container *permissionAnyOf="item.per"><li class="menu-title"  *ngIf="item.isTitle">{{ item.label  }} </li></ng-container>
+       <li *ngIf="!item.isTitle && !item.isLayout">
+         <ng-container *permissionAnyOf="item.per"> <a *ngIf="hasItems(item)" href="javascript:void(0);" class="is-parent"
+             [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}">
             <i class="bx {{item.icon}}" *ngIf="item.icon"></i>
             <span> {{ item.label  }}</span>
-            <span class="badge rounded-pill float-end bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text |
-              translate}}</span>
-          </a>
+            <span class="badge rounded-pill float-end bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text }}</span>
+         </a></ng-container>
 
-          <a [routerLink]="item.link" *ngIf="!hasItems(item)" class="side-nav-link-ref" routerLinkActive="active">
+         <ng-container *permissionAnyOf="item.per">  <a [routerLink]="item.link" *ngIf="!hasItems(item)" class="side-nav-link-ref" routerLinkActive="active">
             <i class="bx {{ item.icon }}" *ngIf="item.icon"></i>
-            <span> {{ item.label | translate }}</span>
+            <span> {{ item.label  }}</span>
             <span class="badge rounded-pill bg-{{item.badge.variant}} float-end" *ngIf="item.badge">{{item.badge.text }}</span>
-          </a>
+         </a></ng-container>
 
           <ul *ngIf="hasItems(item)" class="sub-menu" aria-expanded="false">
-            <li *ngFor="let subitem of item.subItems">
-              <a [routerLink]="subitem.link" *ngIf="!hasItems(subitem)" class="side-nav-link-ref"
+          <li *ngFor="let subitem of item.subItems">
+            <ng-container *permissionAnyOf="subitem.per"> <a [routerLink]="subitem.link" *ngIf="!hasItems(subitem)" class="side-nav-link-ref"
                 [attr.data-parent]="subitem.parentId" routerLinkActive="active">
-                {{ subitem.label }}
-              </a>
-              <a *ngIf="hasItems(subitem)" class="side-nav-link-a-ref has-arrow" href="javascript:void(0);"
+               {{ subitem.label }}
+            </a></ng-container>
+            <ng-container *permissionAnyOf="subitem.per"><a *ngIf="hasItems(subitem)" class="side-nav-link-a-ref has-arrow" href="javascript:void(0);"
                 [attr.data-parent]="subitem.parentId">
-                {{ subitem.label }}
-              </a>
-              <ul *ngIf="hasItems(subitem)" class="sub-menu mm-collapse" aria-expanded="false">
-                <li *ngFor="let subSubitem of subitem.subItems">
-                  <a [attr.data-parent]="subSubitem.parentId" [routerLink]="subSubitem.link" routerLinkActive="active"
+               {{ subitem.label }}
+            </a></ng-container>
+             <ul *ngIf="hasItems(subitem)" class="sub-menu mm-collapse" aria-expanded="false">
+                 <li *ngFor="let subSubitem of subitem.subItems">
+                   <ng-container *permissionAnyOf="subitem.per"><a [attr.data-parent]="subSubitem.parentId" [routerLink]="subSubitem.link" routerLinkActive="active"
                     class="side-nav-link-ref">
-                    {{ subSubitem.label }}
-                  </a>
-                </li>
-              </ul>
-            </li>
+                   {{ subSubitem.label }}
+                   </a></ng-container>
+               </li>
+             </ul>
+           </li>
           </ul>
         </li>
       </ng-container>

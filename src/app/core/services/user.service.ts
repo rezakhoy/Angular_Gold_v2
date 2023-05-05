@@ -11,11 +11,11 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<IUser[]>(`/api/login`);
+      return this.http.get<IUser[]>(`${API_URL}auth/users`, {observe: 'response'});
     }
 
     register(body) {
-        return this.http.post(`${API_URL}auth/create-user`, body);
+        return this.http.post<IUser>(`${API_URL}auth/create-user`, body, {observe: 'response'});
     }
   getAllPersons(): Observable<HttpResponse<IPerson[]>> {
     return this.http.get<any>(`${API_URL}persons`, {  observe: 'response' });

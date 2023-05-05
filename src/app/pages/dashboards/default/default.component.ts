@@ -11,6 +11,8 @@ import {ReportsService} from "../../../core/services/reports.service";
 import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
 import {IOrder} from "../../../core/models/order.models";
 import {OrderService} from "../../../core/services/order.service";
+import {ToastrService} from "ngx-toastr";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -63,15 +65,18 @@ export class DefaultComponent implements OnInit {
   constructor(private modalService: NgbModal,
               private fb: FormBuilder,
               private configService: ConfigService,
+              private titleService: Title,
               private reportService: ReportsService,
               private ws: WebsocketService,
+              private toastr: ToastrService,
               private orderService: OrderService,
               private auth: AuthenticationService,
               private eventService: EventService) {
+
   }
 
   ngOnInit() {
-
+    this.titleService.setTitle("داشبورد")
     this.ws.connect();
     this.reportService.adminBalance().subscribe(res => {
       this.adminBalance = res.body;
