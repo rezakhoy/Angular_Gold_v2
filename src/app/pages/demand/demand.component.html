@@ -172,13 +172,13 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="saveCommand()" [formGroup]="commandForm">
+  <form name="editForm" role="form" novalidate  [formGroup]="commandForm">
     <div class="modal-body">
 
       <div class="row">
         <div class="col-md-6">
           <label for="amount" class="form-label">مبلغ درخواست: </label>
-          <input type="text" formControlName="amount" currencyMask ngbAutofocus  class="form-control" id="amount">
+          <input type="text" formControlName="amount" currencyMask ngbAutofocus autocomplete="off"  class="form-control" id="amount">
         </div>
 
       <div class="col-md-6">
@@ -200,9 +200,9 @@
               (click)="modal.close()">انصراف
       </button>
       <button type="submit"
-              (click)="saveCommand()"
+              (click)="saveCommand(); modal.close()"
               class="btn btn-success btn-sm"
-              (click)="modal.close()">ثبت درخواست
+              >ثبت درخواست
       </button>
 
     </div>

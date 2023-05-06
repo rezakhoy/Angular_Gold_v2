@@ -48,6 +48,7 @@
                   <th sortable="bankName" (sort)="onSort($event)">   بانک </th>
                   <th sortable="balance" (sort)="onSort($event)">     خرج نشده  </th>
                   <th sortable="balance" (sort)="onSort($event)">    پرداخت تایید شده  </th>
+                  <th sortable="status" (sort)="onSort($event)">    وضعیت  </th>
 
                 </tr>
               </thead>
@@ -72,18 +73,24 @@
                   <td>
                     <ngb-highlight [result]="table.cleared| number " [term]="service.searchTerm"></ngb-highlight>
                   </td>
+                  <td>
+                    <span *ngIf="table.status === 'CLEARED'" class="badge font-size-14 bg-success mb-1 " >تسویه شده</span>
+                    <span *ngIf="table.status === 'UNCLEARED'" class="badge font-size-14 bg-info mb-1 " >تسویه نشده</span>
+                    <span *ngIf="table.status === 'CLEARED'" class="badge font-size-14 bg-danger mb-1 " > اضافه واریز</span>
+
+                  </td>
 
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">
                       <li class="list-inline-item px-2">
-                        <a  (click)="getListChildCommand(table.id, commandChildInformation)" ngbTooltip="لیست پرداخت ها "><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>
+                        <a  (click)="getListChildCommand(table.id, commandChildInformation)" ngbTooltip="لیست پرداخت ها "><span class="text text-info"><i class=" bx bx-list-ol"></i></span></a>
                       </li>
                       <li class="list-inline-item px-2" >
                         <a ngbTooltip="خرد کردن" (click)="makeCommandChild(table, commandChildModal)"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>
                       </li>
-<!--                      <li class="list-inline-item px-2" *ngIf="table.balance_r<0" >-->
-<!--                        <a  ngbTooltip="دریافت ریالی " (click)="makeCommand(table, commandModal, 'RECEIVE')"><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>-->
-<!--                      </li>-->
+                      <li class="list-inline-item px-2">
+                        <a  (click)="getClearCommandChild(table , commandToCleared)" ngbTooltip="تسویه مانده دار "><span class="text text-info"><i class=" bx bxl-mastercard"></i></span></a>
+                      </li>
                     </ul>
                   </td>
                 </tr>
@@ -149,10 +156,9 @@
               (click)="modal.close()">انصراف
       </button>
       <button type="button"
-              (click)="saveCommandChild()"
+              (click)="saveCommandChild(); modal.close()"
               class="btn btn-success btn-sm"
-              (click)="modal.close()">ثبت درخواست
-      </button>
+             >ثبت درخواست</button>
 
     </div>
   </form>
@@ -177,4 +183,13 @@
 
     </div>
   </form>
+</ng-template>
+<ng-template #commandToCleared let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
 </ng-template>

@@ -9,6 +9,7 @@ import {ReportsService} from "../../core/services/reports.service";
 import {ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
 import {ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-advancedtable',
@@ -47,6 +48,7 @@ export class DemandComponent implements OnInit {
   constructor(
               private fb: FormBuilder,
               private modalService: NgbModal,
+              private titleService: Title,
               private reportService: ReportsService,
               private commandService: CommandsService
               ) {
@@ -54,6 +56,7 @@ export class DemandComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(" لیست  مطالبات ")
     this.reportService.adminDemandList().subscribe(res => {
       this.demands = res.body;
       console.log(this.demands);

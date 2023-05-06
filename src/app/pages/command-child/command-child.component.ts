@@ -14,7 +14,7 @@ import {map} from "rxjs/operators";
 import {API_URL} from "../../../environments/environment";
 import {Lightbox} from "ngx-lightbox";
 import {HttpClient, HttpEvent, HttpEventType} from "@angular/common/http";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, Title} from "@angular/platform-browser";
 
 
 
@@ -62,6 +62,7 @@ export class CommandChildComponent implements OnInit {
               private http: HttpClient,
               private modalService: NgbModal,
               public router: Router,
+              private titleService: Title,
               private commandService: CommandsService,
               private audiencesService: AudiencesService
               ) {
@@ -69,17 +70,31 @@ export class CommandChildComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.callCommands()
+    this.callCommandChild()
+    this.callCommand()
     this.loadPersons()
   }
 
-  callCommands() {
+  callCommandChild() {
     this.route.paramMap.subscribe(params => {
       let id = params.get('id');
       this.commandService.getCommandChild(+id).subscribe(res => {
         this.commandChildren = res.body;
+        console.log(this.commandChildren);
       })
     })
+  }
+
+  callCommand() {
+    this.route.paramMap.subscribe(params => {
+      let id = params.get('id');
+      this.commandService.getCommand(+id).subscribe(res => {
+        this.command = res.body;
+        console.log('cooooooooommmmmmmand', this.command);
+        this.titleService.setTitle(this.command.audienceName +'--' + this.command.amount)
+      })
+    })
+
   }
 
   transform(image){
@@ -157,7 +172,7 @@ export class CommandChildComponent implements OnInit {
         case HttpEventType.Response:
           console.log('User successfully created!', event.body);
           this.percentDone = false;
-         this.callCommands();
+         this.callCommandChild();
          break;
       }
     })
@@ -172,7 +187,7 @@ export class CommandChildComponent implements OnInit {
 
   confirmPay(id) {
     this.commandService.confirmPayInfo(id).subscribe(res => {
-      this.callCommands();
+      this.callCommandChild();
     })
 
   }

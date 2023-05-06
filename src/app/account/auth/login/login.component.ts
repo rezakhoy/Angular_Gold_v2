@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthenticationService } from '../../../core/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {PermissionService} from "../../../core/services/permission.service";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -24,12 +25,14 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
+              private titleService: Title,
               private router: Router,
               private authenticationService: AuthenticationService,
               private roleService: PermissionService
               ) { }
 
   ngOnInit() {
+    this.titleService.setTitle("سکه و آبشده حمزه نژاد | ورود")
     this.loginForm = new FormGroup({
       'username' : new FormControl(null, [Validators.required]),
       'password' : new FormControl(null, [Validators.required, Validators.minLength(6)])

@@ -12,6 +12,7 @@ import {ICommandChild} from "../../core/models/command-child.models";
 import {API_URL} from "../../../environments/environment";
 import {AdvancedSortableDirective, SortEvent} from "../transactions/advanced-sortable.directive";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-advancedtable',
@@ -67,6 +68,7 @@ export class CommandComponent implements OnInit {
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private route: Router,
+              private titleService: Title,
               private modalService: NgbModal,
               private reportService: CommandsService,
               private commandService: CommandsService,
@@ -78,7 +80,7 @@ export class CommandComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.titleService.setTitle(" لیست دریافت و پرداخت")
     this.service.tables$.subscribe(res => {
       this._fetchData();
     })
@@ -167,5 +169,9 @@ export class CommandComponent implements OnInit {
     //     size: 'xl'
     //   })
     // })
+  }
+
+  getClearCommandChild(table: Command, commandChildInformation) {
+
   }
 }

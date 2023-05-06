@@ -20,6 +20,9 @@ export class CommandsService {
   getCommandChild(id: number): Observable<HttpResponse<ICommandChild[]>> {
     return this.http.get<any>(`${API_URL}get-command-children/`+id, {  observe: 'response' });
   }
+  getCommand(id: number): Observable<HttpResponse<ICommand>> {
+    return this.http.get<any>(`${API_URL}command/`+id, {  observe: 'response' });
+  }
   public createPayCommand(command): any {
     return this.http.post(`${API_URL}create-pay-command`, command);
   }
