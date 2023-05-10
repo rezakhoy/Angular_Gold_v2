@@ -13,6 +13,8 @@ import {IOrder} from "../../../core/models/order.models";
 import {OrderService} from "../../../core/services/order.service";
 import {ToastrService} from "ngx-toastr";
 import {Title} from "@angular/platform-browser";
+import {IPerson} from "../../../core/models/person.models";
+import {UserService} from "../../../core/services/user.service";
 
 
 @Component({
@@ -33,6 +35,8 @@ export class DefaultComponent implements OnInit {
   rejectComment: '';
   mas: IPrices[];
   orders:  IOrder[]= [];
+  personsLoading = false;
+  persons: IPerson[];
   rejectedOrder : IOrder;
   selectedPrice: IPrices;
   myBalance = new MyBalance();
@@ -45,6 +49,7 @@ export class DefaultComponent implements OnInit {
   orderForm = this.fb.group({
     id: [],
     transaction_type: [null],
+    personId: [null],
     quantity: [null, [Validators.min(0),]],
     fee: [null, Validators.required],
     priceGroupId: [null, Validators.required],
@@ -69,6 +74,7 @@ export class DefaultComponent implements OnInit {
               private reportService: ReportsService,
               private ws: WebsocketService,
               private toastr: ToastrService,
+              private userService: UserService,
               private orderService: OrderService,
               private auth: AuthenticationService,
               private eventService: EventService) {
@@ -87,31 +93,29 @@ export class DefaultComponent implements OnInit {
 
     this.ws.price.subscribe(msg => {
       this.mas = msg;
-      console.log(this.mas);
+      console.log("mass issss", this.mas);
     });
 
     this.ws.orders.subscribe(ord => {
-      console.log('ooooooooooooooooooooooooooo',ord);
-      // this.orders = ord;
       this.manageOrders(ord)
     });
-    this.setPriceForm.patchValue({
-      ab: false,
-      as: false,
-      price: 112500000,
-    });
-    let setPrice = {
-      ab: false,
-      as: true,
-      price: 9500000
-    }
-    this.setPrice = setPrice;
+    // this.setPriceForm.patchValue({
+    //   ab: false,
+    //   as: false,
+    //   price: 112500000,
+    // });
+    // let setPrice = {
+    //   ab: false,
+    //   as: true,
+    //   price: 9500000
+    // }
+    // this.setPrice = setPrice;
 
 
     this.auth.getLastPriceList().subscribe(res => {
       console.log(res.body);
       this.mas = res.body;
-      console.log(this.mas);
+      console.log("mas is", this.mas);
       this.setPriceForm.patchValue({
         price: this.mas[0].base,
       });
@@ -120,8 +124,19 @@ export class DefaultComponent implements OnInit {
     this.orderService.getOrderToday().subscribe(res => {
       this.manageOrders(res.body)
     })
+    this.loadPersons()
   }
+
+  private loadPersons() {
+    this.personsLoading = true;
+    this.userService.getAllPersons().subscribe(res => {
+      this.persons = res.body;
+      this.personsLoading = false;
+    })
+  }
+
   manageOrders(ords) {
+    console.log(ords);
     var self = this;
       ords.forEach(function (ord) {
 
@@ -255,4 +270,23 @@ export class DefaultComponent implements OnInit {
     this.ws.orderToUnconfirm(this.rejectedOrder)
     this.rejectComment = ''
   }
+
+  CantRemitGold() {
+    this.toastr.error("با توجه به مانده طلا امکان حواله وجود ندارد")
+  }
+
+  remitGold(remit) {
+    this.modalService.open(remit);
+  }
+
+  changeSelectPerson($event: any) {
+    console.log($event);
+    document.getElementById('description').focus();
+
+  }
+  sellStatusChange(status){
+    console.log(status.checked);
+    this.ws.changeSellStatus(status.checked)
+  }
+
 }

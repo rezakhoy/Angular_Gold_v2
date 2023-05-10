@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
 import {MyTransaction} from "../../core/models/customer-transction.models";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -30,23 +31,19 @@ export class TransactionsComponent implements OnInit {
   @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
   public isCollapsed = true;
 
-  constructor(public service: AdvancedService,  ) {
+  constructor(public service: AdvancedService,private titleService: Title,  ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
   }
 
   ngOnInit() {
 
-
+    this.titleService.setTitle(" لیست تراکنش ها")
     this.service.tables$.subscribe(res => {
 
     })
 
   }
-  //
-  // changeValue(i) {
-  //   this.hideme[i] = !this.hideme[i];
-  // }
 
 
 

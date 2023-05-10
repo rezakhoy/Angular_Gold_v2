@@ -40,6 +40,9 @@ export class UsersComponent implements OnInit {
   priceGroupLoading = false;
   permissions: IPermission[];
   priceGroups: IPriceGroup[];
+  persons: IPerson[];
+  groups: IGroup[];
+
 
   @ViewChildren(AdvancedSortableDirectiveUsers) headers: QueryList<AdvancedSortableDirectiveUsers>;
   public isCollapsed = true;
@@ -48,8 +51,8 @@ export class UsersComponent implements OnInit {
     keyboard : false
   };
 
-  persons: IPerson[];
-  groups: IGroup[];
+
+
 
 
   createUserForm = this.fb.group({

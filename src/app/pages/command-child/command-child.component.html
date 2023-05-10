@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex flex-wrap border-bottom pb-2">
-          <h4> {{child.name }} -- {{child.amount}}</h4>
+          <h4> {{child.name }} -- {{child.amount | number}}</h4>
           <div class="ms-auto mt-auto">
           <button class="btn  btn-primary"  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
           </div>
@@ -16,7 +16,7 @@
             <div class="col-md-3"  *ngFor="let pay of child.payInformationList ">
               <div class="card ">
                 <div class="card-body ">
-                  <h4 class="card-title"> مبلغ : {{pay.amount}}  </h4>
+                  <h4 class="card-title"> مبلغ : {{pay.amount | number}}  </h4>
                   <p class="card-title-desc">  شرح : {{pay.description}}  </p>
                   <div class="row text-center ">
                     <div class="col-6">

@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-          <div class="row" *permissionAnyOf="['user']" >
+          <div class="row" *permissionOnly="['user']" >
             <div class="col-lg-6">
               <div class="card mini-stats-wid">
                 <div class="card-body">
@@ -12,7 +12,8 @@
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
-                      <button class="btn btn-sm w-md btn-primary "  href="">حواله طلا </button>
+                      <button class="btn btn-sm w-md btn-primary " *ngIf="myBalance.balance_v>0" (click)="remitGold(remitModal)">حواله طلا </button>
+                      <button class="btn btn-sm w-md btn-primary " *ngIf="myBalance.balance_v<=0" (click)="CantRemitGold()">حواله طلا </button>
                     </div>
                   </div>
                 </div>
@@ -24,11 +25,12 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-dollar-circle"></i></span>  مانده ریالی</p>
-                      <h5 class="mb-0"> <span  class="badge font-size-14 p-2" [ngClass]="myBalance.balance_v > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{myBalance.balance_r | number}} ریال </span>
+                      <h5 class="mb-0"> <span  class="badge font-size-14 p-2" [ngClass]="myBalance.balance_r > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{myBalance.balance_r | number}} ریال </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
-                      <button class="btn btn-sm w-md btn-primary "  href="">برداشت </button>
+                      <button class="btn btn-sm w-md btn-primary " *ngIf="myBalance.balance_r>0" (click)="remitGold(remitModal)">درخواست وجه </button>
+                      <button class="btn btn-sm w-md btn-primary " *ngIf="myBalance.balance_r<=0" (click)="CantRemitGold()">درخواست حساب </button>
                     </div>
                   </div>
                 </div>
@@ -142,24 +144,25 @@
           </div>
         </div>
     </div>
-  <div class="row">
-    <div class="col-md-6"  *permissionAnyOf="['user']" [ngClass]="">
+  <div class="row" *permissionOnly="['user']">
+    <div class="col-md-6"   >
       <div class="card " >
         <div class="">
           <div class="card-body  justify-content-center ">
             <div class="text-center">
               <div class="row ">
                 <div class="align-content-center">
+
                   <div class="row mt-3"  *ngFor="let m of mas ">
 
                       <div class="col-md-4">
-                        <button class="btn btn-success btn-block " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button>
+                        <button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button>
                       </div>
                       <div class="col-md-4">
                         <span>{{m.priceGroupName}}</span>
                       </div>
                       <div class="col-md-4">
-                        <button class="btn btn-danger btn-block " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button>
+                        <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button>
                       </div>
 
 
@@ -173,10 +176,10 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div  *ngIf="orders"  >
+      <div *ngIf="orders?.length > 0"  >
         <div class="card">
           <div class="card-body">
-            <div class="table-responsive table-hover fs-14  " *ngIf="orders?.length > 0">
+            <div class="table-responsive table-hover fs-14  " >
               <table class="table display mb-4 dataTablesCard dataTable border-no font-w600  card-table text-black">
 
                 <tr class="align-middle">
@@ -221,16 +224,21 @@
 
 
 
-  <div class="row" *permissionAnyOf="['admin']">
+  <div class="row" *permissionAnyOf="['admin', 'acc']">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body" >
               <div class="row">
+                <div class="form-check form-check-danger mb-3">
+                  <input class="form-check-input" (click)="sellStatusChange($event.target)" type="checkbox" id="formCheck1">
+                  <label class="form-check-label" for="formCheck1">
+                    فروش
+                  </label>
+                </div>
                 <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
                   <div class="table-responsive table-hover fs-14 ">
                     <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
                       <tr>
-
                         <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="5000"></ngx-number-spinner></td>
                       </tr>
 
@@ -245,9 +253,9 @@
                   <p>قیمت</p>
                   <tr *ngFor="let m of mas " class="pb-4 ">
                     <td class="col-sm-4 col-md-4">
-                      <button class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></td>
+                      <button  class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  {{m.activeBuy}} </button></td>
                     <td  class="col-sm-4 col-4">{{m.priceGroupName}}</td>
-                    <td  class="col-sm-4 col-4"> <button class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></td>
+                    <td  class="col-sm-4 col-4"> <button  class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}} {{m.activeSell}}  </button></td>
                   </tr>
                 </table>
               </div>
@@ -257,7 +265,49 @@
         </div>
       </div>
     </div>
+    <div *ngIf="orders?.length > 0"  >
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive table-hover fs-14  " >
+            <table class="table display mb-4 dataTablesCard dataTable border-no font-w600  card-table text-black">
 
+              <tr class="align-middle">
+                <td>مشتری</td>
+                <td> نوع درخواست</td>
+                <td>مقدار</td>
+                <td>نرخ </td>
+                <td>توضیحات</td>
+                <td>وضعیت</td>
+                <td *permissionAnyOf="['admin', 'acc']">عملیات</td>
+              </tr>
+              <tr *ngFor="let order of orders; let i = index">
+                                  <td  *permissionIf="'admin'"> {{order.name}}</td>
+                <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
+                <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
+
+                <td>{{order.amount | number : '1.0-3'}}</td>
+                <td>{{order.price | number}}</td>
+                <td>{{order.description}}</td>
+                <td >
+                  <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > در انتظار </span>
+                  <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-12 bg-danger p-1">تایید نشده</span>
+                  <span *ngIf="order.status === 'REJECT'" class="badge font-size-12 bg-warning p-1">بدون پاسخ </span>
+                  <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
+                </td>
+
+                <td *permissionAnyOf="['admin', 'acc']">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'" (click)="confirmOrder(order)">تایید</button>
+                    <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
+                  </div>
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
 
   </div>
@@ -287,6 +337,17 @@
             <span>فروش آبشده به ما با نرخ    {{orderForm.get('fee').value| number}}</span>
 
           </p>
+        </div>
+        <div class="col-md-12" *permissionAnyOf="['admin', 'acc']" >
+          <label  class="form-label">طرف حساب: </label>
+          <ng-select [items]="persons"
+                     autofocus="true"
+                     notFoundText = "مشتری با این نام وجود ندارد!"
+                     bindLabel="name"
+                     formControlName="personId"
+                     bindValue="id"
+                     [loading]="personsLoading">
+          </ng-select>
         </div>
         <div class="col-md-12">
           <label for="quantity" class="form-label">مقدار درخواست: </label>
@@ -323,6 +384,44 @@
       <option value="با عرض پوزش به علت تغییر مظنه تایید نشد">با عرض پوزش به علت تغییر مظنه تایید نشد</option>
       <option value=" مقدار درخواست خارج از محدوده"> مقدار درخواست خارج از محدوده</option>
     </select>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss('cancel click')">انصراف</button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="modal.dismiss(unconfirmOrder(rejectComment))">تایید</button>
+  </div>
+</ng-template>
+
+<ng-template #remitModal let-modal>
+  <div class="modal-header">
+    <h4>حواله طلا</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+    <div class="col-md-12"  >
+      <label  class="form-label">طرف حساب: </label>
+      <ng-select [items]="persons"
+                 autofocus="true"
+                 notFoundText = "مشتری با این نام وجود ندارد! جهت حواله تماس بگیرید"
+                 bindLabel="name"
+                 (change)="changeSelectPerson($event)"
+                 bindValue="id"
+                 [loading]="personsLoading">
+      </ng-select>
+    </div>
+    <div class="col-md-12">
+      <label for="amount" class="form-label">مقدار:</label>
+      <input type="number"   class="form-control"
+             id="amount">
+    </div>
+    <div class="col-md-12">
+      <label for="description" class="form-label">شرح :</label>
+      <input type="text"   class="form-control"
+             id="description">
+    </div>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss('cancel click')">انصراف</button>

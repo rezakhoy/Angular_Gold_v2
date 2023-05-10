@@ -155,5 +155,22 @@ export class WebsocketService {
       JSON.stringify(order),
     )
   }
+  public changeSellStatus(status: boolean) {
+    console.log(" in wsssssssssssss",status);
+    if(status){
+      this.stompClient.send(
+        '/active-sell',
+        {},
+        true
+      )
+    }else {
+      this.stompClient.send(
+        '/deactive-sell',
+        {},
+        false
+      )
+    }
+
+  }
 
 }

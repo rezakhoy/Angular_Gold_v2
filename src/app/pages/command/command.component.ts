@@ -151,24 +151,9 @@ export class CommandComponent implements OnInit {
   }
 
   getListChildCommand(id: number, modal) {
-    // const url = `command/`+id;
-    // window.open(url, '_blank');
-
-
     const url = this.route.serializeUrl(
       this.route.createUrlTree(['/command/']));
-
     window.open( url+'/'+id , '_blank');
-
-    // this.commandService.getCommandChild(id).subscribe(res => {
-    //   this.commandChildren = res.body;
-    //   console.log(this.commandChildren);
-    //   this.modalService.open(modal, {
-    //     backdrop: 'static',
-    //     keyboard: false,
-    //     size: 'xl'
-    //   })
-    // })
   }
 
   getClearCommandChild(table: Command, commandChildInformation) {

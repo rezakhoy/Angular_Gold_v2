@@ -29,7 +29,11 @@ export class LoginComponent implements OnInit {
               private router: Router,
               private authenticationService: AuthenticationService,
               private roleService: PermissionService
-              ) { }
+              ) {
+    if (localStorage.getItem('authorization')) {
+      this.router.navigate(['/'], );
+    }
+  }
 
   ngOnInit() {
     this.titleService.setTitle("سکه و آبشده حمزه نژاد | ورود")
@@ -37,12 +41,6 @@ export class LoginComponent implements OnInit {
       'username' : new FormControl(null, [Validators.required]),
       'password' : new FormControl(null, [Validators.required, Validators.minLength(6)])
     });
-    //
-    // // reset login status
-    // // this.authenticationService.logout();
-    // // get return url from route parameters or default to '/'
-    // // tslint:disable-next-line: no-string-literal
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
