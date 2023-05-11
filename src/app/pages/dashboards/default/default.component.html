@@ -42,7 +42,7 @@
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i
-                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
+                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
 
                   <div class="row">
                     <div class="col-6">
@@ -69,7 +69,7 @@
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i
-                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> هفتگی </p>
+                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> هفتگی </p>
 
                   <div class="row">
                     <div class="col-6">
@@ -94,7 +94,7 @@
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i
-                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> ماهانه </p>
+                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> ماهانه </p>
 
                   <div class="row">
                     <div class="col-6">
@@ -108,7 +108,7 @@
                       <div>
                         <h5 class="text-success">{{adminBalance.month_avg_maz_8x | number : '.0-0'}} </h5>
                         <h5 class="text-danger">{{adminBalance.month_avg_maz_9x | number : '.0-0'}}</h5>
-                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.month_avg_maz_8x - adminBalance.month_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.month_avg_maz_8x - adminBalance.month_avg_maz_9x) | number : '.0-0' }} </p>
+                        <p class="badge font-size-14 " [ngClass]="(adminBalance.month_avg_maz_8x - adminBalance.month_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.month_avg_maz_8x - adminBalance.month_avg_maz_9x) | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>
@@ -119,21 +119,21 @@
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i
-                    class="mdi mdi-ethereum h2 text-primary align-middle mb-0 me-3"></i> کل </p>
+                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> کل </p>
 
                   <div class="row">
                     <div class="col-6">
                       <div>
                         <h5 class="text-success">{{adminBalance.total_sum_8x |  number : '.2-2'}} </h5>
                         <h5 class="text-danger">{{adminBalance.total_sum_9x | number : '.2-2'}} </h5>
-                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.total_sum_8x - adminBalance.total_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_sum_8x - adminBalance.total_sum_9x) | number : '.2-2' }} </p>
+                        <p class="badge font-size-14 " [ngClass]="(adminBalance.total_sum_8x - adminBalance.total_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_sum_8x - adminBalance.total_sum_9x) | number : '.2-2' }} </p>
                       </div>
                     </div>
                     <div class="col-6">
                       <div>
                         <h5 class="text-success">{{adminBalance.total_avg_maz_8x | number : '.0-0'}} </h5>
                         <h5 class="text-danger">{{adminBalance.total_avg_maz_9x | number : '.0-0'}}</h5>
-                        <p class="badge font-size-14 p-2" [ngClass]="(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) | number : '.0-0' }} </p>
+                        <p class="badge font-size-14 " [ngClass]="(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>
@@ -199,7 +199,10 @@
                   <td>{{order.price | number}}</td>
                   <td>{{order.description}}</td>
                   <td >
-                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > در انتظار </span>
+                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > در انتظار
+
+
+                    </span>
                     <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-12 bg-danger p-1">تایید نشده</span>
                     <span *ngIf="order.status === 'REJECT'" class="badge font-size-12 bg-warning p-1">بدون پاسخ </span>
                     <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
@@ -381,7 +384,7 @@
   </div>
   <div class="modal-body">
     <select class="form-select me-sm-2 wide" aria-label="Default select example" [(ngModel)]="rejectComment" id="rejectComment">
-      <option value="با عرض پوزش به علت تغییر مظنه تایید نشد">با عرض پوزش به علت تغییر مظنه تایید نشد</option>
+      <option value="با عرض پوزش به علت تغییر مظنه تایید نشد">  تغییر مظنه </option>
       <option value=" مقدار درخواست خارج از محدوده"> مقدار درخواست خارج از محدوده</option>
     </select>
   </div>

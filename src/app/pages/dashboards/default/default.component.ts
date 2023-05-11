@@ -35,6 +35,7 @@ export class DefaultComponent implements OnInit {
   rejectComment: '';
   mas: IPrices[];
   orders:  IOrder[]= [];
+  requestedOrders:  IOrder[]= [];
   personsLoading = false;
   persons: IPerson[];
   rejectedOrder : IOrder;
@@ -57,7 +58,7 @@ export class DefaultComponent implements OnInit {
     status: [null, Validators.required],
     comment: [null, Validators.required]
   });
-  goldOrderForm = this.fb.group({
+  goldRemitForm = this.fb.group({
     id: [],
     amount: [null, [Validators.min(0)]],
     to: [null, Validators.required],
@@ -136,7 +137,6 @@ export class DefaultComponent implements OnInit {
   }
 
   manageOrders(ords) {
-    console.log(ords);
     var self = this;
       ords.forEach(function (ord) {
 
@@ -145,7 +145,21 @@ export class DefaultComponent implements OnInit {
           } else {
             const mainObjectIndex = self.orders.findIndex((mainObject) => mainObject.id === ord.id);
             if (mainObjectIndex !== -1 ) {
+             // @ts-ignore
+              if ( self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'CONFIRM'){
+                console.log(ord);
+                self.toastr.success(` درخواست ${ord.type ==='SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم  تایید و ثبت گردید`)
+                self.reportService.myBalance().subscribe(res => {
+                  self.myBalance = res.body;
+                });
+             }
+              // @ts-ignore
+              if ( self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'UNCONFIRM'){
+                console.log(ord);
+                self.toastr.error(` درخواست ${ord.type ==='SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم به دلیل  ${ord.description} تایید نشد `)
+              }
               self.orders[mainObjectIndex] = ord;
+
             } else {
               self.orders.push(ord);
               if (self.orders.length>5){
@@ -225,7 +239,6 @@ export class DefaultComponent implements OnInit {
   }
 
   saveGoldOrder() {
-    console.log(this.orderForm.value);
     const order = JSON.stringify({
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,
@@ -281,7 +294,7 @@ export class DefaultComponent implements OnInit {
 
   changeSelectPerson($event: any) {
     console.log($event);
-    document.getElementById('description').focus();
+    document.getElementById('amount').focus();
 
   }
   sellStatusChange(status){

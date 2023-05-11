@@ -144,7 +144,7 @@
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
         <div class="col-md-6">
-          <label  class="form-label">گروه دسترسی </label>
+          <label  class="form-label">گروه قیمتی </label>
           <ng-select [items]="priceGroups"
 
                      notFoundText = "گروه دسترسی وجود ندارد !"
@@ -174,13 +174,13 @@
         <div class="col-md-6">
           <label for="genderEnum" class="form-label">جنسیت </label>
           <select class="form-select" formControlName="genderEnum" id="genderEnum">
-            <option value="MALE">مرد</option>
+            <option value="MALE" [defaultSelected]="true">مرد</option>
             <option value="FEMALE">زن </option>
           </select>
         </div>
         <div class="col-md-6">
           <label for="email" class="form-label"> ایمیل</label>
-          <input type="email"  formControlName="email" class="form-control" id="email">
+          <input type="email" autocomplete="off" formControlName="email" class="form-control" id="email">
         </div>
         <div class="col-md-6">
           <label for="cellPhone" class="form-label">موبایل</label>
@@ -190,18 +190,19 @@
           <label for="phoneNumber" class="form-label"> تلفن ثابت</label>
           <input type="text"  formControlName="phoneNumber" class="form-control" id="phoneNumber">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-4">
+          <label for="address" class="form-label">  آدرس</label>
+          <input type="text"  formControlName="address" class="form-control" id="city">
+        </div>
+        <div class="col-md-8">
           <label for="address" class="form-label">  آدرس</label>
           <input type="text"  formControlName="address" class="form-control" id="address">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <label for="password" class="form-label">رمز ورود</label>
           <input type="password"  formControlName="password" class="form-control" id="password">
         </div>
-        <div class="col-md-6">
-          <label for="password1" class="form-label">تکرار رمز ورود</label>
-          <input type="password1"  formControlName="password1" class="form-control" id="password1">
-        </div>
+
       </div>
     </div>
     <div class="modal-footer">

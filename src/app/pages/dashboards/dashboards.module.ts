@@ -17,24 +17,25 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
 import {PermissionModule} from "ng2-permission";
 import {NgSelectModule} from "@ng-select/ng-select";
 
+
 @NgModule({
   declarations: [DefaultComponent],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DashboardsRoutingModule,
-        UIModule,
-        NgbDropdownModule,
-        NgbTooltipModule,
-        NgbNavModule,
-        WidgetModule,
-        NgApexchartsModule,
-        SimplebarAngularModule,
-        NgxNumberSpinnerModule,
-        CurrencyMaskModule,
-        PermissionModule,
-        NgSelectModule
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DashboardsRoutingModule,
+    UIModule,
+    NgbDropdownModule,
+    NgbTooltipModule,
+    NgbNavModule,
+    WidgetModule,
+    NgApexchartsModule,
+    SimplebarAngularModule,
+    NgxNumberSpinnerModule,
+    CurrencyMaskModule,
+    PermissionModule,
+    NgSelectModule,
+  ]
 })
 export class DashboardsModule { }

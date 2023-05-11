@@ -22,6 +22,7 @@ import {ToastrModule} from "ngx-toastr";
 
 
 
+
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
