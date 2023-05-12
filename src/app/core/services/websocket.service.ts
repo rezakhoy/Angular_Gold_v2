@@ -7,6 +7,8 @@ import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthenticationService} from "./auth.service";
 import {IOrder} from "../models/order.models";
+import {RoleStore} from "ng2-permission";
+import {PermissionService} from "./permission.service";
 
 
 @Injectable({
@@ -21,10 +23,14 @@ export class WebsocketService {
   price: Subject<IPrices[]> = new Subject();
   orders: Subject<IOrder[]> = new Subject();
 
-  constructor(public authService: AuthenticationService) {
+  constructor(public authService: AuthenticationService, private permissionService: PermissionService,) {
     authService.getUser().subscribe(user => {
       this.user = user.body;
+      const roles = user.body.groups.map(function(a) {return a.name;});
+      console.log("roooooooooooooles", roles);
+      this.permissionService.seRole(roles)
     });
+
 
   }
 
@@ -50,6 +56,7 @@ export class WebsocketService {
     const orders = [];
 
     function managePrices(body) {
+
       if (prices.length === 0) {
         prices.push(body);
       } else {
@@ -98,9 +105,10 @@ export class WebsocketService {
     this.stompClient.connect({Authorization: localStorage.getItem('authorization')}, function (frame) {
 
       _this.setConnected(true);
+      console.log('wwwwwwwwwwwwwyyyyyyyyyyy', _this.permissionService.hasPermission('admin'));
       if (user) {
-        // console.log("++++++++++++++++++",  user);
-        // console.log('------------------', user.priceGroups);
+
+
         // if (user.username === 'admin'){
         //   console.log('user is admin');
         _this.stompClient.subscribe('/gold/order', function (alert) {
@@ -161,13 +169,11 @@ export class WebsocketService {
       this.stompClient.send(
         '/active-sell',
         {},
-        true
       )
     }else {
       this.stompClient.send(
         '/deactive-sell',
         {},
-        false
       )
     }
 

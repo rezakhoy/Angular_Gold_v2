@@ -31,5 +31,7 @@ export class PermissionService {
   clearStore(){
     this.roleStore.clearStore();
  }
-
+  hasPermission(per){
+    return this.roleStore.hasRoleDefinition(per)
+  }
 }

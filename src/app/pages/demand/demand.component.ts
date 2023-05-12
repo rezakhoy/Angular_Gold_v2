@@ -57,7 +57,7 @@ export class DemandComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(" لیست  مطالبات ")
-    this.reportService.adminDemandList().subscribe(res => {
+    this.reportService.getRiskList().subscribe(res => {
       this.demands = res.body;
       console.log(this.demands);
     })

@@ -4,6 +4,7 @@ export class IDemand {
   balance_v: number;
   balance_r: number;
   audienceId: number;
+  risk_amount: number;
 
 }
 
@@ -14,6 +15,7 @@ export class Demand implements IDemand {
   public balance_v = 0,
   public balance_r = 0,
   public audienceId = 0,
+  public risk_amount = 0,
   ) {
   }
 }

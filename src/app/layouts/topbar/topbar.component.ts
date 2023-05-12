@@ -36,6 +36,7 @@ export class TopbarComponent implements OnInit {
               public _cookiesService: CookieService) {
     authService.getUser().subscribe(res => {
       this.user = res.body;
+      console.log(this.user);
       const roles = res.body.groups.map(function(a) {return a.name;});
       console.log("roooooooooooooles", roles);
       this.permissionService.seRole(roles)

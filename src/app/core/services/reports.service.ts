@@ -28,6 +28,11 @@ export class ReportsService {
   adminDemandList(): Observable<HttpResponse<Demand[]>> {
     return this.http.get<any>(`${API_URL}admin-demands-list`, {  observe: 'response' });
   }
+
+  getRiskList(): Observable<HttpResponse<Demand[]>> {
+    return this.http.get<any>(`${API_URL}get-risk-list`, {  observe: 'response' });
+  }
+
   adminDemand(): Observable<HttpResponse<IAdminDemand>> {
     return this.http.get<any>(`${API_URL}admin-demands`, {  observe: 'response' });
   }

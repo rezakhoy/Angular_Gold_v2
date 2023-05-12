@@ -55,6 +55,7 @@ export class DefaultComponent implements OnInit {
     fee: [null, Validators.required],
     priceGroupId: [null, Validators.required],
     price: [null, Validators.required],
+    userId: [null],
     status: [null, Validators.required],
     comment: [null, Validators.required]
   });
@@ -243,10 +244,10 @@ export class DefaultComponent implements OnInit {
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,
       'amount': this.orderForm.get('quantity').value,
+      'userId': this.orderForm.get('userId').value,
       'priceGroupId': this.orderForm.get('priceGroupId').value,
       'baseProductId': 1,
-      'description': "des"
-
+      'description': ""
     })
     console.log(order);
     this.ws.sendOrder(order);
@@ -259,7 +260,6 @@ export class DefaultComponent implements OnInit {
       price
     });
   }
-
 
   culcQuantity() {
       const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3317;
@@ -278,6 +278,7 @@ export class DefaultComponent implements OnInit {
     this.rejectedOrder = order;
     this.modalService.open(reject);
   }
+
   unconfirmOrder(comment) {
     this.rejectedOrder.description = comment;
     this.ws.orderToUnconfirm(this.rejectedOrder)
@@ -297,6 +298,7 @@ export class DefaultComponent implements OnInit {
     document.getElementById('amount').focus();
 
   }
+
   sellStatusChange(status){
     console.log(status.checked);
     this.ws.changeSellStatus(status.checked)

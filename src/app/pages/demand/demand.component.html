@@ -51,6 +51,14 @@
 
       </ng-template>
     </ngx-datatable-column>
+    <ngx-datatable-column prop="risk_amount" [flexGrow]="1">
+      <ng-template let-column="columns" let-sort="sortFn" ngx-datatable-header-template>
+        <span class="mobile-hidden "> ریسک </span>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <span class="mobile-hidden ">{{ value |number }}</span>
+      </ng-template>
+    </ngx-datatable-column>
 
   </ngx-datatable>
           </div>

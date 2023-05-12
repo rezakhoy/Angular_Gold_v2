@@ -13,6 +13,7 @@ import {API_URL} from "../../../environments/environment";
 import {AdvancedSortableDirective, SortEvent} from "../transactions/advanced-sortable.directive";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
+import {HttpEvent, HttpEventType} from "@angular/common/http";
 
 @Component({
   selector: 'app-advancedtable',
@@ -48,6 +49,8 @@ export class CommandComponent implements OnInit {
   audiences: IAudiences[];
   audiencesLoading = false;
   commandChildren: ICommandChild[];
+  preview: string;
+  percentDone: any = 0;
 
   commandForm = this.fb.group({
     id: [],
@@ -59,10 +62,21 @@ export class CommandComponent implements OnInit {
     bankName: [null, Validators.required],
     accountOwnerName: [null, Validators.required]
   });
+
   commandChildForm = this.fb.group({
     audienceId:[],
     amount: [null, [Validators.min(10000)]],
     commandId: [null, Validators.required],
+  });
+
+  payInfoForm = this.fb.group({
+    payImage:[null],
+    personId:[null],
+    description:[],
+
+    amount: [null, Validators.required],
+    commandChildId: [null, Validators.required],
+    receiptNumber: [null, Validators.required],
   });
 
   constructor(public service: AdvancedService,
@@ -97,7 +111,11 @@ export class CommandComponent implements OnInit {
       this.audiencesLoading = false;
     })
   }
+  changeSelectPerson($event: any) {
+    console.log($event);
+    document.getElementById('amount').focus();
 
+  }
   /**
    * fetches the table value
    */
@@ -133,13 +151,16 @@ export class CommandComponent implements OnInit {
     this.modalService.open(cgf, this.ngbModalOptions);
       // document.getElementById('amount').focus();
 
+
   }
 
 
   saveCommandChild() {
     let commandChild = this.commandChildForm.value
     this.commandService.createReceiveCommandChild(commandChild).subscribe(res => {
-      console.log(res);
+      this.commandService.getAllCommand().subscribe(res => {
+       this.service.commands = res.body;
+      })
     })
   }
 
@@ -158,5 +179,57 @@ export class CommandComponent implements OnInit {
 
   getClearCommandChild(table: Command, commandChildInformation) {
 
+  }
+
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    console.log(file);
+    this.payInfoForm.patchValue({
+      payImage: file
+    });
+    this.payInfoForm.get('payImage').updateValueAndValidity()
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
+
+  submitForm() {
+    var formData: any = new FormData();
+    console.log(this.payInfoForm.value);
+    const payInfo = {
+      amount: this.payInfoForm.get('amount').value,
+      description: this.payInfoForm.get('description').value,
+      receiptNumber:this.payInfoForm.get('receiptNumber').value,
+      commandChildId:this.payInfoForm.get('commandChildId').value,
+    }
+    // @ts-ignore
+    formData.append('payInfo', JSON.stringify(payInfo) )
+    formData.append('payImage',  this.payInfoForm.value.payImage)
+
+    this.commandService.createPayInfo(formData).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+          this.percentDone = Math.round(event.loaded / event.total * 100);
+          console.log(`Uploaded! ${this.percentDone}%`);
+          break;
+        case HttpEventType.Response:
+          console.log('User successfully created!', event.body);
+          this.percentDone = false;
+          this.commandService.getAllCommand().subscribe(res => {
+            this.service.commands = res.body;
+
+          })
+          break;
+      }
+    })
   }
 }

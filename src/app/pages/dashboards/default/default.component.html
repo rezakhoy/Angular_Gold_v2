@@ -347,17 +347,22 @@
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"
-                     formControlName="personId"
+                     formControlName="userId"
                      bindValue="id"
                      [loading]="personsLoading">
           </ng-select>
+        </div>
+        <div class="col-md-12" *permissionAnyOf="['admin', 'acc']">
+          <label for="price" class="form-label">مظنه   :</label>
+          <input type="text" currencyMask   (keyup)="culcQuantity()"  formControlName="price" class="form-control"
+                 id="fee">
         </div>
         <div class="col-md-12">
           <label for="quantity" class="form-label">مقدار درخواست: </label>
           <input type="number"  (keyup)="culcPrice()" formControlName="quantity" class="form-control" id="quantity">
         </div>
         <div class="col-md-12">
-          <label for="price" class="form-label">مبلغ به تومان :</label>
+          <label for="price" class="form-label">مبلغ   :</label>
           <input type="text" currencyMask   (keyup)="culcQuantity()"  formControlName="price" class="form-control"
                  id="price">
         </div>
