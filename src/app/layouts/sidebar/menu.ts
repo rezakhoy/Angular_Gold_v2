@@ -36,10 +36,9 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 12,
-    label: 'دریافت پرداخت',
+    label: 'دریافت پرداخت (فیش)',
     icon: 'bx bxs-user-detail',
     link: '/command-list',
-    per: ['admin', 'acc']
   },
   {
     id: 5,
