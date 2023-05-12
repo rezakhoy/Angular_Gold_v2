@@ -101,18 +101,6 @@ export class DefaultComponent implements OnInit {
     this.ws.orders.subscribe(ord => {
       this.manageOrders(ord)
     });
-    // this.setPriceForm.patchValue({
-    //   ab: false,
-    //   as: false,
-    //   price: 112500000,
-    // });
-    // let setPrice = {
-    //   ab: false,
-    //   as: true,
-    //   price: 9500000
-    // }
-    // this.setPrice = setPrice;
-
 
     this.auth.getLastPriceList().subscribe(res => {
       console.log(res.body);
@@ -244,7 +232,6 @@ export class DefaultComponent implements OnInit {
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,
       'amount': this.orderForm.get('quantity').value,
-      'userId': this.orderForm.get('userId').value,
       'priceGroupId': this.orderForm.get('priceGroupId').value,
       'baseProductId': 1,
       'description': ""
@@ -304,4 +291,17 @@ export class DefaultComponent implements OnInit {
     this.ws.changeSellStatus(status.checked)
   }
 
+  saveAdminGoldOrder() {
+    const order = JSON.stringify({
+      'price': this.orderForm.get('fee').value,
+      'type': this.orderForm.get('transaction_type').value,
+      'amount': this.orderForm.get('quantity').value,
+      'userId': this.orderForm.get('userId').value,
+      'priceGroupId': this.orderForm.get('priceGroupId').value,
+      'baseProductId': 1,
+      'description': ""
+    })
+    console.log(order);
+    this.ws.orderToConfirm(order);
+  }
 }

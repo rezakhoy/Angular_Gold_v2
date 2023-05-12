@@ -94,10 +94,15 @@ export class WebsocketService {
             managePrices(JSON.parse(alert.body));
           });
         });
-        _this.stompClient.subscribe('/gold/order', function (alert) {
-          console.log(JSON.parse(alert.body));
-          manageOrder(JSON.parse(alert.body))
-        });
+        if (_this.permissionService.hasPermission('admin')|| _this.permissionService.hasPermission('acc')){
+          _this.stompClient.subscribe('/gold/order', function (alert) {
+            manageOrder(JSON.parse(alert.body))
+          });
+        }else {
+          _this.stompClient.subscribe('/gold/my-order/' + user.id, function (alert) {
+            manageOrder(JSON.parse(alert.body))
+          });
+        }
       })
     }
 
@@ -105,16 +110,17 @@ export class WebsocketService {
     this.stompClient.connect({Authorization: localStorage.getItem('authorization')}, function (frame) {
 
       _this.setConnected(true);
-      console.log('wwwwwwwwwwwwwyyyyyyyyyyy', _this.permissionService.hasPermission('admin'));
       if (user) {
+        if (_this.permissionService.hasPermission('admin')|| _this.permissionService.hasPermission('acc')){
 
-
-        // if (user.username === 'admin'){
-        //   console.log('user is admin');
         _this.stompClient.subscribe('/gold/order', function (alert) {
           manageOrder(JSON.parse(alert.body))
         });
-        // }
+        }else {
+          _this.stompClient.subscribe('/gold/my-order/' + user.id, function (alert) {
+            manageOrder(JSON.parse(alert.body))
+          });
+        }
         user.priceGroups.forEach(group => {
           // tslint:disable-next-line:only-arrow-functions
           _this.stompClient.subscribe('/gold/price/' + group.id, function (alert) {
