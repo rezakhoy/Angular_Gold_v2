@@ -59,4 +59,14 @@ export class PriceGroupComponent implements OnInit {
 
   }
 
+  editPriceGroup(group: IPriceGroup, createGroupForm) {
+    this.groupForm.patchValue({
+      id: group.id,
+      name: group.name,
+      limit : group.limit,
+      difference: group.difference,
+      gap: group.gap
+    })
+    this.modalService.open(createGroupForm, this.ngbModalOptions);
+  }
 }

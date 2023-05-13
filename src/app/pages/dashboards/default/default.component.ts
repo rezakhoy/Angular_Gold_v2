@@ -53,11 +53,11 @@ export class DefaultComponent implements OnInit {
     personId: [null],
     quantity: [null, [Validators.min(0),]],
     fee: [null, Validators.required],
-    priceGroupId: [null, Validators.required],
+    priceGroupId: [],
     price: [null, Validators.required],
     userId: [null],
-    status: [null, Validators.required],
-    comment: [null, Validators.required]
+    status: [],
+    comment: [null]
   });
   goldRemitForm = this.fb.group({
     id: [],
@@ -116,6 +116,7 @@ export class DefaultComponent implements OnInit {
     })
     this.loadPersons()
   }
+
 
   private loadPersons() {
     this.personsLoading = true;
@@ -304,4 +305,5 @@ export class DefaultComponent implements OnInit {
     console.log(order);
     this.ws.orderToConfirm(order);
   }
+
 }
