@@ -56,6 +56,7 @@ export class UsersComponent implements OnInit {
 
 
   createUserForm = this.fb.group({
+    id: [],
     personId: [null, Validators.required],
     groupIds: [null, Validators.required],
     priceGroupIds :[],
@@ -159,5 +160,33 @@ export class UsersComponent implements OnInit {
       this.priceGroupLoading = false;
     })
 
+  }
+
+  editUser(user: User, createUserModal) {
+    let groupIdsList = user.groups.map(item => {
+      return item.id;
+    });
+    let priceGroupIdsList = user.priceGroups.map(item => {
+      return item.id;
+    });
+
+    // @ts-ignore
+    let person:IPerson = user.person
+    this.createUserForm.patchValue({
+      id: user.id,
+      personId: person.id,
+      groupIds: groupIdsList,
+      priceGroupIds : priceGroupIdsList,
+      dateOfBirth: this.jalaliDateService.convertToJalali(new Date(person.dateOfBirth)),
+      genderEnum: person.gender,
+      email: person.email,
+      cellPhone: person.cellPhone,
+      phoneNumber: person.phoneNumber,
+      address: person.phoneNumber,
+      description: [],
+      password: [],
+    })
+
+    this.modalService.open(createUserModal, this.ngbModalOptions);
   }
 }
