@@ -185,4 +185,19 @@ export class WebsocketService {
 
   }
 
+  public changeBuyStatus(status: boolean) {
+    if(status){
+      this.stompClient.send(
+        '/active-buy',
+        {},
+      )
+    }else {
+      this.stompClient.send(
+        '/deactive-buy',
+        {},
+      )
+    }
+
+  }
+
 }

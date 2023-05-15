@@ -52,9 +52,6 @@ export class UsersComponent implements OnInit {
   };
 
 
-
-
-
   createUserForm = this.fb.group({
     id: [],
     personId: [null, Validators.required],
@@ -98,7 +95,6 @@ export class UsersComponent implements OnInit {
     this.personsLoading = true;
     this.userService.getAllPersons().subscribe(res => {
       this.persons = res.body;
-      console.log(this.persons);
       this.personsLoading = false;
     })
   }

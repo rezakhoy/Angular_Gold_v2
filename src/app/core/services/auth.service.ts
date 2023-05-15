@@ -50,30 +50,6 @@ export class AuthenticationService {
   }
 
 
-  /**
-     * Performs the register
-     * @param email email
-     * @param password password
-     */
-    register(username: string, password: string) {
-        return getFirebaseBackend().registerUser(username, password).then((response: any) => {
-            const user = response;
-            return user;
-        });
-    }
-
-    /**
-     * Reset password
-     * @param email email
-     */
-    resetPassword(email: string) {
-        return getFirebaseBackend().forgetPassword(email).then((response: any) => {
-            const message = response.data;
-            return message;
-        });
-    }
-
-
     /**
      * Logout the user
      */
@@ -81,6 +57,21 @@ export class AuthenticationService {
     localStorage.removeItem('authorization');
     this.router.navigate(['/account/login'], );
 
+  }
+  //
+  // refreshToToken(refreshToken){
+  //   return this.http.post<IUser>(`${API_URL}login`, refreshToken);
+  // }
+
+  /**
+   * Reset password
+   * @param email email
+   */
+  resetPassword(email: string) {
+    return getFirebaseBackend().forgetPassword(email).then((response: any) => {
+      const message = response.data;
+      return message;
+    });
   }
 
 }

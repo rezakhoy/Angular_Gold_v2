@@ -41,10 +41,10 @@
               class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
               <thead>
                 <tr>
-                  <th sortable="نام " (sort)="onSort($event)">شماره سند</th>
-                  <th sortable="نام کاربری" (sort)="onSort($event)">تاریخ</th>
+                  <th sortable="نام " (sort)="onSort($event)"> نام</th>
                   <th>موبایل</th>
-
+                  <th>گروهایی قیمتی</th>
+                  <th>گروهایی دسترسی</th>
                   <th> مدیریت</th>
                 </tr>
               </thead>
@@ -54,25 +54,38 @@
                     <ngb-highlight [result]="table.person?.name" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.username" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.person?.phoneNumber" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.person?.phoneNumber" [term]="service.searchTerm"></ngb-highlight>
+
+                      <span *ngFor="let priceGroup of table.priceGroups" >
+                         <ngb-highlight [result]="priceGroup.name" ></ngb-highlight> &nbsp;
+                      </span>
+
+
+                  </td>
+                  <td>
+
+                      <span *ngFor="let group of table.groups" >
+                         <ngb-highlight [result]="group.name" ></ngb-highlight> &nbsp;
+                      </span>
+
+
                   </td>
 
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
+                        <a class="text-primary" href="javascript: void(0);" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
                       </li>
                       <li class="list-inline-item px-2">
                         <a class="text-info" (click)="editUser(table, createUserModal )" ngbTooltip="ویرایش"><i class="bx  bx-edit-alt"></i></a>
                       </li>
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="حذف "><i class="bx bx-user-minus"></i></a>
+                        <a class="text-danger" href="javascript: void(0);" ngbTooltip="غیر فعال سازی "><i class="bx bx-user-minus"></i></a>
                       </li>
                       <li class="list-inline-item px-2">
-                        <a href="javascript: void(0);" ngbTooltip="ریست رمز ورود"><i class="bx bx-user-circle"></i></a>
+                        <a class="text-warning" href="javascript: void(0);" ngbTooltip="ریست رمز ورود"><i class="bx bx-key"></i></a>
                       </li>
                     </ul>
                   </td>

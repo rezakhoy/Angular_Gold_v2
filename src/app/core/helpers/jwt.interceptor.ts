@@ -22,6 +22,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       const token = localStorage.getItem('authorization');
+      const refreshToken = localStorage.getItem('refreshToken');
       let headers = null;
 
       if (token) {
@@ -41,13 +42,16 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(requestChange).pipe(
         map((event: HttpEvent<any>) => event), // pass further respone
         catchError((error: HttpErrorResponse) => {
-          console.log('----------------------------------------------------', error);
           if (error && error.status === 401) {
+
             localStorage.removeItem('authorization');
             this.router.navigate(['/account/login']);
             return throwError(error);
           }
           if (error && error.status === 403) {
+
+            console.log("im in 40000000000000000000000000000000003");
+           this.handellError(403)
             localStorage.removeItem('authorization');
             this.router.navigate(['/account/login']);
             return throwError(error);
@@ -58,4 +62,16 @@ export class JwtInterceptor implements HttpInterceptor {
           }
         }));
     }
+
+  private handellError(number: number) {
+      if (403){
+        console.log("handell error 400000003");
+        this.authService.refreshToken(localStorage.getItem('refreshToken')).subscribe(res => {
+
+          console.log(res);
+
+        })
+      }
+
+  }
 }

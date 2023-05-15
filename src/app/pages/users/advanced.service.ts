@@ -87,6 +87,7 @@ export class AdvancedService {
     constructor(private pipe: DecimalPipe, private authService: AuthenticationService) {
       this.authService.getAllUser().subscribe(res => {
         this.users = res.body;
+        console.log(this.users);
         this._search$.pipe(
           tap(() => this._loading$.next(true)),
           debounceTime(200),

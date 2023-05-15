@@ -288,8 +288,11 @@ export class DefaultComponent implements OnInit {
   }
 
   sellStatusChange(status){
-    console.log(status.checked);
     this.ws.changeSellStatus(status.checked)
+  }
+
+  buyStatusChange(status){
+    this.ws.changeBuyStatus(status.checked)
   }
 
   saveAdminGoldOrder() {
