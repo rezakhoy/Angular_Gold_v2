@@ -1,4 +1,5 @@
 import {IAdminBalance} from "./balance.models";
+import {User} from "./auth.models";
 
 enum Gender {
   MALE = "male",
@@ -16,6 +17,7 @@ export class IPerson {
   city: string;
   description: string;
   pCode: string;
+  vip: boolean;
   gender: Gender;
 }
 
@@ -31,8 +33,15 @@ export class Person implements IPerson {
     public address = '',
     public description = '',
     public pCode = '',
+    public vip = false,
     public gender = Gender.MALE,
   ) {
 
   }
+}
+
+
+export interface PersonSearchResult {
+  tables: Person[];
+  total: number;
 }

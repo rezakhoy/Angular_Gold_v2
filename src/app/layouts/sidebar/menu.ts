@@ -28,6 +28,13 @@ export const MENU: MenuItem[] = [
     per: ['admin']
   },
   {
+    id: 4,
+    label: 'مشتریان',
+    icon: 'bx bxs-user-detail',
+    link: '/persons',
+    per: ['admin', 'acc']
+  },
+  {
     id: 7,
     label: 'مطالبات',
     icon: 'bx bxs-user-detail',

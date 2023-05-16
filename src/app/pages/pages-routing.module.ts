@@ -9,6 +9,7 @@ import {DemandComponent} from "./demand/demand.component";
 import {BankComponent} from "./bank/bank.component";
 import {CommandComponent} from "./command/command.component";
 import {CommandChildComponent} from "./command-child/command-child.component";
+import {PersonComponent} from "./person/person.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent
+  },
+  {
+    path: 'persons',
+    component: PersonComponent
   },
   {
     path: 'price-group',

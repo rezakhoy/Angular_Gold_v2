@@ -38,6 +38,7 @@ import {CommandComponent} from "./command/command.component";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {CommandChildComponent} from "./command-child/command-child.component";
 import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
+import {PersonComponent} from "./person/person.component";
 
 
 
@@ -56,6 +57,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     PriceGroupComponent,
     DemandComponent,
     BankComponent,
+    PersonComponent,
     AdvancedSortableDirective,
     CommandChildComponent,
     UsersComponent,

@@ -2,13 +2,10 @@ import { Injectable, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import {BehaviorSubject, observable, Observable, of, Subject} from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
-
-// import { tableData } from './data';
-import { SortDirection } from './advanced-sortable.directive';
-import {IMyTransaction, MyTransaction, SearchResult} from "../../core/models/customer-transction.models";
-import {ReportsService} from "../../core/services/reports.service";
-import {IUser, User, UserSearchResult} from "../../core/models/auth.models";
 import {AuthenticationService} from "../../core/services/auth.service";
+import {IPerson, Person, PersonSearchResult} from "../../core/models/person.models";
+import { SortDirection } from '../users/advanced-sortable.directive';
+import {UserService} from "../../core/services/user.service";
 
 interface State {
     page: number;
@@ -30,7 +27,7 @@ const compare = (v1: string, v2: string) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
  * @param column Fetch the column
  * @param direction Sort direction Ascending or Descending
  */
-function sort(tables: IUser[], column: string, direction: string): User[] {
+function sort(tables: IPerson[], column: string, direction: string): Person[] {
     if (direction === '' || column === '') {
         return tables;
     } else {
@@ -47,9 +44,13 @@ function sort(tables: IUser[], column: string, direction: string): User[] {
  * @param term Search the value
  * @param pipe
  */
-function matches(tables: User, term: string, pipe: PipeTransform) {
-    return tables.username.toLowerCase().includes(term)
-        || tables.username.toLowerCase().includes(term)
+function matches(tables: Person, term: string, pipe: PipeTransform) {
+    return tables.name?.toLowerCase().includes(term)
+        || tables.pCode?.toLowerCase().includes(term)
+
+
+
+
 }
 
 @Injectable({
@@ -59,13 +60,13 @@ function matches(tables: User, term: string, pipe: PipeTransform) {
 
 
 export class AdvancedService {
-    public users: IUser[];
+    public users: IPerson[];
     // tslint:disable-next-line: variable-name
     private _loading$ = new BehaviorSubject<boolean>(true);
     // tslint:disable-next-line: variable-name
     private _search$ = new Subject<void>();
     // tslint:disable-next-line: variable-name
-    private _tables$ = new BehaviorSubject<User[]>([]);
+    private _tables$ = new BehaviorSubject<Person[]>([]);
     // tslint:disable-next-line: variable-name
     private _total$ = new BehaviorSubject<number>(0);
     // tslint:disable-next-line: variable-name
@@ -80,8 +81,8 @@ export class AdvancedService {
         totalRecords: 0
     };
 
-    constructor(private pipe: DecimalPipe, private authService: AuthenticationService) {
-      this.authService.getAllUser().subscribe(res => {
+    constructor(private pipe: DecimalPipe, private userService: UserService) {
+      this.userService.getAllPersons().subscribe(res => {
         this.users = res.body;
         console.log(this.users);
         this._search$.pipe(
@@ -139,7 +140,7 @@ export class AdvancedService {
     /**
      * Search Method
      */
-    private _search(): Observable<UserSearchResult> {
+    private _search(): Observable<PersonSearchResult> {
         const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
         // 1. sort

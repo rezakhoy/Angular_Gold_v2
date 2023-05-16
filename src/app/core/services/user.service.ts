@@ -20,4 +20,12 @@ export class UserService {
   getAllPersons(): Observable<HttpResponse<IPerson[]>> {
     return this.http.get<any>(`${API_URL}persons`, {  observe: 'response' });
   }
+
+  updatePerson(body: any): Observable<HttpResponse<IPerson>> {
+    return this.http.put<any>(`${API_URL}update-person`, {  observe: 'response' });
+  }
+
+
+
+
 }
