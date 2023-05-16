@@ -243,23 +243,25 @@
 
                 </div>
                 <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
-                  <div class="table-responsive table-hover fs-14 ">
-                    <table class="table mb-4 dataTablesCard dataTable border-no font-w600  text-black">
-                      <tr>
-                        <td>  <ngx-number-spinner formControlName="price"   (change)="setlimit()"  [step]="5000"></ngx-number-spinner></td>
-                      </tr>
-
-                    </table>
-                  </div>
+                        <div class="col-md-12">
+                          <div class="input-group">
+                            <button class="btn btn-success" type="button"
+                                    id="11" (click)="plusPrice()">افزایش</button>
+                            <input type="text"  currencyMask (keyup)="setlimit()"  formControlName="price"    class="form-control text-center"
+                                   id="tt">
+                            <button class="btn btn-danger" type="button"
+                                    id="22" (click)="minesPrice()">کاهش</button>
+                          </div>
+                        </div>
                 </form>
               </div>
-          <div class="text-center">
+          <div class="text-center mt-2">
             <div class="row">
               <div >
                   <div *ngFor="let m of mas " class="row ">
                     <div class="d-flex justify-content-between">
                     <div> <button  class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  {{m.activeBuy}} </button></div>
-                    <div>{{m.priceGroupName}}</div>
+                    <div >{{m.priceGroupName}}</div>
                     <div> <button  class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}} {{m.activeSell}}  </button></div>
                     </div>
                   </div>
