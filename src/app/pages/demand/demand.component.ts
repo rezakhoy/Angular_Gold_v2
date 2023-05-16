@@ -57,7 +57,7 @@ export class DemandComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(" لیست  مطالبات ")
-    this.reportService.getRiskList().subscribe(res => {
+    this.reportService.adminDemandList().subscribe(res => {
       this.demands = res.body;
       console.log(this.demands);
     })
@@ -87,6 +87,7 @@ export class DemandComponent implements OnInit {
 
   saveCommand() {
     let command = this.commandForm.value;
+    console.log(command);
     if (command.type === 'PAY'){
       this.commandService.createPayCommand(command).subscribe(res => {
         console.log(res);
