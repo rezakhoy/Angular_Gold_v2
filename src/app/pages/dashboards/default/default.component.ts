@@ -309,4 +309,17 @@ export class DefaultComponent implements OnInit {
     this.ws.orderToConfirm(order);
   }
 
+  minesPrice() {
+    this.setPriceForm.patchValue({
+      price: this.setPriceForm.get('price').value-10000
+    })
+    this.ws.setPrice(this.setPriceForm.get('price').value);
+  }
+
+  plusPrice() {
+    this.setPriceForm.patchValue({
+      price: this.setPriceForm.get('price').value+10000
+    })
+    this.ws.setPrice(this.setPriceForm.get('price').value);
+  }
 }
