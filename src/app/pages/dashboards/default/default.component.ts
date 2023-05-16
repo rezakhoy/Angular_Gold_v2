@@ -34,11 +34,11 @@ export class DefaultComponent implements OnInit {
   isActive: string;
   rejectComment: '';
   mas: IPrices[];
-  orders:  IOrder[]= [];
-  requestedOrders:  IOrder[]= [];
+  orders: IOrder[] = [];
+  requestedOrders: IOrder[] = [];
   personsLoading = false;
   persons: IPerson[];
-  rejectedOrder : IOrder;
+  rejectedOrder: IOrder;
   selectedPrice: IPrices;
   myBalance = new MyBalance();
   adminBalance = new AdminBalance()
@@ -128,39 +128,40 @@ export class DefaultComponent implements OnInit {
 
   manageOrders(ords) {
     var self = this;
-      ords.forEach(function (ord) {
+    ords.forEach(function (ord) {
 
-          if (self.orders.length === 0) {
-            self.orders.push(ord);
-          } else {
-            const mainObjectIndex = self.orders.findIndex((mainObject) => mainObject.id === ord.id);
-            if (mainObjectIndex !== -1 ) {
-             // @ts-ignore
-              if ( self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'CONFIRM'){
-                console.log(ord);
-                self.toastr.success(` درخواست ${ord.type ==='SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم  تایید و ثبت گردید`)
-                self.reportService.myBalance().subscribe(res => {
-                  self.myBalance = res.body;
-                });
-             }
-              // @ts-ignore
-              if ( self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'UNCONFIRM'){
-                console.log(ord);
-                self.toastr.error(` درخواست ${ord.type ==='SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم به دلیل  ${ord.description} تایید نشد `)
-              }
-              self.orders[mainObjectIndex] = ord;
-
-            } else {
-              self.orders.push(ord);
-              if (self.orders.length>5){
-                self.orders.shift()
-              }
-            }
+      if (self.orders.length === 0) {
+        self.orders.push(ord);
+      } else {
+        const mainObjectIndex = self.orders.findIndex((mainObject) => mainObject.id === ord.id);
+        if (mainObjectIndex !== -1) {
+          // @ts-ignore
+          if (self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'CONFIRM') {
+            console.log(ord);
+            self.toastr.success(` درخواست ${ord.type === 'SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم  تایید و ثبت گردید`)
+            self.reportService.myBalance().subscribe(res => {
+              self.myBalance = res.body;
+            });
           }
-      })
+          // @ts-ignore
+          if (self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'UNCONFIRM') {
+            console.log(ord);
+            self.toastr.error(` درخواست ${ord.type === 'SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم به دلیل  ${ord.description} تایید نشد `)
+          }
+          self.orders[mainObjectIndex] = ord;
+
+        } else {
+          self.orders.push(ord);
+          if (self.orders.length > 5) {
+            self.orders.shift()
+          }
+        }
+      }
+    })
 
 
   }
+
   ngAfterViewInit() {
 
   }
@@ -250,10 +251,10 @@ export class DefaultComponent implements OnInit {
   }
 
   culcQuantity() {
-      const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3317;
-      this.orderForm.patchValue({
-        quantity
-      });
+    const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3317;
+    this.orderForm.patchValue({
+      quantity
+    });
 
   }
 
@@ -287,11 +288,11 @@ export class DefaultComponent implements OnInit {
 
   }
 
-  sellStatusChange(status){
+  sellStatusChange(status) {
     this.ws.changeSellStatus(status.checked)
   }
 
-  buyStatusChange(status){
+  buyStatusChange(status) {
     this.ws.changeBuyStatus(status.checked)
   }
 
@@ -311,15 +312,37 @@ export class DefaultComponent implements OnInit {
 
   minesPrice() {
     this.setPriceForm.patchValue({
-      price: this.setPriceForm.get('price').value-10000
+      price: this.setPriceForm.get('price').value - 10000
     })
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }
 
   plusPrice() {
     this.setPriceForm.patchValue({
-      price: this.setPriceForm.get('price').value+10000
+      price: this.setPriceForm.get('price').value + 10000
     })
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }
+
+  checkLang(e: KeyboardEvent) {
+    console.log(e.key);
+    // console.log(e.);
+    if(e.key === 'ی') {
+      return 'ي'
+    }
+    let char = ['Backspace', ' ', 'Alt', 'Shift', 'Tab', 'Enter', 'ي']
+
+    const mainObjectIndex = char.findIndex((mainObject) => mainObject === e.key);
+    if (mainObjectIndex === -1) {
+      if (! isPersian(e.key)) {
+        this.toastr.error("لطفا فارسی تایپ نمایید")
+      }
+    }
+  }
+}
+
+
+function isPersian(key){
+  var p = /^[\u0600-\u06FF\s]+$/;
+  return p.test(key) && key!=' ';
 }

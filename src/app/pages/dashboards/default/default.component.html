@@ -349,16 +349,18 @@
         <div class="col-md-12" *permissionAnyOf="['admin', 'acc']" >
           <label  class="form-label">طرف حساب: </label>
           <ng-select [items]="persons"
+                      (keydown)="checkLang($event)"
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"
                      formControlName="userId"
                      bindValue="id"
+                     trans
                      [loading]="personsLoading">
           </ng-select>
         </div>
         <div class="col-md-12" *permissionAnyOf="['admin', 'acc']">
-          <label for="fee" class="form-label">مظنه   :</label>
+          <label for="fee" class="form-label">مظنه:</label>
           <input type="text" currencyMask   formControlName="fee" class="form-control"
                  id="fee">
         </div>
