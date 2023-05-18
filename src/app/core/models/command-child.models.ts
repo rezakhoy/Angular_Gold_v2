@@ -15,6 +15,10 @@ export class ICommandChild {
   id: number;
   person: number;
   name: string;
+  accountNumber: string;
+  audienceName: string;
+  bankName: string;
+  accountOwnerName: string;
   amount: number;
   type: Type;
   status: Status;

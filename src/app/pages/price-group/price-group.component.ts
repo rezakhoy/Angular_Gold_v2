@@ -56,8 +56,19 @@ export class PriceGroupComponent implements OnInit {
         this.groups = res.body;
       });
     });
-
   }
+
+  updateGroup() {
+    const body = this.groupForm.value;
+    body.sell = true;
+    body.buy = false;
+    this.priceGroupService.updateGroup(body).subscribe(res => {
+      this.priceGroupService.getAllGroups().subscribe(res => {
+        this.groups = res.body;
+      });
+    });
+  }
+
 
   editPriceGroup(group: IPriceGroup, createGroupForm) {
     this.groupForm.patchValue({

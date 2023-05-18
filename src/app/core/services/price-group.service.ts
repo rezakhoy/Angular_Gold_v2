@@ -21,6 +21,11 @@ export class PriceGroupService {
      return this.http.post(`${API_URL}create-price-group`, body);
     // return this.http.post(`${API_URL}create-price-group`, {  observe: 'response' , body});
   }
+   updateGroup(body): any {
+        console.log('gggg', body);
+        return this.http.put(`${API_URL}create-price-group`, body);
+        // return this.http.post(`${API_URL}create-price-group`, {  observe: 'response' , body});
+    }
 
 }
 

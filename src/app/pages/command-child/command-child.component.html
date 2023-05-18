@@ -4,7 +4,12 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex flex-wrap border-bottom pb-2">
-          <h4> {{child.name }} -- {{child.amount | number}}</h4>
+          <h4>
+            <span  *permissionAnyOf="['admin', 'acc']" >{{child.name }} -- {{child.amount | number}}</span>
+            <span>  شماره حساب : {{child.accountNumber}}</span>
+            <span>  به نام :{{child.accountOwnerName}} </span>
+            <span>  قابل پرداخت : {{child.amount}} </span>
+          </h4>
           <div class="ms-auto mt-auto">
           <button class="btn  btn-primary"  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
           </div>

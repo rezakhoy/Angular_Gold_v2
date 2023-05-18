@@ -39,6 +39,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {CommandChildComponent} from "./command-child/command-child.component";
 import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
 import {PersonComponent} from "./person/person.component";
+import {PermissionModule} from "ng2-permission";
 
 
 
@@ -66,34 +67,35 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AdvancedSortableDirectiveDemands
     // AdvancedSortableDirectiveDemands
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbDropdownModule,
-    NgbModalModule,
-    PagesRoutingModule,
-    NgApexchartsModule,
-    ReactiveFormsModule,
-    DashboardsModule,
-    HttpClientModule,
-    UIModule,
-    WidgetModule,
-    FullCalendarModule,
-    NgbNavModule,
-    NgbTooltipModule,
-    NgbCollapseModule,
-    SimplebarAngularModule,
-    LightboxModule,
-    NgbPaginationModule,
-    NgbTypeaheadModule,
-    NgbCollapseModule,
-    FormsModule,
-    NgSelectModule,
-    NgbDatepickerModule,
-    CurrencyMaskModule,
-    NgxDatatableModule,
-    NgImageFullscreenViewModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        NgbDropdownModule,
+        NgbModalModule,
+        PagesRoutingModule,
+        NgApexchartsModule,
+        ReactiveFormsModule,
+        DashboardsModule,
+        HttpClientModule,
+        UIModule,
+        WidgetModule,
+        FullCalendarModule,
+        NgbNavModule,
+        NgbTooltipModule,
+        NgbCollapseModule,
+        SimplebarAngularModule,
+        LightboxModule,
+        NgbPaginationModule,
+        NgbTypeaheadModule,
+        NgbCollapseModule,
+        FormsModule,
+        NgSelectModule,
+        NgbDatepickerModule,
+        CurrencyMaskModule,
+        NgxDatatableModule,
+        NgImageFullscreenViewModule,
+        PermissionModule,
+    ],
   providers: [
     DatePipe,
     { provide: NgbCalendar, useClass: NgbCalendarPersian },
