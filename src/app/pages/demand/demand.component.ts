@@ -23,7 +23,7 @@ export class DemandComponent implements OnInit {
   SelectionType = SelectionType;
   ColumnMode = ColumnMode;
   adminDemands: IAdminDemand;
-
+  displaySpinner = true;
   selected = [];
   temp = [];
   demands: IDemand[];
@@ -59,6 +59,7 @@ export class DemandComponent implements OnInit {
     this.titleService.setTitle(" لیست  مطالبات ")
     this.reportService.adminDemandList().subscribe(res => {
       this.demands = res.body;
+      this.displaySpinner = false;
       console.log(this.demands);
     })
     this.reportService.adminDemand().subscribe(res => {
