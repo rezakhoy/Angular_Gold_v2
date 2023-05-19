@@ -114,8 +114,7 @@ export class PersonComponent implements OnInit {
       phoneNumber: per.phoneNumber,
       address: per.phoneNumber,
       pCode: per.pCode,
-      description: [],
-      password: [],
+      description: per.description,
     })
     this.modalService.open(createUserModal, this.ngbModalOptions);
   }

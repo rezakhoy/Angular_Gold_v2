@@ -132,12 +132,22 @@ export class UsersComponent implements OnInit {
     body.dateOfBirth = y+'-'+ m+'-'+d
     body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
     console.log(body);
-    this.userService.register(body).subscribe(res => {
-      this.toastr.success(` کاربر${res.body.person.name}  با موقت ایجاد شد`)
-      this.userService.getAll().subscribe(res => {
-        this.tables$ = this.service.tables$;
+    if (body.id){
+      this.userService.updateUser(body).subscribe(res => {
+        this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ویرایش ایجاد شد`)
+        this.userService.getAll().subscribe(res => {
+          this.tables$ = this.service.tables$;
+        })
       })
-    })
+    }else {
+      this.userService.register(body).subscribe(res => {
+        this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ایجاد شد`)
+        this.userService.getAll().subscribe(res => {
+          this.tables$ = this.service.tables$;
+        })
+      })
+    }
+
   }
 
   private loadPermissionGroups() {
@@ -185,4 +195,6 @@ export class UsersComponent implements OnInit {
 
     this.modalService.open(createUserModal, this.ngbModalOptions);
   }
+
 }
+
