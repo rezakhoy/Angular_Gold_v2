@@ -54,6 +54,7 @@ export class UsersComponent implements OnInit {
 
   createUserForm = this.fb.group({
     id: [],
+    userId: [null],
     personId: [null, Validators.required],
     groupIds: [null, Validators.required],
     priceGroupIds :[],
@@ -147,7 +148,7 @@ export class UsersComponent implements OnInit {
         })
       })
     }
-
+ this.createUserForm.reset()
   }
 
   private loadPermissionGroups() {
@@ -180,6 +181,7 @@ export class UsersComponent implements OnInit {
     let person:IPerson = user.person
     this.createUserForm.patchValue({
       id: user.id,
+      userId: user.id,
       personId: person.id,
       groupIds: groupIdsList,
       priceGroupIds : priceGroupIdsList,

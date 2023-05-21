@@ -10,6 +10,7 @@ export class IUser {
     enable: boolean;
     expired: string;
     user: IUser;
+    userId: number;
     credential: boolean;
     groups: IGroup[];
     priceGroups: IPriceGroup[];

@@ -124,11 +124,11 @@
   <div class="modal-header">
     <!--    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'b'">درخواست خرید</h4>-->
     <h4 class="modal-title" > ایجاد کاربر جدید</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="saveUser()" [formGroup]="createUserForm">
+  <form name="editForm" role="form" novalidate  [formGroup]="createUserForm">
     <div class="modal-body">
 
       <div class="row">
@@ -223,7 +223,7 @@
               (click)="modal.close()">انصراف
       </button>
       <button type="submit"  class="btn btn-success btn-sm"
-              (click)="modal.close()">ثبت درخواست
+              (click)="saveUser(); modal.close()"> ذخیره کاربر
       </button>
 
     </div>
