@@ -16,7 +16,7 @@ import {JalaliDateCalculatorService} from "ngx-persian";
 import {AuthenticationService} from "../../core/services/auth.service";
 import {Title} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
-import {API_URL} from "../../../environments/environment";
+
 
 @Component({
   selector: 'app-advancedtable',
@@ -137,14 +137,14 @@ export class UsersComponent implements OnInit {
       this.userService.updateUser(body).subscribe(res => {
         this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ویرایش ایجاد شد`)
         this.userService.getAll().subscribe(res => {
-          this.tables$ = this.service.tables$;
+          this.service.setData()
         })
       })
     }else {
       this.userService.register(body).subscribe(res => {
         this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ایجاد شد`)
         this.userService.getAll().subscribe(res => {
-          this.tables$ = this.service.tables$;
+           this.service.setData()
         })
       })
     }
