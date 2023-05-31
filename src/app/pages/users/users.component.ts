@@ -66,7 +66,6 @@ export class UsersComponent implements OnInit {
     address: [],
     description: null,
     password: [null, Validators.required],
-    password1: [null, Validators.required],
   });
 
 
@@ -119,6 +118,7 @@ export class UsersComponent implements OnInit {
   }
 
   createUserFunc(cgf) {
+    this.createUserForm.reset()
     this.modalService.open(cgf, this.ngbModalOptions);
   }
 
@@ -192,7 +192,7 @@ export class UsersComponent implements OnInit {
       phoneNumber: person.phoneNumber,
       address: person.phoneNumber,
       description: person.description,
-      password: [],
+      password: ''
     })
 
     this.modalService.open(createUserModal, this.ngbModalOptions);

@@ -54,7 +54,7 @@
                     <ngb-highlight [result]="table.person?.name" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.person?.phoneNumber" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.person?.cellPhone" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
 
@@ -211,7 +211,7 @@
           <label for="address" class="form-label">  آدرس</label>
           <input type="text"  formControlName="address" class="form-control" id="address">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" *ngIf="!createUserForm.get('id').value">
           <label for="password" class="form-label">رمز ورود</label>
           <input type="password"  formControlName="password" class="form-control" id="password">
         </div>
