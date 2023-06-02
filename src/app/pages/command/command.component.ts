@@ -114,7 +114,6 @@ export class CommandComponent implements OnInit {
   changeSelectPerson($event: any) {
     console.log($event);
     document.getElementById('amount').focus();
-
   }
   /**
    * fetches the table value

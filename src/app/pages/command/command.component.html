@@ -150,6 +150,7 @@
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      formControlName="audienceId"
+                     (change)="changeSelectPerson($event)"
                      >
             <ng-option *ngFor="let aud of audiences "  [value]="aud.id">{{aud.name}} {{aud.balanceR | number}}</ng-option>
           </ng-select>

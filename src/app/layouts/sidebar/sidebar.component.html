@@ -5,7 +5,7 @@
   <!--- Sidemenu -->
   <div id="sidebar-menu">
     <!-- Left Menu Start -->
-    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
+    <ul class="metismenu list-unstyled " id="side-menu"  #sideMenu>
       <!-- {{menuItems}} -->
       <ng-container *ngFor="let item of menuItems">
         <ng-container *permissionAnyOf="item.per"><li class="menu-title"  *ngIf="item.isTitle">{{ item.label  }} </li></ng-container>

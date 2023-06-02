@@ -30,22 +30,30 @@ export const MENU: MenuItem[] = [
   {
     id: 4,
     label: 'مشتریان',
-    icon: 'bx bxs-user-detail',
+    icon: 'bx  bxs-contact',
     link: '/persons',
     per: ['admin', 'acc']
   },
   {
     id: 7,
     label: 'مطالبات',
-    icon: 'bx bxs-user-detail',
+    icon: 'bx bx-repost',
     link: '/demand-list',
     per: ['admin', 'acc']
   },
   {
     id: 12,
+    label: 'لیست دریافت و پرداخت',
+    icon: 'bx bx-vertical-center',
+    link: '/command-child-list',
+    per: ['user']
+  },
+  {
+    id: 13,
     label: 'دریافت پرداخت (فیش)',
-    icon: 'bx bxs-user-detail',
+    icon: 'bx bx-vertical-center',
     link: '/command-list',
+    per: ['admin', 'acc']
   },
   {
     id: 5,

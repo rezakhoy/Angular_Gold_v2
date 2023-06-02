@@ -6,8 +6,8 @@
         <div class="d-flex flex-wrap border-bottom pb-2">
           <h4>
             <span  *permissionAnyOf="['admin', 'acc']" >{{child.name }} -- {{child.amount | number}}</span>
-            <span>  شماره حساب : {{child.accountNumber}}</span>
-            <span>  به نام :{{child.accountOwnerName}} </span>
+            <span>  شماره حساب : {{command.accountNumber}}</span>
+            <span>  به نام :{{command.accountOwnerName}} </span>
             <span>  قابل پرداخت : {{child.amount}} </span>
           </h4>
           <div class="ms-auto mt-auto">
@@ -31,14 +31,14 @@
                         <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>
 
                         <div class="img-fluid">
-                          <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145"/>
+                          <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145" style="max-height: 150px"/>
                         </div>
 
                         <div>
                           <div class="btn-group btn-group-example mt-2" role="group">
-                            <button type="button" class="btn btn-primary w-xs" (click)="confirmPay(pay.id)"><i
+                            <button type="button" [disabled]="pay.status !== 'REQUEST'" class="btn btn-primary w-xs" (click)="confirmPay(pay.id)"><i
                               class="mdi mdi-thumb-up" ></i></button>
-                            <button type="button" class="btn btn-danger w-xs" (click)="unConfirmPay(pay.id)"><i
+                            <button type="button"  [disabled]="pay.status !== 'REQUEST'" class="btn btn-danger w-xs" (click)="unConfirmPay(pay.id)"><i
                               class="mdi mdi-thumb-down"></i></button>
                           </div>
                         </div>
