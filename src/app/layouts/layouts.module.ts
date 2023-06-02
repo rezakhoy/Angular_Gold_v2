@@ -18,6 +18,7 @@ import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.c
 import { LanguageService } from '../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
 import {PermissionModule} from "ng2-permission";
+import {NgxPersianModule} from "ngx-persian";
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -30,7 +31,8 @@ import {PermissionModule} from "ng2-permission";
         ClickOutsideModule,
         UIModule,
         SimplebarAngularModule,
-        PermissionModule
+        PermissionModule,
+        NgxPersianModule
     ],
   providers: [LanguageService]
 })

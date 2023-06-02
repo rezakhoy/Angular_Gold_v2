@@ -114,8 +114,7 @@ export class PersonComponent implements OnInit {
       phoneNumber: per.phoneNumber,
       address: per.phoneNumber,
       pCode: per.pCode,
-      description: [],
-      password: [],
+      description: per.description,
     })
     this.modalService.open(createUserModal, this.ngbModalOptions);
   }
@@ -132,6 +131,7 @@ export class PersonComponent implements OnInit {
     body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
     console.log(body);
     this.userService.updatePerson(body).subscribe(res => {
+      console.log(res);
       this.toastr.success(` کاربر${res.body.name}  با موقت ایجاد شد`)
       this.userService.getAll().subscribe(res => {
         this.tables$ = this.service.tables$;

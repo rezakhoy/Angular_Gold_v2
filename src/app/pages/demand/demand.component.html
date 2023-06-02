@@ -1,5 +1,9 @@
 <div class="container-fluid">
-<div class="row">
+<!--  <span class="loader" #loading></span>-->
+  <ng-template #loading ><div style="margin-top: 300px" class=" d-flex justify-content-center">
+    <span class="loader" ></span>
+  </div></ng-template>
+<div *ngIf="!displaySpinner; else loading" class="row">
       <div class="col-12">
         <div class="card">
           <div class="card-body">
@@ -67,107 +71,6 @@
 
 
 </div>
-<!--  <div class="row">-->
-<!--    <div class="col-12">-->
-<!--      <div class="card">-->
-<!--        <div class="card-body">-->
-<!--          <div class="row mb-5">-->
-<!--            <div  class="d-flex flex-wrap">-->
-<!--              <h4 class="card-title">لیست  مطالبات</h4>-->
-<!--              <div  class="ms-auto mt-auto">-->
-<!--&lt;!&ndash;                <button class="btn btn-primary" (click)="createUserFunc(createUserModal)">ایجاد کاربر جدید</button>&ndash;&gt;-->
-<!--              </div>-->
-
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="row mb-md-2">-->
-<!--            <div class="col-sm-12 col-md-6">-->
-<!--              <div class="dataTables_length" id="tickets-table_length"><label-->
-<!--                  class="d-inline-flex align-items-center">تعداد-->
-<!--                  <select name="tickets-table_length" aria-controls="tickets-table" name="pageSize"-->
-<!--                    [(ngModel)]="service.pageSize" class="form-control form-control-sm mx-2">-->
-<!--                    <option [ngValue]="10">10</option>-->
-<!--                    <option [ngValue]="25">25</option>-->
-<!--                    <option [ngValue]="50">50</option>-->
-<!--                    <option [ngValue]="100">100</option>-->
-<!--                    <option [ngValue]="1000">1000</option>-->
-<!--                  </select> سطر</label></div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; Search &ndash;&gt;-->
-<!--            <div class="col-sm-12 col-md-6">-->
-<!--              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label-->
-<!--                  class="d-inline-flex align-items-center">جستجو:-->
-<!--                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"-->
-<!--                    aria-controls="tickets-table" [(ngModel)]="service.searchTerm"></label></div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; End search &ndash;&gt;-->
-<!--          </div>-->
-<!--          &lt;!&ndash; Table &ndash;&gt;-->
-<!--          <div class="table-responsive">-->
-<!--            <table id="basic-datatable"-->
-<!--              class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">-->
-<!--              <thead>-->
-<!--                <tr>-->
-<!--                  <th sortable="name " (sort)="onSort($event)"> نام</th>-->
-<!--                  <th sortable="balance_v" (sort)="onSort($event)">مانده وزنی</th>-->
-<!--                  <th sortable="balance_r" (sort)="onSort($event)">مانده ریالی</th>-->
-
-<!--                </tr>-->
-<!--              </thead>-->
-<!--              <tbody *ngFor="let table of tables$ | async;let i=index">-->
-<!--                <tr>-->
-<!--                  <td>-->
-<!--                    <ngb-highlight [result]="table.name" [term]="service.searchTerm"></ngb-highlight>-->
-<!--                  </td>-->
-<!--                  <td>-->
-<!--                    <ngb-highlight [result]="table.balance_v.toString() " [term]="service.searchTerm"></ngb-highlight>-->
-<!--                  </td>-->
-<!--                  <td>-->
-<!--                    <ngb-highlight [result]="table.balance_r| number " [term]="service.searchTerm"></ngb-highlight>-->
-<!--                  </td>-->
-
-<!--                  <td>-->
-<!--                    <ul class="list-inline font-size-20 contact-links mb-0">-->
-<!--                      <li class="list-inline-item px-2">-->
-<!--                        <a href="javascript: void(0);" ngbTooltip="ارسال پیام"><span class="text text-info"><i class="bx bx-message-square-dots"></i></span></a>-->
-<!--                      </li>-->
-<!--                      <li class="list-inline-item px-2"  *ngIf="table.balance_r>0">-->
-<!--                        <a ngbTooltip="پرداخت ریالی" (click)="makeCommand(table, commandModal, 'PAY')"><span class="text text-danger"><i class="bx bxs-minus-square"></i></span></a>-->
-<!--                      </li>-->
-<!--                      <li class="list-inline-item px-2" *ngIf="table.balance_r<0" >-->
-<!--                        <a  ngbTooltip="دریافت ریالی " (click)="makeCommand(table, commandModal, 'RECEIVE')"><span class="text text-success"><i class="bx bxs-plus-square"></i></span></a>-->
-<!--                      </li>-->
-<!--                    </ul>-->
-<!--                  </td>-->
-
-
-<!--                </tr>-->
-<!--              </tbody>-->
-<!--            </table>-->
-<!--          </div>-->
-<!--          &lt;!&ndash; End table &ndash;&gt;-->
-<!--          <div class="row justify-content-md-between align-items-md-center mt-2">-->
-<!--            <div class="col-sm-12 col-md-5">-->
-<!--              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">Showing-->
-<!--                {{service.startIndex}} to-->
-<!--                {{service.endIndex}} of {{service.totalRecords}}-->
-<!--                entries-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; Pagination &ndash;&gt;-->
-<!--            <div class="col-sm-12 col-md-5">-->
-<!--              <div class="text-md-right float-md-end pagination-rounded">-->
-<!--                <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">-->
-<!--                </ngb-pagination>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash; End Pagination &ndash;&gt;-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 </div>
 
 <!--**********************************

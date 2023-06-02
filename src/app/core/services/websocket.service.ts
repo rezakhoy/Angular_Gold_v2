@@ -173,12 +173,12 @@ export class WebsocketService {
     console.log(" in wsssssssssssss",status);
     if(status){
       this.stompClient.send(
-        '/active-sell',
+        '/app/active-sell',
         {},
       )
     }else {
       this.stompClient.send(
-        '/deactive-sell',
+        '/app/deactive-sell',
         {},
       )
     }
@@ -188,12 +188,12 @@ export class WebsocketService {
   public changeBuyStatus(status: boolean) {
     if(status){
       this.stompClient.send(
-        '/active-buy',
+        '/app/active-buy',
         {},
       )
     }else {
       this.stompClient.send(
-        '/deactive-buy',
+        '/app/deactive-buy',
         {},
       )
     }

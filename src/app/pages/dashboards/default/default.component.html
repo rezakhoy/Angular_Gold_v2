@@ -154,10 +154,10 @@
               <div class="row ">
                 <div class="align-content-center">
 
-                  <div class="row mt-3"  *ngFor="let m of mas ">
-                      <div class="d-flex justify-content-between">
+                  <div class="row mt-3 "  *ngFor="let m of mas ">
+                      <div class="d-flex justify-content-around">
                       <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></div>
-                      <div class="text-center">  <span>{{m.priceGroupName}}</span></div>
+                      <div >  <h5>{{m.priceGroupName}}</h5></div>
                       <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></div>
                       </div>
                   </div>
@@ -258,11 +258,11 @@
           <div class="text-center mt-2">
             <div class="row">
               <div >
-                  <div *ngFor="let m of mas " class="row ">
+                  <div *ngFor="let m of mas " class="row mt-3 ">
                     <div class="d-flex justify-content-between">
-                    <div> <button  class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  {{m?.activeBuy}} </button></div>
-                    <div >{{m.priceGroupName}}</div>
-                    <div> <button  class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}} {{m?.activeSell}}  </button></div>
+                    <div> <button  class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  {{m.activeBuy}} </button></div>
+                    <div ><h5>{{m.priceGroupName}} </h5></div>
+                    <div> <button  class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}} {{m.activeSell}}  </button></div>
                     </div>
                   </div>
 

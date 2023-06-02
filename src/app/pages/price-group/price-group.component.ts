@@ -22,6 +22,7 @@ export class PriceGroupComponent implements OnInit {
     name: [null, Validators.required],
     limit : [null, [Validators.min(0), Validators.required]],
     difference: [null, Validators.required],
+    description: null,
     gap: [null, Validators.required]
   });
   groups: IPriceGroup[];
@@ -39,6 +40,7 @@ export class PriceGroupComponent implements OnInit {
     this.titleService.setTitle("گروههای قیمتی")
     this.priceGroupService.getAllGroups().subscribe(res => {
       this.groups = res.body;
+      console.log(this.groups);
     })
   }
 
@@ -74,6 +76,7 @@ export class PriceGroupComponent implements OnInit {
     this.groupForm.patchValue({
       id: group.id,
       name: group.name,
+      description: group.description,
       limit : group.limit,
       difference: group.difference,
       gap: group.gap

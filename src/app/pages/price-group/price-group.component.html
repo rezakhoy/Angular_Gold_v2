@@ -20,6 +20,7 @@
                 <tr>
                   <th scope="col" style="width: 70px;">#</th>
                   <th scope="col">نام</th>
+                  <th scope="col">شرح</th>
                   <th scope="col">خرید</th>
                   <th scope="col">فروش</th>
                   <th scope="col">محدودیت</th>
@@ -32,6 +33,7 @@
                 <tr *ngFor="let group of groups; let i = index">
                   <td>{{group.id}}</td>
                   <td>{{group.name}}</td>
+                  <td>{{group.description}}</td>
                   <td>{{group.buy}}</td>
                   <td>{{group.sell}}</td>
                   <td>{{group.limit}}</td>
@@ -63,7 +65,7 @@
   <div class="modal-header">
     <!--    <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'b'">درخواست خرید</h4>-->
     <h4 class="modal-title" > ایجاد فرم جدید</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -74,6 +76,10 @@
         <div class="col-md-12">
           <label for="name" class="form-label">عنوان </label>
           <input  type="text" formControlName="name" class="form-control" id="name">
+        </div>
+        <div class="col-md-12">
+          <label for="description" class="form-label">شرح </label>
+          <input  type="text" formControlName="description" class="form-control" id="description">
         </div>
         <div class="col-md-12">
           <label for="gap" class="form-label">گپ </label>

@@ -12,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 export class FooterComponent implements OnInit {
 
   // set the currenr year
-  year: number = new Date().getFullYear();
+  year :Date = new Date()
 
-  constructor() { }
+  constructor() {
+    let now = new Date();
+    console.log('Date is......',now);
+  }
 
   ngOnInit() {
   }

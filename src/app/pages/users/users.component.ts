@@ -16,7 +16,7 @@ import {JalaliDateCalculatorService} from "ngx-persian";
 import {AuthenticationService} from "../../core/services/auth.service";
 import {Title} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
-import {API_URL} from "../../../environments/environment";
+
 
 @Component({
   selector: 'app-advancedtable',
@@ -54,6 +54,7 @@ export class UsersComponent implements OnInit {
 
   createUserForm = this.fb.group({
     id: [],
+    userId: [null],
     personId: [null, Validators.required],
     groupIds: [null, Validators.required],
     priceGroupIds :[],
@@ -63,9 +64,8 @@ export class UsersComponent implements OnInit {
     cellPhone: [null, Validators.required],
     phoneNumber: [],
     address: [],
-    description: [],
+    description: null,
     password: [null, Validators.required],
-    password1: [null, Validators.required],
   });
 
 
@@ -118,6 +118,7 @@ export class UsersComponent implements OnInit {
   }
 
   createUserFunc(cgf) {
+    this.createUserForm.reset()
     this.modalService.open(cgf, this.ngbModalOptions);
   }
 
@@ -132,12 +133,22 @@ export class UsersComponent implements OnInit {
     body.dateOfBirth = y+'-'+ m+'-'+d
     body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
     console.log(body);
-    this.userService.register(body).subscribe(res => {
-      this.toastr.success(` کاربر${res.body.person.name}  با موقت ایجاد شد`)
-      this.userService.getAll().subscribe(res => {
-        this.tables$ = this.service.tables$;
+    if (body.id){
+      this.userService.updateUser(body).subscribe(res => {
+        this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ویرایش ایجاد شد`)
+        this.userService.getAll().subscribe(res => {
+          this.service.setData()
+        })
       })
-    })
+    }else {
+      this.userService.register(body).subscribe(res => {
+        this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ایجاد شد`)
+        this.userService.getAll().subscribe(res => {
+           this.service.setData()
+        })
+      })
+    }
+ this.createUserForm.reset()
   }
 
   private loadPermissionGroups() {
@@ -170,6 +181,7 @@ export class UsersComponent implements OnInit {
     let person:IPerson = user.person
     this.createUserForm.patchValue({
       id: user.id,
+      userId: user.id,
       personId: person.id,
       groupIds: groupIdsList,
       priceGroupIds : priceGroupIdsList,
@@ -179,10 +191,12 @@ export class UsersComponent implements OnInit {
       cellPhone: person.cellPhone,
       phoneNumber: person.phoneNumber,
       address: person.phoneNumber,
-      description: [],
-      password: [],
+      description: person.description,
+      password: ''
     })
 
     this.modalService.open(createUserModal, this.ngbModalOptions);
   }
+
 }
+
