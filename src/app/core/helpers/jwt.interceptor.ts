@@ -42,6 +42,7 @@ export class JwtInterceptor implements HttpInterceptor {
         map((event: HttpEvent<any>) => event), // pass further respone
         catchError((error: HttpErrorResponse) => {
           console.log(error.status);
+          console.log(error);
           if (error && error.status === 401) {
 
             localStorage.removeItem('authorization');
@@ -49,9 +50,7 @@ export class JwtInterceptor implements HttpInterceptor {
             return throwError(error);
           }
           if (error && error.status === 400) {
-            this.toastr.error('نام کاربری یا رمز عبور صحیح نمی باشد')
-            localStorage.removeItem('authorization');
-            this.router.navigate(['/account/login']);
+            // this.toastr.error('نام کاربری یا رمز عبور صحیح نمی باشد')
             return throwError(error);
           }
           if (error && error.status === 0) {

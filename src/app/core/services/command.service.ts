@@ -29,11 +29,9 @@ export class CommandsService {
   public createReceiveCommand(command): any {
     return this.http.post(`${API_URL}create-receive-command`, command);
   }
-  public createPayCommandChild(command): any {
-    return this.http.post(`${API_URL}create-pay-command-child`, command);
-  }
-  public createReceiveCommandChild(command): any {
-    return this.http.post(`${API_URL}create-receive-command-child`, command);
+
+  public createCommandChild(command): any {
+    return this.http.post(`${API_URL}create-command-child`, command);
   }
   public createPayInfo(payInfo){
     console.log("befor send pay info ", payInfo);

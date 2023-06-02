@@ -24,8 +24,10 @@ export class UserService {
     return this.http.get<any>(`${API_URL}persons`, {  observe: 'response' });
   }
 
-  updatePerson(body: any): Observable<HttpResponse<IPerson>> {
-    return this.http.put<any>(`${API_URL}update-person`, {  observe: 'response' });
+  updatePerson(body: any): Observable<IPerson> {
+      // @ts-ignore
+      return this.http.put(`${API_URL}update-person`, body);
+    // return this.http.put<any>(`${API_URL}update-person`, {  observe: 'response' });
   }
 
 

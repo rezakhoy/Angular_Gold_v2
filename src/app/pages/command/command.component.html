@@ -43,6 +43,7 @@
               <thead>
                 <tr>
                   <th sortable="audienceName " (sort)="onSort($event)"> مشتری</th>
+                  <th sortable="audienceName " (sort)="onSort($event)"> نوع </th>
                   <th sortable="amount" (sort)="onSort($event)">  قابل پرداخت</th>
                   <th sortable="accountOwnerName" (sort)="onSort($event)"> پرداخت شده به </th>
                   <th sortable="bankName" (sort)="onSort($event)">   بانک </th>
@@ -57,7 +58,11 @@
                   <td>
                     <ngb-highlight [result]="table.audienceName" [term]="service.searchTerm"></ngb-highlight>
                   </td>
+                  <td>
+                    <span *ngIf="table.type === 'PAY'" class="text-info " > دستور پرداخت</span>
+                    <span *ngIf="table.type === 'RECEIVE'" class="text-success " > دستور دریافت</span>
 
+                  </td>
                   <td>
                     <ngb-highlight [result]="table.amount| number " [term]="service.searchTerm"></ngb-highlight>
                   </td>

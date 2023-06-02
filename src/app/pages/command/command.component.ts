@@ -157,7 +157,8 @@ export class CommandComponent implements OnInit {
 
   saveCommandChild() {
     let commandChild = this.commandChildForm.value
-    this.commandService.createReceiveCommandChild(commandChild).subscribe(res => {
+    console.log('in coooooooomand....', commandChild);
+    this.commandService.createCommandChild(commandChild).subscribe(res => {
       this.commandService.getAllCommand().subscribe(res => {
        this.service.commands = res.body;
       })

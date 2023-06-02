@@ -64,6 +64,7 @@ export class UsersComponent implements OnInit {
     cellPhone: [null, Validators.required],
     phoneNumber: [],
     address: [],
+    city: [],
     description: null,
     password: [null, Validators.required],
   });
@@ -190,7 +191,8 @@ export class UsersComponent implements OnInit {
       email: person.email,
       cellPhone: person.cellPhone,
       phoneNumber: person.phoneNumber,
-      address: person.phoneNumber,
+      city: person.city,
+      address: person.address,
       description: person.description,
       password: ''
     })

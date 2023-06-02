@@ -129,13 +129,16 @@ export class PersonComponent implements OnInit {
 
     body.dateOfBirth = y+'-'+ m+'-'+d
     body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
-    console.log(body);
+    console.log('in save person', body);
     this.userService.updatePerson(body).subscribe(res => {
       console.log(res);
-      this.toastr.success(` کاربر${res.body.name}  با موقت ایجاد شد`)
+      this.toastr.success(` مشتری ${res.name}  با موفقیت ویرایش شد شد`)
       this.userService.getAll().subscribe(res => {
         this.tables$ = this.service.tables$;
       })
+    },error => {
+      console.log(error);
+      this.toastr.error(`  ${error.error}  `, 'خطا :')
     })
   }
 }
