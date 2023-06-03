@@ -217,7 +217,53 @@
     </div>
   </div>
 
+  <div class="row" *permissionOnly="['user']">
+   <div class="col-md-12">
+     <div *ngIf="userCommandUnclearedList?.length > 0"  >
+       <div class="card">
+         <div class="card-body">
+           <div class="table-responsive table-hover fs-14  " >
+             <table class="table display mb-4 dataTablesCard dataTable border-no font-w600  card-table text-black">
 
+               <tr class="align-middle">
+                 <td> نوع درخواست</td>
+                 <td>مبلغ</td>
+                 <td>شماره حساب </td>
+                 <td> به نام </td>
+                 <td>بانک</td>
+                 <td>وضعیت</td>
+                 <td >ثبت</td>
+               </tr>
+               <tr *ngFor="let commandChild of userCommandUnclearedList; let i = index">
+                 <!--                  <td  *permissionIf="'admin'"> {{order.user.name}}</td>-->
+                 <td *ngIf="commandChild.type === 'PAY'">پرداخت</td>
+                 <td *ngIf="commandChild.type === 'RECEIVE'"> دریافت</td>
+
+                 <td>{{commandChild.amount | number : '1.0-3'}}</td>
+                 <td>{{commandChild.accountNumber }}</td>
+                 <td>{{commandChild.accountOwnerName}}</td>
+                 <td>{{commandChild.bankName}}</td>
+                 <td >
+                    <span *ngIf="commandChild.status === 'UNCLEARED'" class="badge  font-size-12 bg-info p-1" >  تسویه نشده </span>
+                   <span *ngIf="commandChild.status === 'CLEARED'" class="badge font-size-12 bg-success  p-1"> تسویه شده</span>
+                   <span *ngIf="commandChild.status === 'OVER'" class="badge font-size-12 bg-danger p-1"> اضافه واریز </span>
+                 </td>
+
+                 <td >
+                   <div class="btn-group btn-group-sm" role="group">
+                     <button class="btn btn-info  " (click)="makePayInfo(child, payInfoModal)" [disabled]="commandChild.status === 'CLEARED'|| commandChild.status === 'OVER' " >ثبت فیش</button>
+                   </div>
+
+                 </td>
+               </tr>
+             </table>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+  </div>
 
 
   <div class="row" *permissionAnyOf="['admin', 'acc']">
@@ -329,7 +375,7 @@
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'BUY'">درخواست خرید</h4>
     <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'SELL'">درخواست فروش</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -398,7 +444,7 @@
 
 <ng-template #reject let-modal>
   <div class="modal-header">
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -417,7 +463,7 @@
 <ng-template #remitModal let-modal>
   <div class="modal-header">
     <h4>حواله طلا</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -450,4 +496,50 @@
     <button type="button" class="btn btn-outline-secondary btn-sm" (click)="modal.dismiss('cancel click')">انصراف</button>
     <button type="button" class="btn btn-primary btn-sm" (click)="modal.dismiss(unconfirmOrder(rejectComment))">تایید</button>
   </div>
+</ng-template>
+<ng-template #payInfoModal let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="payInfoForm" >
+      <!--        Progress Bar-->
+      <!--        <div class="progress form-group" *ngIf="percentDone">-->
+      <!--          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"-->
+      <!--               [style.width.%]="percentDone">-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <div class="row mb-5">
+        <div class="col-md-6">
+          <label for="amount" class="form-label">مبلغ درخواست: </label>
+          <input type="text" formControlName="amount" autocomplete="off" currencyMask  ngbAutofocus class="form-control" id="amount">
+        </div>
+        <div class="col-md-6">
+          <label for="receiptNumber" class="form-label">شماره فیش: </label>
+          <input type="text" formControlName="receiptNumber"    class="form-control" id="receiptNumber">
+        </div>
+        <div class="col-md-12">
+          <label for="description" class="form-label"> توضیحات: </label>
+          <input type="text" formControlName="description"    class="form-control" id="description">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="preview " *ngIf="preview && preview !== null">
+          <img [src]="preview" [alt]="payInfoForm.value.name" width="150">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="file" (change)="uploadFile($event)">
+      </div>
+
+      <div class="row">
+        <button class="btn btn-info btn-block mt-5" (click)="submitForm(); modal.close() ">ثبت فیش</button>
+      </div>
+    </form>
+  </div>
+
 </ng-template>

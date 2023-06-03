@@ -23,6 +23,12 @@ export class CommandsService {
   getCommand(id: number): Observable<HttpResponse<ICommand>> {
     return this.http.get<any>(`${API_URL}command/`+id, {  observe: 'response' });
   }
+  getCommandChildren(): Observable<HttpResponse<ICommandChild[]>> {
+    return this.http.get<any>(`${API_URL}get-command-children`, {  observe: 'response' });
+  }
+  getCommandChildrenUncleared(): Observable<HttpResponse<ICommandChild[]>> {
+    return this.http.get<any>(`${API_URL}get-command-children-uncleared`, {  observe: 'response' });
+  }
   public createPayCommand(command): any {
     return this.http.post(`${API_URL}create-pay-command`, command);
   }
@@ -43,6 +49,16 @@ export class CommandsService {
   }
   public confirmPayInfo(id): any {
     return this.http.post(`${API_URL}confirm-pay-info/`+id , id);
+  }
+
+  public updateCommandChild(commandChild): any {
+    return this.http.put(`${API_URL}update-command-child` , commandChild);
+  }
+  public deleteCommandChild(id): any {
+    return this.http.delete(`${API_URL}delete-command-child/`+ id );
+  }
+  public deletePayInformation(id): any {
+    return this.http.delete(`${API_URL}delete-pay-information/`+ id );
   }
 }
 

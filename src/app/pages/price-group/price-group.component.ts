@@ -52,7 +52,7 @@ export class PriceGroupComponent implements OnInit {
   saveGroup() {
     const body = this.groupForm.value;
     body.sell = true;
-    body.buy = false;
+    body.buy = true;
     this.priceGroupService.createGroup(body).subscribe(res => {
       this.priceGroupService.getAllGroups().subscribe(res => {
         this.groups = res.body;

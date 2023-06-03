@@ -15,6 +15,10 @@ import {ToastrService} from "ngx-toastr";
 import {Title} from "@angular/platform-browser";
 import {IPerson} from "../../../core/models/person.models";
 import {UserService} from "../../../core/services/user.service";
+import {PermissionService} from "../../../core/services/permission.service";
+import {CommandsService} from "../../../core/services/command.service";
+import {ICommandChild} from "../../../core/models/command-child.models";
+import {HttpEvent, HttpEventType} from "@angular/common/http";
 
 
 @Component({
@@ -35,8 +39,10 @@ export class DefaultComponent implements OnInit {
   rejectComment: '';
   mas: IPrices[];
   orders: IOrder[] = [];
+  userCommandUnclearedList: ICommandChild[];
   requestedOrders: IOrder[] = [];
   personsLoading = false;
+  preview: string;
   persons: IPerson[];
   rejectedOrder: IOrder;
   selectedPrice: IPrices;
@@ -67,6 +73,13 @@ export class DefaultComponent implements OnInit {
     comment: [null, Validators.required]
   });
 
+  payInfoForm = this.fb.group({
+    payImage:[null],
+    description:[],
+    amount: [null, Validators.required],
+    commandChildId: [null, Validators.required],
+    receiptNumber: [null, Validators.required],
+  });
   @ViewChild('content') content;
 
   constructor(private modalService: NgbModal,
@@ -79,11 +92,20 @@ export class DefaultComponent implements OnInit {
               private userService: UserService,
               private orderService: OrderService,
               private auth: AuthenticationService,
+              private commandService: CommandsService,
+              private permissionService: PermissionService,
               private eventService: EventService) {
 
   }
 
   ngOnInit() {
+
+    if (this.permissionService.hasPermission('user')){
+      console.log('this useeeeeeeeeeeeeeeeeeeeeer is User');
+      this.commandService.getCommandChildrenUncleared().subscribe(res =>{
+        this.userCommandUnclearedList = res.body;
+      })
+    }
     this.titleService.setTitle("داشبورد")
     this.ws.connect();
     this.reportService.adminBalance().subscribe(res => {
@@ -92,8 +114,8 @@ export class DefaultComponent implements OnInit {
     this.reportService.myBalance().subscribe(res => {
       this.myBalance = res.body;
     });
-
     this.ws.price.subscribe(msg => {
+      console.log(msg);
       this.mas = msg;
       console.log("mass issss", this.mas);
     });
@@ -257,7 +279,13 @@ export class DefaultComponent implements OnInit {
     });
 
   }
+  makePayInfo(child, modal){
 
+    this.payInfoForm.patchValue({
+      commandChildId: child.id
+    })
+    this.modalService.open(modal, this.ngbModalOptions);
+  }
   confirmOrder(order: IOrder) {
     order.description = this.rejectComment;
     this.ws.orderToConfirm(order)
@@ -338,6 +366,54 @@ export class DefaultComponent implements OnInit {
         this.toastr.error("لطفا فارسی تایپ نمایید")
       }
     }
+  }
+
+
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    console.log(file);
+    this.payInfoForm.patchValue({
+      payImage: file
+    });
+    this.payInfoForm.get('payImage').updateValueAndValidity()
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
+
+  submitForm() {
+    var formData: any = new FormData();
+    console.log(this.payInfoForm.value);
+    const payInfo = {
+      amount: this.payInfoForm.get('amount').value,
+      description: this.payInfoForm.get('description').value,
+      receiptNumber:this.payInfoForm.get('receiptNumber').value,
+      commandChildId:this.payInfoForm.get('commandChildId').value,
+    }
+    // @ts-ignore
+    formData.append('payInfo', JSON.stringify(payInfo) )
+    formData.append('payImage',  this.payInfoForm.value.payImage)
+
+    this.commandService.createPayInfo(formData).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+
+          break;
+        case HttpEventType.Response:
+          console.log('User successfully created!', event.body);
+
+          break;
+      }
+    })
   }
 }
 

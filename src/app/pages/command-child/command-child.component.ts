@@ -15,6 +15,7 @@ import {API_URL} from "../../../environments/environment";
 import {Lightbox} from "ngx-lightbox";
 import {HttpClient, HttpEvent, HttpEventType} from "@angular/common/http";
 import {DomSanitizer, Title} from "@angular/platform-browser";
+import {ToastrService} from "ngx-toastr";
 
 
 
@@ -55,10 +56,23 @@ export class CommandChildComponent implements OnInit {
     receiptNumber: [null, Validators.required],
   });
 
+  commandChildForm = this.fb.group({
+    id: [null],
+    name: [null],
+    accountNumber: [null],
+    audienceName: [null],
+    bankName: [null],
+    accountOwnerName: [null],
+    amount: [null],
+    type: [null],
+    status: [null]
+  })
+
   constructor(private route: ActivatedRoute,
               private lightbox: Lightbox,
               private _sanitizer: DomSanitizer,
               private fb: FormBuilder,
+              private toastr: ToastrService,
               private http: HttpClient,
               private modalService: NgbModal,
               public router: Router,
@@ -193,6 +207,37 @@ export class CommandChildComponent implements OnInit {
   }
 
   unConfirmPay(id: number) {
+
+  }
+
+  editCommandChild(child: ICommandChild, payInfoModal) {
+    console.log(child);
+    this.modalService.open(payInfoModal, this.ngbModalOptions);
+    console.log(child);
+    this.commandChildForm.patchValue({
+      id: child.id,
+    });
+  }
+
+  updateCommandChild() {
+    let commandChild = this.commandChildForm.value;
+    console.log(commandChild);
+    this.commandService.updateCommandChild(commandChild).subscribe(res => {
+      console.log(res);
+    })
+
+  }
+
+  deleteCommandChild(child: ICommandChild) {
+    this.commandService.deleteCommandChild(child.id).subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  deletePayInfo(pay) {
+    this.commandService.deletePayInformation(pay.id).subscribe(res => {
+      this.toastr.error(`  پرداخت با شناسه  ${res}  حذف شد`)
+    })
 
   }
 }

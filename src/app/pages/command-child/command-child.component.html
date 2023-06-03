@@ -11,7 +11,9 @@
             <span>  قابل پرداخت : {{child.amount}} </span>
           </h4>
           <div class="ms-auto mt-auto">
-          <button class="btn  btn-primary"  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
+          <button class="btn btn-sm btn-success mr-1 "  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
+          <button class="btn btn-sm btn-primary mr-1"  (click)="editCommandChild(child, commandChildModal)">ویرایش  </button>
+          <button class="btn  btn-sm btn-danger mr-1"  (click)="deleteCommandChild(child)">حذف  </button>
           </div>
 
 
@@ -24,6 +26,7 @@
                   <h4 class="card-title"> مبلغ : {{pay.amount | number}}  </h4>
                   <p class="card-title-desc">  شرح : {{pay.description}}  </p>
                   <div class="row text-center ">
+                    <button class="btn  btn-sm btn-danger mr-1"  (click)="deletePayInfo(pay)">حذف  </button>
                     <div class="col-6">
                       <div>
                         <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>
@@ -71,7 +74,7 @@
     <ng-template #payInfoModal let-modal>
       <div class="modal-header">
 
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -114,3 +117,26 @@
    </div>
 
     </ng-template>
+
+<ng-template #commandChildModal let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="commandChildForm" >
+      <div class="row mb-5">
+        <div class="col-md-6">
+          <label for="amount_command_child" class="form-label">مبلغ درخواست: </label>
+          <input type="text" formControlName="amount" autocomplete="off" currencyMask  ngbAutofocus class="form-control" id="amount_command_child">
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-info btn-block mt-5" (click)="updateCommandChild(); modal.close() ">ویرایش درخواست پرداخت</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
