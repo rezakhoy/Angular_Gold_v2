@@ -10,6 +10,7 @@ import {BankComponent} from "./bank/bank.component";
 import {CommandComponent} from "./command/command.component";
 import {CommandChildComponent} from "./command-child/command-child.component";
 import {PersonComponent} from "./person/person.component";
+import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'command-list',
     component: CommandComponent
+  },
+  {
+    path: 'command-child-list',
+    component: CommandChildListComponent
   },
   {
     path: 'command/:id',

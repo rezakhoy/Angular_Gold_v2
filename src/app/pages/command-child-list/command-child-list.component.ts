@@ -16,20 +16,19 @@ import {Lightbox} from "ngx-lightbox";
 import {HttpClient, HttpEvent, HttpEventType} from "@angular/common/http";
 import {DomSanitizer, Title} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
-import {error} from "protractor";
 
 
 
 @Component({
   selector: 'app-advancedtable',
-  templateUrl: './command-child.component.html',
-  styleUrls: ['./command-child.component.scss'],
+  templateUrl: './command-child-list.component.html',
+  styleUrls: ['./command-child-list.component.scss'],
 })
 
 /**
  * Advanced table component
  */
-export class CommandChildComponent implements OnInit {
+export class CommandChildListComponent implements OnInit {
 
 
 
@@ -87,17 +86,13 @@ export class CommandChildComponent implements OnInit {
   ngOnInit() {
     this.callCommandChild()
     this.callCommand()
-    this.loadPersons()
   }
 
   callCommandChild() {
-    this.route.paramMap.subscribe(params => {
-      let id = params.get('id');
-      this.commandService.getCommandChild(+id).subscribe(res => {
+      this.commandService.getCommandChildren().subscribe(res => {
         this.commandChildren = res.body;
         console.log(this.commandChildren);
       })
-    })
   }
 
   callCommand() {
@@ -121,11 +116,6 @@ export class CommandChildComponent implements OnInit {
       this.audiences = res.body;
       this.audiencesLoading = false;
     })
-  }
-
-  getListChildCommand(id: number, modal) {
-    const url = `${API_URL}command/`+id;
-    window.open(url, '_blank');
   }
 
   showLightbox(index) {
@@ -203,8 +193,6 @@ export class CommandChildComponent implements OnInit {
   confirmPay(id) {
     this.commandService.confirmPayInfo(id).subscribe(res => {
       this.callCommandChild();
-    }, error=> {
-      this.toastr.error(`   ${error.error} `)
     })
 
   }

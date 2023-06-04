@@ -40,6 +40,7 @@ import {CommandChildComponent} from "./command-child/command-child.component";
 import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
 import {PersonComponent} from "./person/person.component";
 import {PermissionModule} from "ng2-permission";
+import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
 
 
 
@@ -59,6 +60,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DemandComponent,
     BankComponent,
     PersonComponent,
+    CommandChildListComponent,
     AdvancedSortableDirective,
     CommandChildComponent,
     UsersComponent,

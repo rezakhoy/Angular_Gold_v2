@@ -140,14 +140,18 @@ export class UsersComponent implements OnInit {
         this.userService.getAll().subscribe(res => {
           this.service.setData()
         })
-      })
+      }, error => {
+        this.toastr.error(`   ${error.error} `)
+      } )
     }else {
       this.userService.register(body).subscribe(res => {
         this.toastr.success(`  کاربر ${res.body.person.name}  با موفقیت ایجاد شد`)
         this.userService.getAll().subscribe(res => {
            this.service.setData()
         })
-      })
+      }, error => {
+        this.toastr.error(`   ${error.error} `)
+      } )
     }
  this.createUserForm.reset()
   }

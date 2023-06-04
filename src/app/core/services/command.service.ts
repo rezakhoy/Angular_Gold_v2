@@ -29,6 +29,7 @@ export class CommandsService {
   getCommandChildrenUncleared(): Observable<HttpResponse<ICommandChild[]>> {
     return this.http.get<any>(`${API_URL}get-command-children-uncleared`, {  observe: 'response' });
   }
+
   public createPayCommand(command): any {
     return this.http.post(`${API_URL}create-pay-command`, command);
   }
