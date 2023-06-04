@@ -12,6 +12,7 @@ import {CommandChildComponent} from "./command-child/command-child.component";
 import {PersonComponent} from "./person/person.component";
 import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
 
+
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard' },
   {

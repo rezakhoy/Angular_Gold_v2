@@ -1,122 +1,138 @@
 <div class="container-fluid">
-
-  <div class="row" *ngFor="let child of commandChildren ">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex flex-wrap border-bottom pb-2">
-          <h4>
-<!--            <span  *permissionAnyOf="['admin', 'acc']" >{{child.name }} &#45;&#45; {{child.amount | number}}</span>-->
-            <span>  شماره حساب : {{child.accountNumber}}</span>
-            <span>  به نام :{{child.accountOwnerName}} </span>
-            <span>  قابل پرداخت : {{child.amount}} </span>
-          </h4>
-          <div class="ms-auto mt-auto">
-          <button class="btn btn-sm btn-success mr-1 "  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">لیست دریافت و پرداخت ها</h4>
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Show
+                  <select name="tickets-table_length" aria-controls="tickets-table" name="pageSize"
+                    [(ngModel)]="service.pageSize" class="form-control form-control-sm mx-2">
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="25">25</option>
+                    <option [ngValue]="50">50</option>
+                    <option [ngValue]="100">100</option>
+                  </select> entries</label></div>
+            </div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                  class="d-inline-flex align-items-center">Search:
+                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table" [(ngModel)]="service.searchTerm"></label></div>
+            </div>
+            <!-- End search -->
           </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable"
+              class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th sortable="name" (sort)="onSort($event)">نوع</th>
+                  <th sortable="position" (sort)="onSort($event)">بانک</th>
+                  <th sortable="office" (sort)="onSort($event)">صاحب حساب</th>
+                  <th sortable="age" (sort)="onSort($event)">شماره حساب</th>
+                  <th sortable="date" (sort)="onSort($event)"> قابل پرداخت</th>
+                  <th sortable="salary" (sort)="onSort($event)">وضعیت</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let table of tables$ | async;let i=index">
+                <tr>
+                  <td align="center">
+                    <a class="expand-row" (click)="changeValue(i)">
+                      +
+                    </a>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.type" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.bankName" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.accountOwnerName" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.accountNumber" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.amount.toString()" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.status" [term]="service.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-success mr-1 "  (click)="makePayInfo(table, payInfoModal)">ثبت فیش</button>
+                  </td>
+                </tr>
 
+                <tr *ngIf="!hideme[i]" class="sub-table no-bg">
+                  <td align="center"> </td>
+                  <td colspan="15" class="p-0">
+                    <table class="table mb-0 table-striped">
+                      <thead class="bg-dark text-white">
+                        <tr>
+                          <th>مبلغ فیش</th>
+                          <th>شماره فیش</th>
+                          <th>وضعیت </th>
+                          <th> تصویر</th>
 
-        </div>
-        <div class="row">
-
-            <div class="col-md-3"  *ngFor="let pay of child.payInformationList ">
-              <div class="card ">
-                <div class="card-body ">
-                  <h4 class="card-title"> مبلغ : {{pay.amount | number}}  </h4>
-                  <p class="card-title-desc">  شرح : {{pay.description}}  </p>
-                  <div class="row text-center ">
-                    <button class="btn  btn-sm btn-danger mr-1"  (click)="deletePayInfo(pay)">حذف  </button>
-                    <div class="col-6">
-                      <div>
-                        <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>
-                        <span *ngIf="pay.status === 'UNCONFIRM'" class="badge font-size-14 bg-danger  mb-1">تایید نشده</span>
-                        <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>
-
-                        <div class="img-fluid">
-                          <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145" style="max-height: 150px"/>
-                        </div>
-
-                        <div>
-                          <div class="btn-group btn-group-example mt-2" role="group">
-                            <button type="button" [disabled]="pay.status !== 'REQUEST'" class="btn btn-primary w-xs" (click)="confirmPay(pay.id)"><i
-                              class="mdi mdi-thumb-up" ></i></button>
-                            <button type="button"  [disabled]="pay.status !== 'REQUEST'" class="btn btn-danger w-xs" (click)="unConfirmPay(pay.id)"><i
-                              class="mdi mdi-thumb-down"></i></button>
-                          </div>
-                        </div>
-                        <ng-image-fullscreen-view
-                          [images]="imageObject"
-                          [show]="showFlag"
-                          [direction]="'rtl'"
-                          [closeText]="'بستن'"
-                          (click)="onclick($event)"
-                        ></ng-image-fullscreen-view>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pay of table.payInformationList ; let i = index">
+                          <td>{{pay.amount}}</td>
+                          <td>{{pay.receiptNumber}}</td>
+                          <td>{{pay.status}}</td>
+                          <td> <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145" style="max-height: 50px"/></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-image-fullscreen-view
+                  [images]="imageObject"
+                  [show]="showFlag"
+                  [direction]="'rtl'"
+                  [closeText]="'بستن'"
+                  (click)="onclick($event)"
+          ></ng-image-fullscreen-view>
+          <!-- End table -->
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">Showing
+                {{service.startIndex}} to
+                {{service.endIndex}} of {{service.totalRecords}}
+                entries
               </div>
             </div>
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-right float-md-end pagination-rounded">
+                <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+              </div>
+            </div>
+            <!-- End Pagination -->
           </div>
-
+        </div>
       </div>
     </div>
   </div>
+</div>
 
 
-  </div>
 
 
-<!--**********************************
-                modal
-***********************************-->
-    <ng-template #payInfoModal let-modal>
-      <div class="modal-header">
-
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-   <div class="modal-body">
-     <form [formGroup]="payInfoForm" >
-       <!--        Progress Bar-->
-       <!--        <div class="progress form-group" *ngIf="percentDone">-->
-       <!--          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"-->
-       <!--               [style.width.%]="percentDone">-->
-       <!--          </div>-->
-       <!--        </div>-->
-       <div class="row mb-5">
-         <div class="col-md-6">
-           <label for="amount" class="form-label">مبلغ درخواست: </label>
-           <input type="text" formControlName="amount" autocomplete="off" currencyMask  ngbAutofocus class="form-control" id="amount">
-         </div>
-         <div class="col-md-6">
-           <label for="receiptNumber" class="form-label">شماره فیش: </label>
-           <input type="text" formControlName="receiptNumber"    class="form-control" id="receiptNumber">
-         </div>
-         <div class="col-md-12">
-           <label for="description" class="form-label"> توضیحات: </label>
-           <input type="text" formControlName="description"    class="form-control" id="description">
-         </div>
-       </div>
-       <div class="form-group">
-         <div class="preview " *ngIf="preview && preview !== null">
-           <img [src]="preview" [alt]="payInfoForm.value.name" width="150">
-         </div>
-       </div>
-
-       <div class="form-group">
-         <input type="file" (change)="uploadFile($event)">
-       </div>
-
-       <div class="row">
-         <button class="btn btn-info btn-block mt-5" (click)="submitForm(); modal.close() ">ثبت فیش</button>
-       </div>
-     </form>
-   </div>
-
-    </ng-template>
-
-<ng-template #commandChildModal let-modal>
+<ng-template #payInfoModal let-modal>
   <div class="modal-header">
 
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -124,15 +140,39 @@
     </button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="commandChildForm" >
+    <form [formGroup]="payInfoForm" >
+      <!--        Progress Bar-->
+      <!--        <div class="progress form-group" *ngIf="percentDone">-->
+      <!--          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"-->
+      <!--               [style.width.%]="percentDone">-->
+      <!--          </div>-->
+      <!--        </div>-->
       <div class="row mb-5">
         <div class="col-md-6">
-          <label for="amount_command_child" class="form-label">مبلغ درخواست: </label>
-          <input type="text" formControlName="amount" autocomplete="off" currencyMask  ngbAutofocus class="form-control" id="amount_command_child">
+          <label for="amount" class="form-label">مبلغ فیش: </label>
+          <input type="text" formControlName="amount" autocomplete="off" currencyMask  ngbAutofocus class="form-control" id="amount">
+        </div>
+        <div class="col-md-6">
+          <label for="receiptNumber" class="form-label">شماره فیش: </label>
+          <input type="text" formControlName="receiptNumber"    class="form-control" id="receiptNumber">
+        </div>
+        <div class="col-md-12">
+          <label for="description" class="form-label"> توضیحات: </label>
+          <input type="text" formControlName="description"    class="form-control" id="description">
         </div>
       </div>
+      <div class="form-group">
+        <div class="preview " *ngIf="preview && preview !== null">
+          <img [src]="preview" [alt]="payInfoForm.value.name" width="150">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="file" (change)="uploadFile($event)">
+      </div>
+
       <div class="row">
-        <button class="btn btn-info btn-block mt-5" (click)="updateCommandChild(); modal.close() ">ویرایش درخواست پرداخت</button>
+        <button class="btn btn-info btn-block mt-5" (click)="submitForm(); modal.close() ">ثبت فیش</button>
       </div>
     </form>
   </div>

@@ -108,9 +108,13 @@ export class DefaultComponent implements OnInit {
     }
     this.titleService.setTitle("داشبورد")
     this.ws.connect();
-    this.reportService.adminBalance().subscribe(res => {
-      this.adminBalance = res.body;
-    });
+    if (this.permissionService.hasPermission('admin') || this.permissionService.hasPermission('acc')){
+      console.log('this useeeeeeeeeeeeeeeeeeeeeer is User');
+      this.reportService.adminBalance().subscribe(res => {
+        this.adminBalance = res.body;
+      });
+    }
+
     this.reportService.myBalance().subscribe(res => {
       this.myBalance = res.body;
     });

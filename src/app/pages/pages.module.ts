@@ -44,9 +44,6 @@ import {CommandChildListComponent} from "./command-child-list/command-child-list
 
 
 
-
-
-
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
