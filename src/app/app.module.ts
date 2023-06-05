@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -19,6 +19,7 @@ import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule} from "ng2-
 import {PermissionModule} from "ng2-permission";
 import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
 import {ToastrModule} from "ngx-toastr";
+import {PermissionService} from "./core/services/permission.service";
 
 
 
@@ -38,6 +39,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   thousands: ","
 };
 
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent
@@ -76,6 +78,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   bootstrap: [AppComponent],
   providers: [
     WebsocketService,
+    PermissionService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ],

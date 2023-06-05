@@ -10,6 +10,7 @@ import {ICommand} from "../../core/models/command.models";
 import {CommandsService} from "../../core/services/command.service";
 import {ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import {Title} from "@angular/platform-browser";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-advancedtable',
@@ -49,6 +50,7 @@ export class DemandComponent implements OnInit {
               private fb: FormBuilder,
               private modalService: NgbModal,
               private titleService: Title,
+              private toastr: ToastrService,
               private reportService: ReportsService,
               private commandService: CommandsService
               ) {
@@ -91,11 +93,13 @@ export class DemandComponent implements OnInit {
     console.log(command);
     if (command.type === 'PAY'){
       this.commandService.createPayCommand(command).subscribe(res => {
-        console.log(res);
+        this.toastr.success('دستور پرداخت با موفقیت ثبت شد')
+        this.commandForm.reset()
       })
     }else if (command.type === 'RECEIVE')
     this.commandService.createReceiveCommand(command).subscribe(res => {
-      console.log(res);
+      this.toastr.success('دستور دریافت با موفقیت ثبت شد')
+      this.commandForm.reset()
     })
   }
 

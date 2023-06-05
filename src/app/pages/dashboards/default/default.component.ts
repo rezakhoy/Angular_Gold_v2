@@ -91,14 +91,18 @@ export class DefaultComponent implements OnInit {
               private toastr: ToastrService,
               private userService: UserService,
               private orderService: OrderService,
+              private authService: AuthenticationService,
               private auth: AuthenticationService,
               private commandService: CommandsService,
               private permissionService: PermissionService,
               private eventService: EventService) {
-
+    permissionService.init()
   }
 
   ngOnInit() {
+    this.titleService.setTitle("داشبورد")
+
+    this.ws.connect();
 
     if (this.permissionService.hasPermission('user')){
       console.log('this useeeeeeeeeeeeeeeeeeeeeer is User');
@@ -106,8 +110,7 @@ export class DefaultComponent implements OnInit {
         this.userCommandUnclearedList = res.body;
       })
     }
-    this.titleService.setTitle("داشبورد")
-    this.ws.connect();
+
     if (this.permissionService.hasPermission('admin') || this.permissionService.hasPermission('acc')){
       console.log('this useeeeeeeeeeeeeeeeeeeeeer is User');
       this.reportService.adminBalance().subscribe(res => {

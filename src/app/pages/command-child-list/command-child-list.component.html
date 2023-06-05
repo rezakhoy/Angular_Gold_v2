@@ -49,7 +49,9 @@
                     </a>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.type" [term]="service.searchTerm"></ngb-highlight>
+                    <span *ngIf="table.type === 'PAY'" class="text-info"> پرداخت</span>
+                    <span *ngIf="table.type === 'RECEIVE'" class="text-info"> دریافت</span>
+
                   </td>
                   <td>
                     <ngb-highlight [result]="table.bankName" [term]="service.searchTerm"></ngb-highlight>
@@ -64,14 +66,16 @@
                     <ngb-highlight [result]="table.amount.toString()" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.status" [term]="service.searchTerm"></ngb-highlight>
+                    <span *ngIf="table.status === 'CLEARED'" class="badge font-size-14 bg-success mb-1 " >تسویه شده</span>
+                    <span *ngIf="table.status === 'UNCLEARED'" class="badge font-size-14 bg-info mb-1 " >تسویه نشده</span>
+                    <span *ngIf="table.status === 'OVER'" class="badge font-size-14 bg-danger mb-1 " > اضافه واریز</span>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-success mr-1 "  (click)="makePayInfo(table, payInfoModal)">ثبت فیش</button>
+                    <button class="btn btn-sm btn-info mr-1 "  (click)="makePayInfo(table, payInfoModal)">ثبت فیش</button>
                   </td>
                 </tr>
 
-                <tr *ngIf="!hideme[i]" class="sub-table no-bg">
+                <tr *ngIf="hideme[i]" class="sub-table no-bg">
                   <td align="center"> </td>
                   <td colspan="15" class="p-0">
                     <table class="table mb-0 table-striped">
@@ -88,7 +92,12 @@
                         <tr *ngFor="let pay of table.payInformationList ; let i = index">
                           <td>{{pay.amount}}</td>
                           <td>{{pay.receiptNumber}}</td>
-                          <td>{{pay.status}}</td>
+                          <td>
+                            <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>
+                            <span *ngIf="pay.status === 'UNCONFIRM'" class="badge font-size-14 bg-danger  mb-1">تایید نشده</span>
+                            <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>
+
+                          </td>
                           <td> <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145" style="max-height: 50px"/></td>
                         </tr>
                       </tbody>

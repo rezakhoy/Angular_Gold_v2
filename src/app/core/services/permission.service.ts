@@ -1,12 +1,26 @@
 import { Injectable } from '@angular/core';
 import {PermissionStore, RoleStore} from 'ng2-permission';
+import {AuthenticationService} from "./auth.service";
+import {BehaviorSubject} from "rxjs";
+import {User} from "../models/auth.models";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionService {
 
-  constructor(private permissionStore: PermissionStore, private roleStore: RoleStore) { }
+  constructor(private permissionStore: PermissionStore, private roleStore: RoleStore, private authService: AuthenticationService,) {
+    authService.getUser().subscribe(res => {
+      const roles = res.body.groups.map(function(a) {return a.name;});
+      console.log("roooooooooooooles", roles);
+      roleStore.defineRoles(roles, function () {
+        return true;
+      });
+    });
+
+  }
+
+
   init() {
     this.permissionStore.definePermission('Read', function () {
       return true;

@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 // export const API_URL = 'http://localhost:8080/';
 // export const API_URL = 'http://192.168.9.18:8080/';
-export const API_URL = 'http://192.168.1.7:8080/';
+export const API_URL = 'http://192.168.0.107:8080/';
 // export const API_URL = 'http://5.122.2.193:8080/';
 export const permission = 'user';
 export const environment = {
