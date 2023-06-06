@@ -140,6 +140,7 @@ export class CommandChildComponent implements OnInit {
   }
   onclick($event: MouseEvent) {
     this.showFlag = false;
+    this.imageObject.pop()
   }
 
 

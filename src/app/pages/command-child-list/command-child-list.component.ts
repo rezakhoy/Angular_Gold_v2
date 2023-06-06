@@ -162,6 +162,7 @@ export class CommandChildListComponent implements OnInit {
   }
   onclick($event: MouseEvent) {
     this.showFlag = false;
+    this.imageObject.pop()
   }
   /**
    * fetches the table value

@@ -18,45 +18,70 @@
 
 
         </div>
-        <div class="row">
+        <div class="row ">
 
             <div class="col-md-3"  *ngFor="let pay of child.payInformationList ">
-              <div class="card ">
-                <div class="card-body ">
-                  <h4 class="card-title"> مبلغ : {{pay.amount | number}}  </h4>
-                  <p class="card-title-desc">  شرح : {{pay.description}}  </p>
-                  <div class="row text-center ">
-                    <button class="btn  btn-sm btn-danger mr-1"  (click)="deletePayInfo(pay)">حذف  </button>
-                    <div class="col-6">
-                      <div>
-                        <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>
-                        <span *ngIf="pay.status === 'UNCONFIRM'" class="badge font-size-14 bg-danger  mb-1">تایید نشده</span>
-                        <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mt-0">مبلغ : {{pay.amount | number}} </h4>
+                    <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>
+                    <span *ngIf="pay.status === 'UNCONFIRM'" class="badge font-size-14 bg-danger  mb-1">تایید نشده</span>
+                    <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>
 
-                        <div class="img-fluid">
-                          <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)" width="145" style="max-height: 150px"/>
-                        </div>
-
-                        <div>
-                          <div class="btn-group btn-group-example mt-2" role="group">
-                            <button type="button" class="btn btn-primary w-xs" (click)="confirmPay(pay.id)"><i
-                              class="mdi mdi-thumb-up" ></i></button>
-                            <button type="button"  [disabled]="pay.status !== 'REQUEST'" class="btn btn-danger w-xs" (click)="unConfirmPay(pay.id)"><i
-                              class="mdi mdi-thumb-down"></i></button>
-                          </div>
-                        </div>
-                        <ng-image-fullscreen-view
-                          [images]="imageObject"
-                          [show]="showFlag"
-                          [direction]="'rtl'"
-                          [closeText]="'بستن'"
-                          (click)="onclick($event)"
-                        ></ng-image-fullscreen-view>
-                      </div>
-                    </div>
-                  </div>
                 </div>
+                <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)"  style="max-height: 150px"/>
+                <div class="card-body">
+                  <p class="card-text">شرح :{{pay.description}} </p>
+                  <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-danger btn-sm  "  (click)="deletePayInfo(pay)"> حذف فیش</button>
+                    <button type="button" class="btn btn-warning btn-sm  " (click)="unConfirmPay(pay.id)"> رد فیش </button>
+                    <button type="button" class="btn btn-success btn-sm " (click)="confirmPay(pay.id)">تایید فیش</button>
+                  </div>
+
+                </div>
+                                        <ng-image-fullscreen-view
+                                          [images]="imageObject"
+                                          [show]="showFlag"
+                                          [direction]="'rtl'"
+                                          [closeText]="'بستن'"
+                                          (click)="onclick($event)"
+                                        ></ng-image-fullscreen-view>
               </div>
+<!--              <div class="card ">-->
+<!--                <div class="card-body  ">-->
+<!--                  <h4 class="card-title text-center"> مبلغ : {{pay.amount | number}}  </h4>-->
+<!--                  <p class="card-title-desc ">  شرح : {{pay.description}}  </p>-->
+<!--                  <div class="row text-center ">-->
+<!--                    <div class="col-6">-->
+<!--                      <div>-->
+<!--                        <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>-->
+<!--                        <span *ngIf="pay.status === 'UNCONFIRM'" class="badge font-size-14 bg-danger  mb-1">تایید نشده</span>-->
+<!--                        <span *ngIf="pay.status === 'CONFIRM'" class="badge font-size-14 bg-success  mb-1">تایید شده</span>-->
+
+<!--                        <div class=" d-flex align-items-center">-->
+<!--                          <img [src]="transform(pay.image)" (click)="showLightbox(pay.image)"  style="max-height: 150px"/>-->
+<!--                        </div>-->
+
+<!--                        <div>-->
+<!--                          <div class="btn-group  mt-2" role="group">-->
+<!--                            <button type="button" class="btn btn-danger btn-sm "  (click)="deletePayInfo(pay)">حذف</button>-->
+<!--                            <button type="button" class="btn btn-warning btn-sm " (click)="unConfirmPay(pay.id)"> رد </button>-->
+<!--                            <button type="button" class="btn btn-success btn-sm " (click)="confirmPay(pay.id)">تایید</button>-->
+<!--                          </div>-->
+
+<!--                        </div>-->
+<!--                        <ng-image-fullscreen-view-->
+<!--                          [images]="imageObject"-->
+<!--                          [show]="showFlag"-->
+<!--                          [direction]="'rtl'"-->
+<!--                          [closeText]="'بستن'"-->
+<!--                          (click)="onclick($event)"-->
+<!--                        ></ng-image-fullscreen-view>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
           </div>
 
