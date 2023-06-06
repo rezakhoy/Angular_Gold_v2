@@ -151,6 +151,7 @@ export class DefaultComponent implements OnInit {
     this.personsLoading = true;
     this.userService.getAllPersons().subscribe(res => {
       this.persons = res.body;
+      console.log(res.body);
       this.personsLoading = false;
     })
   }
@@ -271,6 +272,22 @@ export class DefaultComponent implements OnInit {
     this.ws.sendOrder(order);
   }
 
+
+  saveAdminGoldOrder() {
+    const order = JSON.stringify({
+      'price': this.orderForm.get('fee').value,
+      'type': this.orderForm.get('transaction_type').value,
+      'amount': this.orderForm.get('quantity').value,
+      'personID': this.orderForm.get('userId').value,
+      'priceGroupId': this.orderForm.get('priceGroupId').value,
+      'baseProductId': 1,
+      'description': ""
+    })
+    console.log(order);
+    this.ws.sendOrder(order);
+  }
+
+
   culcPrice() {
     console.log("culc price ab");
     const price = ((this.orderForm.get('fee').value / 4.3317) * this.orderForm.get('quantity').value).toFixed();
@@ -331,19 +348,6 @@ export class DefaultComponent implements OnInit {
     this.ws.changeBuyStatus(status.checked)
   }
 
-  saveAdminGoldOrder() {
-    const order = JSON.stringify({
-      'price': this.orderForm.get('fee').value,
-      'type': this.orderForm.get('transaction_type').value,
-      'amount': this.orderForm.get('quantity').value,
-      'userId': this.orderForm.get('userId').value,
-      'priceGroupId': this.orderForm.get('priceGroupId').value,
-      'baseProductId': 1,
-      'description': ""
-    })
-    console.log(order);
-    this.ws.orderToConfirm(order);
-  }
 
   minesPrice() {
     this.setPriceForm.patchValue({
