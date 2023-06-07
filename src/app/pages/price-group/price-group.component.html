@@ -34,11 +34,11 @@
                   <td>{{group.id}}</td>
                   <td>{{group.name}}</td>
                   <td>{{group.description}}</td>
-                  <td>{{group.buy}}</td>
-                  <td>{{group.sell}}</td>
+                  <td><span *ngIf="group.buy" class="badge bg-success "> فعال</span><span *ngIf="!group.buy" class="badge  bg-light"> غیرفعال</span></td>
+                  <td><span *ngIf="group.sell" class="badge bg-success "> فعال</span><span *ngIf="!group.sell" class="badge  bg-light"> غیرفعال</span></td>
                   <td>{{group.limit}}</td>
-                  <td>{{group.difference}}</td>
-                  <td>{{group.gap}}</td>
+                  <td>{{group.difference | number}}</td>
+                  <td>{{group.gap| number}}</td>
 
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">
@@ -73,25 +73,41 @@
     <div class="modal-body">
 
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <label for="name" class="form-label">عنوان </label>
           <input  type="text" formControlName="name" class="form-control" id="name">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
           <label for="description" class="form-label">شرح </label>
           <input  type="text" formControlName="description" class="form-control" id="description">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
           <label for="gap" class="form-label">گپ </label>
           <input type="text" currencyMask formControlName="gap" class="form-control" id="gap">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
           <label for="difference" class="form-label">تفاوت </label>
           <input type="text" currencyMask formControlName="difference" class="form-control" id="difference">
         </div>
-        <div class="col-md-12">
+        <div class="col-md-4">
           <label for="limit" class="form-label">محدودیت معامله</label>
           <input type="text"   formControlName="limit" class="form-control" id="limit">
+        </div>
+        <div class="col-md-4">
+        <div class="form-check form-check-success mb-3">
+          <input class="form-check-input" formControlName="buy" type="checkbox" id="buy" >
+          <label class="form-check-label" for="buy">
+            خرید
+          </label>
+        </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check form-check-danger mb-3">
+            <input class="form-check-input" formControlName="sell" type="checkbox" id="sell" >
+            <label class="form-check-label" for="sell">
+              فروش
+            </label>
+          </div>
         </div>
       </div>
     </div>

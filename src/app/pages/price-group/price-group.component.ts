@@ -23,7 +23,9 @@ export class PriceGroupComponent implements OnInit {
     limit : [null, [Validators.min(0), Validators.required]],
     difference: [null, Validators.required],
     description: null,
-    gap: [null, Validators.required]
+    gap: [null, Validators.required],
+    sell: [null, Validators.required],
+    buy: [null, Validators.required]
   });
   groups: IPriceGroup[];
   constructor( private fb: FormBuilder,
@@ -51,10 +53,10 @@ export class PriceGroupComponent implements OnInit {
 
   saveGroup() {
     const body = this.groupForm.value;
-    body.sell = true;
-    body.buy = true;
     this.priceGroupService.createGroup(body).subscribe(res => {
+
       this.priceGroupService.getAllGroups().subscribe(res => {
+        this.groupForm.reset();
         this.groups = res.body;
       });
     });
@@ -62,10 +64,9 @@ export class PriceGroupComponent implements OnInit {
 
   updateGroup() {
     const body = this.groupForm.value;
-    body.sell = true;
-    body.buy = false;
     this.priceGroupService.updateGroup(body).subscribe(res => {
       this.priceGroupService.getAllGroups().subscribe(res => {
+        this.groupForm.reset();
         this.groups = res.body;
       });
     });
@@ -79,7 +80,9 @@ export class PriceGroupComponent implements OnInit {
       description: group.description,
       limit : group.limit,
       difference: group.difference,
-      gap: group.gap
+      gap: group.gap,
+      buy: group.buy,
+      sell: group.sell
     })
     this.modalService.open(createGroupForm, this.ngbModalOptions);
   }
