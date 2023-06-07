@@ -278,7 +278,7 @@ export class DefaultComponent implements OnInit {
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,
       'amount': this.orderForm.get('quantity').value,
-      'personID': this.orderForm.get('userId').value,
+      'personId': this.orderForm.get('userId').value,
       'priceGroupId': this.orderForm.get('priceGroupId').value,
       'baseProductId': 1,
       'description': ""
