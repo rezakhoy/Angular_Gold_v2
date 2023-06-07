@@ -203,6 +203,9 @@ export class UsersComponent implements OnInit {
 
     this.modalService.open(createUserModal, this.ngbModalOptions);
   }
-
+  changeSelectPerson($event: any) {
+    console.log($event);
+    document.getElementById('groupIds').click();
+  }
 }
 
