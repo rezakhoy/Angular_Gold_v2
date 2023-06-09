@@ -169,6 +169,9 @@ export class UsersComponent implements OnInit {
     this.priceGroupLoading = true;
     this.priceGroupService.getAllGroups().subscribe(res => {
       this.priceGroups = res.body;
+      this.priceGroups.map(e => {
+        e.fullName = `${e.name} - ${e.description}`;
+      }); //Add
       this.priceGroupLoading = false;
     })
 

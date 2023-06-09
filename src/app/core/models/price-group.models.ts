@@ -7,4 +7,5 @@ export class IPriceGroup {
   limit: number;
   difference: number;
   gap: number;
+  fullName: string
 }

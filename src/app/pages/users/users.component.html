@@ -54,7 +54,7 @@
                     <ngb-highlight [result]="table.person?.name" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.person?.cellPhone" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.person?.cellPhone.toString()" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
 
@@ -137,9 +137,11 @@
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"
+
                      formControlName="personId"
                      bindValue="id"
                      [loading]="personsLoading">
+
           </ng-select>
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
@@ -153,6 +155,7 @@
                      bindValue="id"
                      multiple="true"
                      [loading]="groupsLoading">
+
           </ng-select>
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
@@ -161,11 +164,14 @@
           <ng-select [items]="priceGroups"
 
                      notFoundText = "گروه دسترسی وجود ندارد !"
-                     bindLabel="name"
+                     bindLabel="fullName"
                      formControlName="priceGroupIds"
                      bindValue="id"
                      multiple="true"
                      [loading]="priceGroupLoading">
+<!--            <ng-template ng-label-tmp let-item="item">-->
+<!--              {{item.name}}:{{item.description}}-->
+<!--            </ng-template>-->
           </ng-select>
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
