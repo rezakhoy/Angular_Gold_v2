@@ -4,6 +4,7 @@ export interface IPrices {
   activeSell?: boolean;
   priceGroupId?: number;
   priceGroupName?: string;
+  priceGroupDescription?: string;
   sell?: number;
   buy?: number;
   time?: string;
