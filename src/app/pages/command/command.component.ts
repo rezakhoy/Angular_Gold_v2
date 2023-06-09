@@ -178,7 +178,9 @@ export class CommandComponent implements OnInit {
   }
 
   getClearCommandChild(table: Command, commandChildInformation) {
-
+      this.commandService.clearCommand(table.id).subscribe(res => {
+        console.log(res);
+      })
   }
 
   uploadFile(event) {

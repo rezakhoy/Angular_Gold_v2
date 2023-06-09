@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../../core/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {PermissionService} from "../../../core/services/permission.service";
 import {Title} from "@angular/platform-browser";
+import { owner } from 'src/environments/environment';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle("سکه و آبشده حمزه نژاد | ورود")
+    this.titleService.setTitle(owner)
     this.loginForm = new FormGroup({
       'username' : new FormControl(null, [Validators.required]),
       'password' : new FormControl(null, [Validators.required, Validators.minLength(6)])

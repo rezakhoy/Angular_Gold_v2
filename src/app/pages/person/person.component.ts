@@ -134,7 +134,7 @@ export class PersonComponent implements OnInit {
       console.log(res);
       this.toastr.success(` مشتری ${res.name}  با موفقیت ویرایش شد شد`)
       this.userService.getAll().subscribe(res => {
-        this.tables$ = this.service.tables$;
+        this.service.setData();
       })
     },error => {
       console.log(error);

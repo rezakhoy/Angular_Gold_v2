@@ -36,6 +36,9 @@ export class CommandsService {
   public createReceiveCommand(command): any {
     return this.http.post(`${API_URL}create-receive-command`, command);
   }
+  public clearCommand(id): any {
+    return this.http.post(`${API_URL}clear-command/`+id , id);
+  }
 
   public createCommandChild(command): any {
     return this.http.post(`${API_URL}create-command-child`, command);
@@ -51,6 +54,7 @@ export class CommandsService {
   public confirmPayInfo(id): any {
     return this.http.post(`${API_URL}confirm-pay-info/`+id , id);
   }
+
 
   public updateCommandChild(commandChild): any {
     return this.http.put(`${API_URL}update-command-child` , commandChild);

@@ -63,7 +63,7 @@
                     <ngb-highlight [result]="table.accountNumber" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.amount.toString()" [term]="service.searchTerm"></ngb-highlight>
+                    <ngb-highlight [result]="table.amount | number"  [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
                     <span *ngIf="table.status === 'CLEARED'" class="badge font-size-14 bg-success mb-1 " >تسویه شده</span>
@@ -90,7 +90,7 @@
                       </thead>
                       <tbody>
                         <tr *ngFor="let pay of table.payInformationList ; let i = index">
-                          <td>{{pay.amount}}</td>
+                          <td>{{pay.amount | number}}</td>
                           <td>{{pay.receiptNumber}}</td>
                           <td>
                             <span *ngIf="pay.status === 'REQUEST'" class="badge font-size-14 bg-info mb-1 " > در انتظار </span>

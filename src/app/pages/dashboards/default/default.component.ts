@@ -112,13 +112,14 @@ export class DefaultComponent implements OnInit {
     }
 
     if (this.permissionService.hasPermission('admin') || this.permissionService.hasPermission('acc')){
-      console.log('this useeeeeeeeeeeeeeeeeeeeeer is User');
+      console.log('this useeeeeeeeeeeeeeeeeeeeeer is Admin');
       this.reportService.adminBalance().subscribe(res => {
         this.adminBalance = res.body;
       });
     }
 
     this.reportService.myBalance().subscribe(res => {
+
       this.myBalance = res.body;
     });
     this.ws.price.subscribe(msg => {
@@ -281,7 +282,7 @@ export class DefaultComponent implements OnInit {
       'personId': this.orderForm.get('userId').value,
       'priceGroupId': this.orderForm.get('priceGroupId').value,
       'baseProductId': 1,
-      'description': ""
+      'description': "ثبت تلفنی"
     })
     console.log(order);
     this.ws.sendOrder(order);

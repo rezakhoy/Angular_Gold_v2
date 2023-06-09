@@ -112,6 +112,23 @@ export class AdvancedService {
     get startIndex() { return this._state.startIndex; }
     get endIndex() { return this._state.endIndex; }
     get totalRecords() { return this._state.totalRecords; }
+  setData(){
+    this.userService.getAllPersons().subscribe(res => {
+      this.users = res.body;
+      console.log(this.users);
+      this._search$.pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(200),
+        switchMap(() => this._search()),
+        delay(200),
+        tap(() => this._loading$.next(false))
+      ).subscribe(result => {
+        this._tables$.next(result.tables);
+        this._total$.next(result.total);
+      });
+      this._search$.next();
+    })
+  }
 
     /**
      * set the value

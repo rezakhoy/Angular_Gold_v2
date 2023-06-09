@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {PermissionStore, RoleStore} from 'ng2-permission';
 import {AuthenticationService} from "./auth.service";
-import {BehaviorSubject} from "rxjs";
-import {User} from "../models/auth.models";
+
 
 @Injectable({
   providedIn: 'root'

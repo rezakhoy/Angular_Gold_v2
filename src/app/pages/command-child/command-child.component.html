@@ -8,7 +8,7 @@
             <span  *permissionAnyOf="['admin', 'acc']" >{{child.name }} -- {{child.amount | number}}</span>
             <span>  شماره حساب : {{command.accountNumber}}</span>
             <span>  به نام :{{command.accountOwnerName}} </span>
-            <span>  قابل پرداخت : {{child.amount}} </span>
+            <span>  قابل پرداخت : {{child.amount|number}} </span>
           </h4>
           <div class="ms-auto mt-auto">
           <button class="btn btn-sm btn-success mr-1 "  (click)="makePayInfo(child, payInfoModal)">ثبت فیش</button>

@@ -6,6 +6,7 @@ export const API_URL = 'http://localhost:8080/';
 // export const API_URL = 'http://192.168.0.107:8080/';
 // export const API_URL = 'http://5.122.2.193:8080/';
 export const permission = 'user';
+export const owner = 'سکه و آبشده حمزه نژاد';
 export const environment = {
 
   production: false,
