@@ -15,7 +15,7 @@ export class Page404Component implements OnInit {
   constructor(private titleService: Title,) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("طلای حمزه نژاد |404")
+    this.titleService.setTitle("صفحه مورد نظر پیدا نشد |404")
   }
 
 }

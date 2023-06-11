@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   error = '';
+  owner= owner;
   returnUrl: string;
 
 
@@ -103,4 +104,5 @@ export class LoginComponent implements OnInit {
     //   }
   //   }
   // }
+
 }

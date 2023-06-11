@@ -14,6 +14,8 @@ import {AdvancedSortableDirective, SortEvent} from "../transactions/advanced-sor
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {HttpEvent, HttpEventType} from "@angular/common/http";
+import Swal from 'sweetalert2';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-advancedtable',
@@ -82,6 +84,7 @@ export class CommandComponent implements OnInit {
   constructor(public service: AdvancedService,
               private fb: FormBuilder,
               private route: Router,
+              private toastr: ToastrService,
               private titleService: Title,
               private modalService: NgbModal,
               private reportService: CommandsService,
@@ -178,9 +181,24 @@ export class CommandComponent implements OnInit {
   }
 
   getClearCommandChild(table: Command, commandChildInformation) {
-      this.commandService.clearCommand(table.id).subscribe(res => {
-        console.log(res);
-      })
+    Swal.fire({
+      title: ` از تسویه دستور پرداخت با شناسه  ${table.id} اطمینان دارید؟`,
+      text: "در صورت تسویه قابل برگشت نمی باشد",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      allowOutsideClick: false,
+      confirmButtonText: 'بله تسویه شود!',
+      cancelButtonText: 'انصراف'
+
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.commandService.clearCommand(table.id).subscribe(res => {
+          this.service.setData();
+          this.toastr.success('دستور با موفقیت تسویه شد ')
+        })
+      }
+    })
   }
 
   uploadFile(event) {

@@ -109,6 +109,22 @@ export class AdvancedService {
     get startIndex() { return this._state.startIndex; }
     get endIndex() { return this._state.endIndex; }
     get totalRecords() { return this._state.totalRecords; }
+  setData(){
+    this.service.getAllCommand().subscribe(res => {
+      this.commands = res.body;
+      this._search$.pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(200),
+        switchMap(() => this._search()),
+        delay(200),
+        tap(() => this._loading$.next(false))
+      ).subscribe(result => {
+        this._tables$.next(result.tables);
+        this._total$.next(result.total);
+      });
+      this._search$.next();
+    })
+  }
 
     /**
      * set the value
