@@ -41,16 +41,13 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(requestChange).pipe(
         map((event: HttpEvent<any>) => event), // pass further respone
         catchError((error: HttpErrorResponse) => {
-          console.log(error.status);
-          console.log(error);
           if (error && error.status === 401) {
-
             localStorage.removeItem('authorization');
             this.router.navigate(['/account/login']);
             return throwError(error);
           }
           if (error && error.status === 400) {
-            // this.toastr.error('نام کاربری یا رمز عبور صحیح نمی باشد')
+            this.toastr.error('نام کاربری یا رمز عبور صحیح نمی باشد')
             return throwError(error);
           }
           if (error && error.status === 0) {
@@ -60,9 +57,6 @@ export class JwtInterceptor implements HttpInterceptor {
             return throwError(error);
           }
           if (error && error.status === 403) {
-
-            console.log("im in 40000000000000000000000000000000003");
-           // this.handellError(403)
             localStorage.removeItem('authorization');
             this.router.navigate(['/account/login']);
             return throwError(error);

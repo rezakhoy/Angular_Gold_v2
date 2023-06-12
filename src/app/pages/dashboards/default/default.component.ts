@@ -352,14 +352,14 @@ export class DefaultComponent implements OnInit {
 
   minesPrice() {
     this.setPriceForm.patchValue({
-      price: this.setPriceForm.get('price').value - 10000
+      price: this.setPriceForm.get('price').value - 50000
     })
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }
 
   plusPrice() {
     this.setPriceForm.patchValue({
-      price: this.setPriceForm.get('price').value + 10000
+      price: this.setPriceForm.get('price').value + 50000
     })
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }

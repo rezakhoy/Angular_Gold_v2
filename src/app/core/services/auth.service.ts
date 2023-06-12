@@ -42,7 +42,6 @@ export class AuthenticationService {
      */
     login(username, password): Observable<IUser> {
       const body = JSON.stringify({  'username': username, 'password': password });
-      console.log(body);
       return this.http.post<IUser>(`${API_URL}login`, body);
     }
   refreshToken(refreshToken): Observable<HttpEvent<IRefreshToken>> {
