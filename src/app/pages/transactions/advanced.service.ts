@@ -89,6 +89,7 @@ export class AdvancedService {
     constructor(private pipe: DecimalPipe, private reportService: ReportsService) {
       this.reportService.myTransaction().subscribe(res => {
         this.myTransaction = res.body;
+        console.log(this.myTransaction);
         this._search$.pipe(
           tap(() => this._loading$.next(true)),
           debounceTime(200),

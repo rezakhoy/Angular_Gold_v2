@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
 import {MyTransaction} from "../../core/models/customer-transction.models";
 import {Title} from "@angular/platform-browser";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 
 @Component({
@@ -31,13 +32,16 @@ export class TransactionsComponent implements OnInit {
   @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
   public isCollapsed = true;
 
-  constructor(public service: AdvancedService,private titleService: Title,  ) {
+  constructor(public service: AdvancedService,
+              private titleService: Title,
+              public deviceService: DeviceDetectorService
+              ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
   }
 
   ngOnInit() {
-
+    this.deviceService.isMobile()
     this.titleService.setTitle(" لیست تراکنش ها")
     this.service.tables$.subscribe(res => {
 
