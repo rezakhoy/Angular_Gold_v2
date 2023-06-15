@@ -8,7 +8,7 @@
               <div class="col-7">
                 <div class="text-light p-4">
                   <h5 class="text-light">خوش آمدید</h5>
-                  <p>{{owner}}</p>
+                  <p class="font-size-18">{{owner}}</p>
                 </div>
               </div>
               <div class="col-5 align-self-end">
@@ -33,7 +33,7 @@
 
                 <div class="mb-3">
                   <label for="username">نام کاربری</label>
-                  <input type="text" formControlName="username" class="form-control" id="username" placeholder="نام کاربری"
+                  <input type="text" formControlName="username" class="form-control" id="username" placeholder=" شماره موبایل"
                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                   <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                     <div *ngIf="f.username.errors.required">نام کاربری اجباری است</div>
@@ -43,7 +43,7 @@
                 <div class="mb-3">
                   <label for="password">رمز عبور</label>
                   <div class="input-group auth-pass-inputgroup">
-                    <input type="password" class="form-control" formControlName="password" id="password" placeholder="Enter password"
+                    <input type="password" class="form-control" formControlName="password" id="password" placeholder="رمز ورود"
                       [ngClass]="{ 'is-invalid': submitted && f.password.errors }" aria-label="Password"
                       aria-describedby="password-addon">
 

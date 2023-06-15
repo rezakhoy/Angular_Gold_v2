@@ -57,20 +57,14 @@ export class AuthenticationService {
     this.router.navigate(['/account/login'], );
 
   }
-  //
-  // refreshToToken(refreshToken){
-  //   return this.http.post<IUser>(`${API_URL}login`, refreshToken);
-  // }
+
 
   /**
    * Reset password
    * @param email email
    */
-  resetPassword(email: string) {
-    return getFirebaseBackend().forgetPassword(email).then((response: any) => {
-      const message = response.data;
-      return message;
-    });
+  resetPassword(password: string) {
+    return this.http.post<any>(`${API_URL}auth/reset-password`, password);
   }
 
 }
