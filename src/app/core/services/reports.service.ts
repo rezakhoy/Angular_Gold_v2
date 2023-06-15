@@ -24,6 +24,13 @@ export class ReportsService {
   myTransaction(): Observable<HttpResponse<MyTransaction[]>> {
     return this.http.get<any>(`${API_URL}my-transaction`, {  observe: 'response' });
   }
+  adminTrades(){
+   const body = {
+      "startDate": "1402/03/25",
+      "endDate": "1402/03/25"
+    }
+    return this.http.post<any>(`${API_URL}admin-trade`, body);
+  }
 
   adminDemandList(): Observable<HttpResponse<Demand[]>> {
     return this.http.get<any>(`${API_URL}admin-demands-list`, {  observe: 'response' });

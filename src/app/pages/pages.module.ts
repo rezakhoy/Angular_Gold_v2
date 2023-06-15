@@ -41,6 +41,7 @@ import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
 import {PersonComponent} from "./person/person.component";
 import {PermissionModule} from "ng2-permission";
 import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
+import {TradesComponent} from "./trades/trades.component";
 
 
 
@@ -54,6 +55,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   declarations: [
     TransactionsComponent,
     PriceGroupComponent,
+    TradesComponent,
     DemandComponent,
     BankComponent,
     PersonComponent,

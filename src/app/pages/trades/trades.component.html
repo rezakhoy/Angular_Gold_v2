@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="deviceService.isDesktop()" >
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">لیست تراکنش ها</h4>
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6">
+
+            </div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+
+            </div>
+            <!-- End search -->
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable"
+              class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+              <thead>
+                <tr>
+                  <th>شرح</th>
+                  <th>تاثیر ریالی </th>
+                  <th >مانده ریالی</th>
+                  <th >تاثیر وزنی</th>
+                  <th>مانده وزنی</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let trade of trades ">
+                <tr>
+                <td>{{trade.sanad}}</td>
+<!--                <td>{{trade.n}}</td>-->
+                <td>{{trade.sanad}}</td>
+                <td>{{trade.sanad}}</td>
+                <td>{{trade.sanad}}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- End table -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  <div class="row" *ngIf="deviceService.isMobile()">-->
+<!--    <div class="card"  *ngFor="let table of tables$ | async;let i=index">-->
+<!--      <div class="card-body">-->
+<!--        <div class="row border-bottom ">-->
+<!--          <div class="d-flex justify-content-between">-->
+<!--        <span>-->
+<!--            سند :{{table.sanad}}-->
+<!--        </span>-->
+<!--            <span>-->
+<!--           تاریخ : {{table.tariz}}-->
+<!--        </span>-->
+<!--          </div>-->
+
+
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <span>-->
+<!--            شرح : {{table.sh}}-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="d-flex justify-content-between">-->
+<!--          <span *ngIf="table.v_bes || table.v_bed">-->
+<!--            تاثیر وزنی : <span class="text-success" *ngIf="table.v_bes>0">{{table.v_bes}}</span>-->
+<!--                        <span class="text-danger " *ngIf="table.v_bed>0">{{table.v_bed}}</span>-->
+<!--        </span>-->
+<!--            <span *ngIf="table.r_bes || table.r_bed">-->
+<!--            تاثیر ریالی : <span class="text-success" *ngIf="table.r_bes>0">{{table.r_bes|number}}</span>-->
+<!--                          <span class="text-danger" *ngIf="table.r_bed>0">{{table.r_bed|number}}</span>-->
+<!--        </span>-->
+<!--          </div>-->
+
+<!--          <div class="row border-top">-->
+<!--            <div class="d-flex justify-content-between">-->
+
+<!--              <span>-->
+<!--           م ریالی : <span class="badge font-size-13 " [ngClass]="table.balance_r > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{table.balance_r |number}}</span>-->
+<!--               </span>-->
+<!--              <span>-->
+<!--          م وزنی: <span class="badge font-size-13 " [ngClass]="table.balance_v> 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{table.balance_v}}</span>-->
+<!--                </span>-->
+<!--            </div>-->
+
+
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+</div>
+

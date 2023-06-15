@@ -42,6 +42,13 @@ export const MENU: MenuItem[] = [
     per: ['admin', 'acc']
   },
   {
+    id: 22,
+    label: 'معاملات',
+    icon: 'bx bx-repost',
+    link: '/trades',
+    per: ['admin', 'acc']
+  },
+  {
     id: 12,
     label: 'لیست دریافت و پرداخت',
     icon: 'bx bx-vertical-center',
