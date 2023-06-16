@@ -17,6 +17,7 @@ export class IUser {
     person: IPerson;
    authorization: string;
     refreshToken:string;
+    password: string;
 }
 
 

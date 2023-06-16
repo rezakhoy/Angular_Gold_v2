@@ -83,7 +83,7 @@
                         <a class="text-danger" href="javascript: void(0);" ngbTooltip="غیر فعال سازی "><i class="bx bx-user-minus"></i></a>
                       </li>
                       <li class="list-inline-item px-2">
-                        <a class="text-warning" href="javascript: void(0);" ngbTooltip="ریست رمز ورود"><i class="bx bx-key"></i></a>
+                        <a class="text-warning" (click)="changePassword(table, resetPasswordUserModal)" ngbTooltip="ریست رمز ورود"><i class="bx bx-key"></i></a>
                       </li>
                     </ul>
                   </td>

@@ -16,6 +16,7 @@ import {JalaliDateCalculatorService} from "ngx-persian";
 import {AuthenticationService} from "../../core/services/auth.service";
 import {Title} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -209,6 +210,24 @@ export class UsersComponent implements OnInit {
   changeSelectPerson($event: any) {
     console.log($event);
     document.getElementById('groupIds').click();
+  }
+
+  async changePassword(table: IUser, resetPasswordUserModal) {
+    const {value: password } = await Swal.fire({
+      title: `تغییر رمز کار بر ${table.person.name}`,
+      input: 'password',
+      inputLabel: 'لطفا رمز جدید را وارد نمایید',
+      inputPlaceholder: 'لطفا رمز جدید را وارد نمایید'
+    })
+
+    if (password) {
+      table.password = password
+      this.authService.resetPassword(password).subscribe(res => {
+        console.log(res);
+      })
+      Swal.fire((password))
+    }
+
   }
 }
 
