@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {PermissionService} from "../../../core/services/permission.service";
 import {Title} from "@angular/platform-browser";
 import { owner } from 'src/environments/environment';
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private titleService: Title,
               private router: Router,
+              private toastr: ToastrService,
               private authenticationService: AuthenticationService,
               private roleService: PermissionService
               ) {
@@ -58,10 +60,8 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.login(this.username.value, this.password.value)
       .subscribe(tokenObj => {
-          console.log(tokenObj);
           if (tokenObj.authorization !== null && tokenObj.authorization !== '') {
             const roles = tokenObj.user.groups.map(function(a) {return a.name;});
-            console.log("roooooooooooooles", roles);
             this.roleService.seRole(roles)
             localStorage.removeItem('authorization' );
             localStorage.removeItem('refreshToken' );
@@ -72,9 +72,7 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           if (error.status === 400) {
-            // this.toastr.error('نام کاربری یا رمز ورود صحیح نمی باشد ', 'خطای اعتبار سنجی!!');
-          } else {
-            // this.toastr.error('نام کاربری یا رمز ورود صحیح نمی باشد ', 'خطای اعتبار سنجی!!');
+            this.toastr.error('نام کاربری یا رمز ورود صحیح نمی باشد ', 'خطای اعتبار سنجی!!');
           }
         }
       );

@@ -70,11 +70,8 @@ export class JwtInterceptor implements HttpInterceptor {
 
   private handellError(number: number) {
       if (403){
-        console.log("handell error 400000003");
         this.authService.refreshToken(localStorage.getItem('refreshToken')).subscribe(res => {
-
           console.log(res);
-
         })
       }
 

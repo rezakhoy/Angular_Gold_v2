@@ -24,10 +24,13 @@ export class ReportsService {
   myTransaction(): Observable<HttpResponse<MyTransaction[]>> {
     return this.http.get<any>(`${API_URL}my-transaction`, {  observe: 'response' });
   }
-  adminTrades(){
+  getTransactions(page: number, size: number, sort: string): Observable<HttpResponse<MyTransaction[]>>{
+    return this.http.get<any>(`${API_URL}my-transaction?page=${page}&size=${size}&sort=${sort}`, {  observe: 'response' });
+  }
+  adminTrades(startDate:string, endDate:string){
    const body = {
-      "startDate": "1402/03/25",
-      "endDate": "1402/03/25"
+      "startDate": startDate ,
+      "endDate": endDate
     }
     return this.http.post<any>(`${API_URL}admin-trade`, body);
   }

@@ -6,6 +6,7 @@ import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.direct
 import {MyTransaction} from "../../core/models/customer-transction.models";
 import {Title} from "@angular/platform-browser";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {ReportsService} from "../../core/services/reports.service";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class TransactionsComponent implements OnInit {
   tableData: MyTransaction[];
   public selected: any;
   hideme: boolean[] = [];
+  displaySpinner = true;
   tables$: Observable<MyTransaction[]>;
   total$: Observable<number>;
   editableTable: any;
@@ -34,19 +36,22 @@ export class TransactionsComponent implements OnInit {
 
   constructor(public service: AdvancedService,
               private titleService: Title,
-              public deviceService: DeviceDetectorService
+              public deviceService: DeviceDetectorService,
+              public reportService: ReportsService
               ) {
     this.tables$ = service.tables$;
     this.total$ = service.total$;
   }
 
   ngOnInit() {
+
     this.deviceService.isMobile()
     this.titleService.setTitle(" لیست تراکنش ها")
-    this.service.tables$.subscribe(res => {
 
+
+    this.tables$.subscribe(res => {
+      console.log(res)
     })
-
   }
 
 

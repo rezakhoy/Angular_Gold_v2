@@ -11,7 +11,6 @@ export class PermissionService {
   constructor(private permissionStore: PermissionStore, private roleStore: RoleStore, private authService: AuthenticationService,) {
     authService.getUser().subscribe(res => {
       const roles = res.body.groups.map(function(a) {return a.name;});
-      console.log("roooooooooooooles", roles);
       roleStore.defineRoles(roles, function () {
         return true;
       });
