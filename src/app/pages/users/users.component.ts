@@ -213,19 +213,19 @@ export class UsersComponent implements OnInit {
   }
 
   async changePassword(table: IUser, resetPasswordUserModal) {
-    const {value: password } = await Swal.fire({
+    const {value: text } = await Swal.fire({
       title: `تغییر رمز کار بر ${table.person.name}`,
-      input: 'password',
+      input: 'text',
       inputLabel: 'لطفا رمز جدید را وارد نمایید',
       inputPlaceholder: 'لطفا رمز جدید را وارد نمایید'
     })
 
-    if (password) {
-      table.password = password
-      this.authService.resetPassword(password).subscribe(res => {
+    if (text) {
+      table.password = text
+      this.authService.resetPassword(table).subscribe(res => {
         console.log(res);
       })
-      Swal.fire((password))
+
     }
 
   }

@@ -63,8 +63,9 @@ export class AuthenticationService {
    * Reset password
    * @param email email
    */
-  resetPassword(password: string) {
-    return this.http.post<any>(`${API_URL}auth/reset-password`, password);
+  resetPassword(user: IUser) {
+    console.log(user);
+    return this.http.put<any>(`${API_URL}auth/set-password`, user);
   }
 
 }

@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           if (error.status === 400) {
-            this.toastr.error('نام کاربری یا رمز ورود صحیح نمی باشد ', 'خطای اعتبار سنجی!!');
+            // this.toastr.error('نام کاربری یا رمز ورود صحیح نمی باشد ', 'خطای اعتبار سنجی!!');
           }
         }
       );
