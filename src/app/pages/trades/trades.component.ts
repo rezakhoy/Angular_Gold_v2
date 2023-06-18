@@ -23,6 +23,8 @@ import * as moment from 'moment';
 export class TradesComponent implements OnInit {
   trades: ITrade[];
   startDate: NgbDateStruct;
+  totalBuy: number;
+  totalSell: number;
   endDate: NgbDateStruct;
   constructor(
               private service: ReportsService,
@@ -56,6 +58,13 @@ export class TradesComponent implements OnInit {
     }else {
       this.service.adminTrades(this.ngbToString(this.startDate), this.ngbToString(this.endDate)).subscribe(res=> {
         this.trades = res;
+
+       let totalBuy = this.trades.filter((x) =>   x.n_sanad == '81' || x.n_sanad == '83'
+        ).reduce((total,line) => total + line.v_750 ,0)
+        let total = this.trades.reduce((total,line) => total + line.v_750 ,0)
+        // this.trades.reduce((tt, trade)=> trade.v_750 += tt.v_750)
+        this.totalBuy = totalBuy;
+       this.totalSell = total - totalBuy;
       })
     }
   }

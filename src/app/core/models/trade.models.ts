@@ -6,6 +6,5 @@ export class ITrade {
   n_sanad:string;
   r_bed: number;
   r_bes: number;
-
   v_750:number;
 }

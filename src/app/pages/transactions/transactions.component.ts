@@ -1,78 +1,77 @@
 import { Component, OnInit, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import { AdvancedService } from './advanced.service';
-import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
+// import { AdvancedService } from './advanced.service';
+// import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
 import {MyTransaction} from "../../core/models/customer-transction.models";
 import {Title} from "@angular/platform-browser";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ReportsService} from "../../core/services/reports.service";
+import {IPageable} from "../../core/models/pageable.models";
 
 
 @Component({
   selector: 'app-advancedtable',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
-  providers: [AdvancedService, DecimalPipe]
+  // providers: [AdvancedService, DecimalPipe]
 })
 
 /**
  * Advanced table component
  */
 export class TransactionsComponent implements OnInit {
-  // bread crum data
-  breadCrumbItems: Array<{}>;
-  // Table data
-  tableData: MyTransaction[];
-  public selected: any;
-  hideme: boolean[] = [];
-  displaySpinner = true;
-  tables$: Observable<MyTransaction[]>;
-  total$: Observable<number>;
-  editableTable: any;
 
-  @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
+  displaySpinner = true;
+  transaction: MyTransaction[];
+  pageable: IPageable;
+  total: number;
+  page:  number;
+  totalPages:  number;
+  pageSize:  number;
+  size:  number;
+  previousPage: number;
+  pageNumber:  number;
+  editableTable: any;
+  totalElements: number = 0;
+
   public isCollapsed = true;
 
-  constructor(public service: AdvancedService,
+  constructor(
               private titleService: Title,
               public deviceService: DeviceDetectorService,
               public reportService: ReportsService
               ) {
-    this.tables$ = service.tables$;
-    this.total$ = service.total$;
   }
 
   ngOnInit() {
-
     this.deviceService.isMobile()
     this.titleService.setTitle(" لیست تراکنش ها")
-
-
-    this.tables$.subscribe(res => {
-      console.log(res)
-    })
+    this.getMyTransactions(0, 20, '')
   }
 
 
+  private getMyTransactions(page, size, sort) {
+    this.reportService.getTransactions(page,size,sort)
+      .subscribe(data => {
+          this.displaySpinner=false;
+          this.transaction = data.body['content'];
+          this.pageable = data.body['pageable'];
+          this.totalElements = data.body['totalElements'];
+          this.totalPages = data.body['totalPages'];
+        }
+        , error => {
+          console.log(error.error.message);
+        }
+      );
+  }
 
 
+  selectPage(event) {
+    if (this.previousPage !== event) {
+      this.previousPage = event;
+      this.getMyTransactions(event, this.size, '');
+    }
 
-
-
-  /**
-   * Sort table data
-   * @param param0 sort the column
-   *
-   */
-  onSort({ column, direction }: SortEvent) {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
   }
 }

@@ -25,7 +25,8 @@ export class ReportsService {
     return this.http.get<any>(`${API_URL}my-transaction`, {  observe: 'response' });
   }
   getTransactions(page: number, size: number, sort: string): Observable<HttpResponse<MyTransaction[]>>{
-    return this.http.get<any>(`${API_URL}my-transaction?page=${page}&size=${size}&sort=${sort}`, {  observe: 'response' });
+
+    return this.http.get<any>(`${API_URL}my-transaction?page=${page-1}&size=${size}&sort=${sort}`, {  observe: 'response' });
   }
   adminTrades(startDate:string, endDate:string){
    const body = {
