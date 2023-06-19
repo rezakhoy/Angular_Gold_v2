@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-advancedtable',
+  selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   providers: [AdvancedService, DecimalPipe]
@@ -223,7 +223,7 @@ export class UsersComponent implements OnInit {
     if (text) {
       table.password = text
       this.authService.resetPassword(table).subscribe(res => {
-        console.log(res);
+        this.toastr.success(`  رمز کاربر  ${res.person.name}  با موفقیت  تغییر یافت !`)
       })
 
     }

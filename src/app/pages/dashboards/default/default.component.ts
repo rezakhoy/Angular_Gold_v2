@@ -160,8 +160,14 @@ export class DefaultComponent implements OnInit {
   manageOrders(ords) {
     var self = this;
     ords.forEach(function (ord) {
-
+      if (ord.status === 'REQUEST'){
+        let audio = new Audio();
+        audio.src = "../../../assets/Notification.wav";
+        audio.load();
+        audio.play();
+      }
       if (self.orders.length === 0) {
+
         self.orders.push(ord);
       } else {
         const mainObjectIndex = self.orders.findIndex((mainObject) => mainObject.id === ord.id);
@@ -182,6 +188,9 @@ export class DefaultComponent implements OnInit {
           self.orders[mainObjectIndex] = ord;
 
         } else {
+
+
+
           self.orders.push(ord);
           if (self.orders.length > 5) {
             self.orders.shift()

@@ -64,8 +64,7 @@ export class AuthenticationService {
    * @param email email
    */
   resetPassword(user: IUser) {
-    console.log(user);
-    return this.http.put<any>(`${API_URL}auth/set-password`, user);
+    return this.http.put<any>(`${API_URL}set-password`, user);
   }
 
 }

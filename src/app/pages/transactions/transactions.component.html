@@ -85,9 +85,8 @@
             <!-- Pagination -->
             <div class="col-sm-12 col-md-5">
               <div class="text-md-right float-md-end pagination-rounded">
-                <ngb-pagination [collectionSize]="totalElements " [(page)]="pageable.pageNumber" [pageSize]="pageable.pageSize"
+                <ngb-pagination [collectionSize]="totalElements " [(page)]="pageable.pageNumber " [pageSize]="pageable.pageSize"
                                 [maxSize]="7" [rotate]="true" (pageChange)="selectPage($event)"
-
                 >
                 </ngb-pagination>
               </div>
@@ -146,7 +145,6 @@
 </div>
 
     </div>
-  </div>
     <div class="col-sm-12 col-md-5">
       <div class="text-md-right float-md-end pagination-rounded">
         <ngb-pagination [collectionSize]="totalElements " [(page)]="pageable.pageNumber" [pageSize]="pageable.pageSize"
@@ -156,5 +154,7 @@
         </ngb-pagination>
       </div>
     </div>
+  </div>
+
   </div>
 </div>

@@ -50,7 +50,7 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 12,
-    label: 'لیست دریافت و پرداخت',
+    label: 'فیش بانکی',
     icon: 'bx bx-vertical-center',
     link: '/command-child-list',
     per: ['user']

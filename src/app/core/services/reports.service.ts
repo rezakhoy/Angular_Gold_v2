@@ -36,10 +36,12 @@ export class ReportsService {
     return this.http.post<any>(`${API_URL}admin-trade`, body);
   }
 
-  adminDemandList(): Observable<HttpResponse<Demand[]>> {
-    return this.http.get<any>(`${API_URL}admin-demands-list`, {  observe: 'response' });
+  // adminDemandList(): Observable<HttpResponse<Demand[]>> {
+  //   return this.http.get<any>(`${API_URL}admin-demands-list`, {  observe: 'response' });
+  // }
+  adminDemandList(page: number, size: number, sort: string): Observable<HttpResponse<MyTransaction[]>>{
+    return this.http.get<any>(`${API_URL}admin-demands-list?page=${page-1}&size=${size}&sort=${sort}`, {  observe: 'response' });
   }
-
   getRiskList(): Observable<HttpResponse<Demand[]>> {
     return this.http.get<any>(`${API_URL}get-risk-list`, {  observe: 'response' });
   }

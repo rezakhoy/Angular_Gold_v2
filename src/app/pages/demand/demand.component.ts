@@ -11,6 +11,7 @@ import {CommandsService} from "../../core/services/command.service";
 import {ColumnMode, DatatableComponent, SelectionType } from '@swimlane/ngx-datatable';
 import {Title} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
+import {IPageable} from "../../core/models/pageable.models";
 
 @Component({
   selector: 'app-advancedtable',
@@ -27,6 +28,16 @@ export class DemandComponent implements OnInit {
   displaySpinner = true;
   selected = [];
   temp = [];
+  pageable: IPageable;
+  total: number;
+  page:  number;
+  totalPages:  number;
+  pageSize:  number;
+  size:  number;
+  previousPage: number;
+  pageNumber:  number;
+  editableTable: any;
+  totalElements: number = 0;
   demands: IDemand[];
   selectedDemand: IDemand;
   ngbModalOptions: NgbModalOptions = {
@@ -59,14 +70,34 @@ export class DemandComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(" لیست  مطالبات ")
-    this.reportService.adminDemandList().subscribe(res => {
-      this.demands = res.body;
-      this.displaySpinner = false;
-      console.log(this.demands);
-    })
+    // this.reportService.adminDemandList().subscribe(res => {
+    //   console.log(res);
+    //   this.demands = res.body;
+    //   this.displaySpinner = false;
+    //   console.log(this.demands);
+    // })
+    this.getAdmindemandList(1, 100, '')
     this.reportService.adminDemand().subscribe(res => {
         this.adminDemands = res.body;
     })
+  }
+
+  private getAdmindemandList(page, size, sort) {
+    this.reportService.adminDemandList(page,size,sort)
+      .subscribe(data => {
+          console.log(data);
+          this.displaySpinner=false;
+          this.demands = data.body['content'];
+          console.log(this.demands);
+          this.pageable = data.body['pageable'];
+          this.pageable.pageNumber = this.pageable.pageNumber+=1;
+          this.totalElements = data.body['totalElements'];
+          this.totalPages = data.body['totalPages'];
+        }
+        , error => {
+          console.log(error.error.message);
+        }
+      );
   }
 
   onSelect({ selected }) {
@@ -112,5 +143,12 @@ export class DemandComponent implements OnInit {
       audienceId: this.selectedDemand.audienceId,
       type: pay
     })
+  }
+  selectPage(event) {
+    if (this.previousPage !== event) {
+      this.previousPage = event;
+      this.getAdmindemandList(event, this.size, '');
+    }
+
   }
 }

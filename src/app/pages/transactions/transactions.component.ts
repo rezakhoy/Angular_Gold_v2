@@ -1,8 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, HostListener } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
-import { Observable } from 'rxjs';
-// import { AdvancedService } from './advanced.service';
-// import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
+import { Component, OnInit} from '@angular/core';
 import {MyTransaction} from "../../core/models/customer-transction.models";
 import {Title} from "@angular/platform-browser";
 import {DeviceDetectorService} from "ngx-device-detector";
@@ -14,7 +10,6 @@ import {IPageable} from "../../core/models/pageable.models";
   selector: 'app-advancedtable',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
-  // providers: [AdvancedService, DecimalPipe]
 })
 
 /**
@@ -57,6 +52,8 @@ export class TransactionsComponent implements OnInit {
           this.displaySpinner=false;
           this.transaction = data.body['content'];
           this.pageable = data.body['pageable'];
+          console.log(this.pageable);
+          this.pageable.pageNumber = this.pageable.pageNumber+=1;
           this.totalElements = data.body['totalElements'];
           this.totalPages = data.body['totalPages'];
         }
