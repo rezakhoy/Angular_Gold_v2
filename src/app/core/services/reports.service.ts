@@ -17,7 +17,7 @@ export class ReportsService {
 
 
 
-  myBalance(): Observable<HttpResponse<MyBalance>> {
+  myBalance(): Observable<HttpResponse<IMyBalance>> {
     return this.http.get<any>(`${API_URL}my-balance`, {  observe: 'response' });
   }
 

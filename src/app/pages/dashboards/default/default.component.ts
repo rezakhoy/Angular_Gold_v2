@@ -19,6 +19,7 @@ import {PermissionService} from "../../../core/services/permission.service";
 import {CommandsService} from "../../../core/services/command.service";
 import {ICommandChild} from "../../../core/models/command-child.models";
 import {HttpEvent, HttpEventType} from "@angular/common/http";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 
 @Component({
@@ -47,6 +48,7 @@ export class DefaultComponent implements OnInit {
   rejectedOrder: IOrder;
   selectedPrice: IPrices;
   myBalance = new MyBalance();
+  loadingMyBalance = true;
   adminBalance = new AdminBalance()
   setPriceForm = this.fb.group({
     ab: [],
@@ -90,6 +92,7 @@ export class DefaultComponent implements OnInit {
               private ws: WebsocketService,
               private toastr: ToastrService,
               private userService: UserService,
+              public deviceService: DeviceDetectorService,
               private orderService: OrderService,
               private authService: AuthenticationService,
               private auth: AuthenticationService,
@@ -105,27 +108,21 @@ export class DefaultComponent implements OnInit {
     this.ws.connect();
 
     if (this.permissionService.hasPermission('user')){
-      console.log('this useeeeeeeeeeeeeeeeeeeeeer is User');
       this.commandService.getCommandChildrenUncleared().subscribe(res =>{
         this.userCommandUnclearedList = res.body;
       })
     }
 
-    if (this.permissionService.hasPermission('admin') || this.permissionService.hasPermission('acc')){
-      console.log('this useeeeeeeeeeeeeeeeeeeeeer is Admin');
-      this.reportService.adminBalance().subscribe(res => {
-        this.adminBalance = res.body;
-      });
-    }
+    this.getAdminBalance();
 
     this.reportService.myBalance().subscribe(res => {
-
+      console.log(res.body);
       this.myBalance = res.body;
+      this.loadingMyBalance = false;
     });
     this.ws.price.subscribe(msg => {
-      console.log(msg);
       this.mas = msg;
-      console.log("mass issss", this.mas);
+      console.log( this.mas);
     });
 
     this.ws.orders.subscribe(ord => {
@@ -147,7 +144,13 @@ export class DefaultComponent implements OnInit {
     this.loadPersons()
   }
 
-
+  public getAdminBalance(){
+  if (this.permissionService.hasPermission('admin') || this.permissionService.hasPermission('acc')){
+    this.reportService.adminBalance().subscribe(res => {
+      this.adminBalance = res.body;
+    });
+  }
+}
   private loadPersons() {
     this.personsLoading = true;
     this.userService.getAllPersons().subscribe(res => {
@@ -299,15 +302,14 @@ export class DefaultComponent implements OnInit {
 
 
   culcPrice() {
-    console.log("culc price ab");
-    const price = ((this.orderForm.get('fee').value / 4.3317) * this.orderForm.get('quantity').value).toFixed();
+    const price = ((this.orderForm.get('fee').value / 4.3318) * this.orderForm.get('quantity').value).toFixed();
     this.orderForm.patchValue({
       price
     });
   }
 
   culcQuantity() {
-    const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3317;
+    const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3318;
     this.orderForm.patchValue({
       quantity
     });
@@ -323,6 +325,7 @@ export class DefaultComponent implements OnInit {
   confirmOrder(order: IOrder) {
     order.description = this.rejectComment;
     this.ws.orderToConfirm(order)
+    order.status = 'Waiting'
   }
 
   rejectOrder(order: IOrder, reject) {

@@ -17,7 +17,7 @@ import {PermissionService} from "./permission.service";
 export class WebsocketService {
 
   private stompClient = null;
-  disabled = true;
+  public  disabled = true;
   user: IUser;
 
   price: Subject<IPrices[]> = new Subject();
@@ -27,7 +27,6 @@ export class WebsocketService {
     authService.getUser().subscribe(user => {
       this.user = user.body;
       const roles = user.body.groups.map(function(a) {return a.name;});
-      console.log("roooooooooooooles", roles);
       this.permissionService.seRole(roles)
     });
 

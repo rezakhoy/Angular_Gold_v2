@@ -4,6 +4,7 @@ enum Status {
   CONFIRM = "confirm",
   UNCONFIRM = "unconfim",
   REJECT  = "reject",
+  Waiting  = "waiting",
 }
 enum Type {
   SELL = "sell",
@@ -15,7 +16,7 @@ export class IOrder {
   price: number;
   priceGroupId: number;
   name: string;
-  status: Status;
+  status: string;
   type: Type;
   amount: number;
   description: string;

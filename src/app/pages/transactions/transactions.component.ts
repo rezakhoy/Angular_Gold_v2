@@ -71,4 +71,8 @@ export class TransactionsComponent implements OnInit {
     }
 
   }
+
+  search(e) {
+    console.log(e);
+  }
 }

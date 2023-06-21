@@ -1,5 +1,6 @@
 <div class="container-fluid">
     <div class="row">
+
         <div class="col-12">
 <!--============================================= User Balance ==========================================================-->
           <div class="row" *permissionOnly="['user']" >
@@ -9,7 +10,10 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-component"></i></span>  مانده طلایی</p>
-                      <h5 class="mb-0" > <span class="badge font-size-14 p-2" [ngClass]="myBalance.balance_v > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">  {{myBalance?.balance_v | number : '.3-3'}} گرم </span>
+                      <h5 class="mb-0" >
+                        <i *ngIf="loadingMyBalance" class="bx bx-revision bx-spin text-info font-size-17"></i>
+                        <span *ngIf="!loadingMyBalance" class="badge font-size-14 p-2" [ngClass]="myBalance.balance_v > 0 ?
+                         ' badge-soft-success ' : 'badge-soft-danger'">   {{myBalance?.balance_v | number : '.3-3'}} گرم </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
@@ -26,7 +30,9 @@
                   <div class="d-flex flex-wrap">
                     <div class="mr-3">
                       <p class="text-muted mb-2">   <span class="text-warning h3"><i class="bx bxs-dollar-circle"></i></span>  مانده ریالی</p>
-                      <h5 class="mb-0"> <span  class="badge font-size-14 p-2" [ngClass]="myBalance.balance_r > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{myBalance.balance_r | number}} ریال </span>
+                      <h5 class="mb-0">
+                        <i *ngIf="loadingMyBalance" class="bx bx-revision bx-spin text-info font-size-17"></i>
+                        <span *ngIf="!loadingMyBalance" class="badge font-size-14 p-2" [ngClass]="myBalance.balance_r > 0 ? ' badge-soft-success ' : 'badge-soft-danger'">{{myBalance.balance_r | number}} ریال </span>
                       </h5>
                     </div>
                     <div class="ms-auto mt-auto">
@@ -43,7 +49,7 @@
             <div class="col-sm-3 text-center">
               <div class="card">
                 <div class="card-body">
-                  <p class="text-muted mb-2"><i
+                  <p class="text-muted mb-2"><i (click)="getAdminBalance()"
                     class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
 
                   <div class="row">
@@ -70,7 +76,7 @@
             <div class="col-sm-3">
               <div class="card">
                 <div class="card-body">
-                  <p class="text-muted mb-2"><i
+                  <p class="text-muted mb-2"><i  (click)="getAdminBalance()"
                     class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> هفتگی </p>
 
                   <div class="row">
@@ -95,7 +101,7 @@
             <div class="col-sm-3">
               <div class="card">
                 <div class="card-body">
-                  <p class="text-muted mb-2"><i
+                  <p class="text-muted mb-2"><i  (click)="getAdminBalance()"
                     class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> ماهانه </p>
 
                   <div class="row">
@@ -120,7 +126,7 @@
             <div class="col-sm-3">
               <div class="card">
                 <div class="card-body">
-                  <p class="text-muted mb-2"><i
+                  <p class="text-muted mb-2"><i  (click)="getAdminBalance()"
                     class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> کل </p>
 
                   <div class="row">
@@ -271,16 +277,17 @@
       <div class="card">
         <div class="card-body" >
               <div class="row">
+                <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
                 <div class="row">
                   <div class="d-flex justify-content-around">
                     <div class="form-check form-check-danger  mb-3">
-                      <input class="form-check-input" (click)="sellStatusChange($event.target)" type="checkbox" id="formCheck1">
+                      <input class="form-check-input" (click)="sellStatusChange($event.target)" [checked]="mas[0].activeSell" type="checkbox" id="formCheck1">
                       <label class="form-check-label" for="formCheck1">
                         فروش
                       </label>
                     </div>
                     <div class="form-check form-check-success mb-3">
-                      <input class="form-check-input" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
+                      <input class="form-check-input" [checked]="mas[0].activeBuy" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
                       <label class="form-check-label" for="formCheck1">
                         خرید
                       </label>
@@ -288,7 +295,7 @@
                   </div>
 
                 </div>
-                <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
+
                         <div class="col-md-12">
                           <div class="input-group">
                             <button class="btn btn-success" type="button"
@@ -323,25 +330,25 @@
       <div class="card">
         <div class="card-body">
           <div class="table-responsive table-hover fs-14  " >
-            <table class="table display mb-4 dataTablesCard dataTable border-no font-w600  card-table text-black">
+            <table class="table table-sm display mb-4  table-hover border-no font-w600  ">
 
               <tr class="align-middle">
                 <td>مشتری</td>
                 <td> نوع درخواست</td>
                 <td>مقدار</td>
                 <td>نرخ </td>
-                <td>توضیحات</td>
+                <td *ngIf="deviceService.isDesktop()">توضیحات</td>
                 <td>وضعیت</td>
                 <td *permissionAnyOf="['admin', 'acc']">عملیات</td>
               </tr>
               <tr *ngFor="let order of orders; let i = index">
                                   <td  *permissionIf="'admin'"> {{order.name}}</td>
-                <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
-                <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
+                <td *ngIf="order.type === 'SELL'">فروش </td>
+                <td *ngIf="order.type === 'BUY'">خرید </td>
 
                 <td>{{order.amount | number : '1.0-3'}}</td>
                 <td>{{order.price | number}}</td>
-                <td>{{order.description}}</td>
+                <td *ngIf="deviceService.isDesktop()" >{{order.description}}</td>
                 <td >
                   <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > در انتظار </span>
                   <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-12 bg-danger p-1">تایید نشده</span>
@@ -351,7 +358,7 @@
 
                 <td *permissionAnyOf="['admin', 'acc']">
                   <div class="btn-group btn-group-sm" role="group">
-                    <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'" (click)="confirmOrder(order)">تایید</button>
+                    <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'"  (click)="confirmOrder(order)">تایید</button>
                     <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
                   </div>
 
