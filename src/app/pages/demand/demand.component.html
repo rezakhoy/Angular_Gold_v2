@@ -7,6 +7,22 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body">
+            <div class="row">
+              <div class="d-flex justify-content-around border-bottom">
+
+                <div>
+                 <span>کل مانده ریالی : </span> <span class="badge font-size-14 " [ngClass]="adminDemands.demands_r > 0 ? ' bg-success ' : 'bg-danger'">{{adminDemands.demands_r |  number }}</span>
+                </div>
+                <div>
+                  <span>کل مانده وزنی : </span> <p class="badge font-size-14 " [ngClass]="adminDemands.demands_v > 0 ? ' bg-success ' : 'bg-danger'">{{adminDemands.demands_v |  number : '.2-2'}}</p>
+                </div>
+
+
+              </div>
+
+
+            </div>
+            <div class="row mt-2"><h4>لیست مطالبات:</h4></div>
   <ngx-datatable
     #table
     [rows]="demands" [columns]="columns"

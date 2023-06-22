@@ -134,6 +134,8 @@ export class DemandComponent implements OnInit {
     })
   }
 
+
+
   makeCommand(index, commandModal, pay: string) {
     console.log(index);
     this.selectedDemand = this.demands[index];
