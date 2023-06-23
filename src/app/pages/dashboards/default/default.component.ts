@@ -114,13 +114,13 @@ export class DefaultComponent implements OnInit {
     }
 
     this.getAdminBalance();
-
     this.reportService.myBalance().subscribe(res => {
       this.myBalance = res.body;
       this.loadingMyBalance = false;
     });
     this.ws.price.subscribe(msg => {
-      this.mas = msg;
+      this.mas = msg
+        .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
     });
 
     this.ws.orders.subscribe(ord => {
@@ -128,7 +128,8 @@ export class DefaultComponent implements OnInit {
     });
 
     this.auth.getLastPriceList().subscribe(res => {
-      this.mas = res.body;
+      this.mas = res.body
+        .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
       this.setPriceForm.patchValue({
         price: this.mas[0].base,
       });
