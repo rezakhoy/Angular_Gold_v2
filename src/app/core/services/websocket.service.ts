@@ -70,7 +70,6 @@ export class WebsocketService {
     }
 
     function manageOrder(body) {
-      console.log(body);
       if (orders.length === 0) {
         orders.push(body);
       } else {
@@ -145,7 +144,6 @@ export class WebsocketService {
   }
 
   public sendOrder(order) {
-    console.log(order);
     this.stompClient.send(
       '/app/send-order-request',
       {},
@@ -153,7 +151,6 @@ export class WebsocketService {
     )
   }
   public orderToConfirm(order) {
-    console.log(order);
     this.stompClient.send(
       '/app/send-order-confirm',
       {},
@@ -161,7 +158,6 @@ export class WebsocketService {
     )
   }
   public orderToUnconfirm(order) {
-    console.log(order);
     this.stompClient.send(
       '/app/send-order-unconfirm',
       {},
@@ -169,7 +165,6 @@ export class WebsocketService {
     )
   }
   public changeSellStatus(status: boolean) {
-    console.log(" in wsssssssssssss",status);
     if(status){
       this.stompClient.send(
         '/app/active-sell',

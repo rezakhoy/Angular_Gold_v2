@@ -283,18 +283,19 @@
                 <form name="editForm" role="form" novalidate  [formGroup]="setPriceForm">
                 <div class="row">
                   <div class="d-flex justify-content-around">
-                    <div class="form-check form-check-danger  mb-3">
-                      <input class="form-check-input" (click)="sellStatusChange($event.target)" [checked]="mas[0]?.activeSell" type="checkbox" id="formCheck1">
-                      <label class="form-check-label" for="formCheck1">
-                        فروش
-                      </label>
-                    </div>
                     <div class="form-check form-check-success mb-3">
                       <input class="form-check-input" [checked]="mas[0]?.activeBuy" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
                       <label class="form-check-label" for="formCheck1">
                         خرید
                       </label>
                     </div>
+                    <div class="form-check form-check-danger  mb-3">
+                      <input class="form-check-input" (click)="sellStatusChange($event.target)" [checked]="mas[0]?.activeSell" type="checkbox" id="formCheck1">
+                      <label class="form-check-label" for="formCheck1">
+                        فروش
+                      </label>
+                    </div>
+
                   </div>
 
                 </div>
@@ -316,9 +317,17 @@
               <div >
                   <div *ngFor="let m of mas " class="row mt-3 ">
                     <div class="d-flex justify-content-between">
-                    <div> <button  class="btn btn-success shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  {{m.activeBuy}} </button></div>
+                    <div> <button  class="btn  shadow " [ngClass]="m.activeBuy  ?  'btn-success' : 'btn-outline-success'"  (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
+
+                      <span> ریال {{m.buy| number}} </span><br/>
+                      <span>خرید از ما </span>
+<!--                      <span>Delivery &amp; Pickup</span>-->
+                    </button></div>
                     <div ><h5>{{m.priceGroupName}} -- {{m.priceGroupDescription}}</h5></div>
-                    <div> <button  class="btn btn-danger shadow " (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}} {{m.activeSell}}  </button></div>
+                    <div> <button  class="btn shadow " [ngClass]="m.activeSell  ?  'btn-danger' : 'btn-outline-danger'" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
+                      <span> ریال {{m.sell| number}} </span><br/>
+                      <span>فروش به ما  </span>
+                    </button></div>
                     </div>
                   </div>
 
