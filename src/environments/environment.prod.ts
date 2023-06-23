@@ -7,11 +7,11 @@
 // export const API_URL = 'http://2.187.249.48:8080/';
 // export const API_URL = 'http://89.37.12.242:8080/';
 export const permission = 'user';
-// export const owner = 'سکه و آبشده حمزه نژاد';
-// export const API_URL = 'http://2.187.249.48:8080/';
+export const owner = 'سکه و آبشده حمزه نژاد';
+export const API_URL = 'http://2.187.249.48:8080/';
 
-export const owner = 'سکه و آبشده امینی';
-export const API_URL = 'http://2.186.115.100:8080/';
+// export const owner = 'سکه و آبشده امینی';
+// export const API_URL = 'http://2.186.115.100:8080/';
 export const environment = {
 
   production: false,

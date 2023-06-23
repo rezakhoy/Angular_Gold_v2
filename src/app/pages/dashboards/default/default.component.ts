@@ -309,7 +309,7 @@ export class DefaultComponent implements OnInit {
   }
 
   culcQuantity() {
-    const quantity = this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3318;
+    const quantity =( this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3318).toFixed(2);
     this.orderForm.patchValue({
       quantity
     });
