@@ -137,13 +137,11 @@
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"
-
                      formControlName="personId"
                      bindValue="id"
                      [loading]="personsLoading">
 
           </ng-select>
-<!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
         <div class="col-md-6">
           <label  class="form-label">گروه دسترسی </label>
@@ -157,17 +155,16 @@
                      [loading]="groupsLoading">
 
           </ng-select>
-<!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
         <div class="col-md-6">
           <label  class="form-label">گروه قیمتی </label>
           <ng-select [items]="priceGroups"
-
                      notFoundText = "گروه دسترسی وجود ندارد !"
                      bindLabel="fullName"
                      formControlName="priceGroupIds"
                      bindValue="id"
                      multiple="true"
+                     id="priceGroupIds"
                      [loading]="priceGroupLoading">
 <!--            <ng-template ng-label-tmp let-item="item">-->
 <!--              {{item.name}}:{{item.description}}-->
@@ -175,21 +172,21 @@
           </ng-select>
 <!--          <input  type="text" formControlName="name" class="form-control" id="name">-->
         </div>
-        <div class="col-md-6">
-          <label for="dateOfBirth" class="form-label">تاریخ تولد </label>
-          <div class="input-group">
-            <input
-              id="dateOfBirth"
-              formControlName="dateOfBirth"
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              ngbDatepicker
-              #d="ngbDatepicker"
-            />
-            <button class="btn btn-primary" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt font-size-20 text-light"></i></button>
-          </div>
-        </div>
+<!--        <div class="col-md-6">-->
+<!--          <label for="dateOfBirth" class="form-label">تاریخ تولد </label>-->
+<!--          <div class="input-group">-->
+<!--            <input-->
+<!--              id="dateOfBirth"-->
+<!--              formControlName="dateOfBirth"-->
+<!--              class="form-control"-->
+<!--              placeholder="yyyy-mm-dd"-->
+<!--              name="dp"-->
+<!--              ngbDatepicker-->
+<!--              #d="ngbDatepicker"-->
+<!--            />-->
+<!--            <button class="btn btn-primary" (click)="d.toggle()" type="button"><i class="fas fa-calendar-alt font-size-20 text-light"></i></button>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="col-md-6">
           <label for="genderEnum" class="form-label">جنسیت </label>
           <select class="form-select" formControlName="genderEnum" id="genderEnum">
@@ -197,17 +194,17 @@
             <option value="FEMALE">زن </option>
           </select>
         </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label"> ایمیل</label>
-          <input type="email" autocomplete="off" formControlName="email" class="form-control" id="email">
-        </div>
+<!--        <div class="col-md-6">-->
+<!--          <label for="email" class="form-label"> ایمیل</label>-->
+<!--          <input type="email" autocomplete="off" formControlName="email" class="form-control" id="email">-->
+<!--        </div>-->
         <div class="col-md-6">
           <label for="cellPhone" class="form-label">موبایل</label>
-          <input type="text"  formControlName="cellPhone" class="form-control" id="cellPhone">
+          <input type="text" autocomplete="off" formControlName="cellPhone" class="form-control" id="cellPhone">
         </div>
         <div class="col-md-6">
           <label for="phoneNumber" class="form-label"> تلفن ثابت</label>
-          <input type="text"  formControlName="phoneNumber" class="form-control" id="phoneNumber">
+          <input type="text"  autocomplete="off" formControlName="phoneNumber" class="form-control" id="phoneNumber">
         </div>
         <div class="col-md-4">
           <label for="city" class="form-label">  شهر</label>
@@ -215,11 +212,11 @@
         </div>
         <div class="col-md-8">
           <label for="address" class="form-label">  آدرس</label>
-          <input type="text"  formControlName="address" class="form-control" id="address">
+          <input type="text" autocomplete="off" formControlName="address" class="form-control" id="address">
         </div>
         <div class="col-md-12" *ngIf="!createUserForm.get('id').value">
           <label for="password" class="form-label">رمز ورود</label>
-          <input type="password"  formControlName="password" class="form-control" id="password">
+          <input type="password" autocomplete="off" formControlName="password" class="form-control" id="password">
         </div>
 
       </div>

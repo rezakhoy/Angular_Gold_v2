@@ -17,6 +17,7 @@ import {AuthenticationService} from "../../core/services/auth.service";
 import {Title} from "@angular/platform-browser";
 import {ToastrService} from "ngx-toastr";
 import Swal from 'sweetalert2';
+import {group} from "@angular/animations";
 
 
 @Component({
@@ -121,19 +122,26 @@ export class UsersComponent implements OnInit {
 
   createUserFunc(cgf) {
     this.createUserForm.reset()
+    let groupIdsList = this.groups.filter(s => s.name==='user').map(item => {
+      return item.id;
+    });
+    console.log(groupIdsList);
+    this.createUserForm.patchValue({
+      groupIds: groupIdsList
+    })
     this.modalService.open(cgf, this.ngbModalOptions);
   }
 
   saveUser() {
     let date = this.createUserForm.get('dateOfBirth').value;
-    let y = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getFullYear()
-    let m = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getMonth()
-    let d = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getDay()
-
     let body = this.createUserForm.value;
-
-    body.dateOfBirth = y+'-'+ m+'-'+d
-    body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
+    if (date){
+      let y = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getFullYear()
+      let m = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getMonth()
+      let d = this.jalaliDateService.convertToGeorgian(date.year, date.month, date.day).getDay()
+      body.dateOfBirth = y+'-'+ m+'-'+d
+      body.dateOfBirth = this.datePipe.transform(body.dateOfBirth, 'yyyy-MM-dd');
+    }
     console.log(body);
     if (body.id){
       this.userService.updateUser(body).subscribe(res => {
@@ -194,7 +202,7 @@ export class UsersComponent implements OnInit {
       personId: person.id,
       groupIds: groupIdsList,
       priceGroupIds : priceGroupIdsList,
-      dateOfBirth: this.jalaliDateService.convertToJalali(new Date(person.dateOfBirth)),
+      dateOfBirth: person.dateOfBirth? '' :  this.jalaliDateService.convertToJalali(new Date(person.dateOfBirth)),
       genderEnum: person.gender,
       email: person.email,
       cellPhone: person.cellPhone,
@@ -209,7 +217,7 @@ export class UsersComponent implements OnInit {
   }
   changeSelectPerson($event: any) {
     console.log($event);
-    document.getElementById('groupIds').click();
+    document.getElementById('priceGroupIds').focus();
   }
 
   async changePassword(table: IUser, resetPasswordUserModal) {

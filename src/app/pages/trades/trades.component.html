@@ -23,20 +23,35 @@
             </div>
             <div class="col-md-6">
               <label for="endDate" class="form-label">تاریخ پایان </label>
-              <div class="input-group">
-                <input
-                  id="endDate"
-                  [(ngModel)]="endDate"
-                  class="form-control"
-                  placeholder="yyyy-mm-dd"
-                  name="dp"
-                  ngbDatepicker
-                  #c="ngbDatepicker"
-                  (closed)="checkDate()"
-                  (click)="c.toggle()"
-                />
+              <div class="input-group mb-3">
 
+                                <input
+                                  id="endDate"
+                                  [(ngModel)]="endDate"
+                                  class="form-control"
+                                  placeholder="yyyy-mm-dd"
+                                  name="dp"
+                                  ngbDatepicker
+                                  #c="ngbDatepicker"
+                                  (closed)="checkDate()"
+                                  (click)="c.toggle()"/>
+                <button class="btn btn-info"  (click)="checkDate()" type="button">جستجو</button>
               </div>
+<!--              <label for="endDate" class="form-label">تاریخ پایان </label>-->
+<!--              <div class="input-group">-->
+<!--                <input-->
+<!--                  id="endDate"-->
+<!--                  [(ngModel)]="endDate"-->
+<!--                  class="form-control"-->
+<!--                  placeholder="yyyy-mm-dd"-->
+<!--                  name="dp"-->
+<!--                  ngbDatepicker-->
+<!--                  #c="ngbDatepicker"-->
+<!--                  (closed)="checkDate()"-->
+<!--                  (click)="c.toggle()"-->
+<!--                />-->
+
+
             </div>
           </div>
           <!-- Table -->

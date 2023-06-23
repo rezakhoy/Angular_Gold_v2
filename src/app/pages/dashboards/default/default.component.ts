@@ -373,7 +373,7 @@ export class DefaultComponent implements OnInit {
 
   checkLang(e: KeyboardEvent) {
 
-    // console.log(e.);
+    console.log(e.key);
     if(e.key === 'ی') {
       return 'ي'
     }

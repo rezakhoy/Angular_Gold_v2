@@ -45,7 +45,7 @@
             </div>
           </div>
 <!--============================================= Admin Balance ==========================================================-->
-          <div class="row text-center "  *permissionAnyOf="['admin']">
+          <div class="row text-center "  *permissionAnyOf="['admin', 'super_admin']">
             <div class="col-sm-3 text-center">
               <div class="card">
                 <div class="card-body">
@@ -149,8 +149,10 @@
               </div>
             </div>
           </div>
+
         </div>
     </div>
+  <!--============================================= user prices ==========================================================-->
   <div class="row" *permissionOnly="['user']">
     <div class="col-md-6"   >
       <div class="card " >
@@ -174,6 +176,7 @@
         </div>
       </div>
     </div>
+    <!--============================================= user orders ==========================================================-->
     <div class="col-md-6">
       <div *ngIf="orders?.length > 0"  >
         <div class="card">
@@ -187,10 +190,10 @@
                   <td>نرخ </td>
                   <td>توضیحات</td>
                   <td>وضعیت</td>
-                  <td *permissionAnyOf="['admin', 'acc']">عملیات</td>
+                  <td *permissionAnyOf="['admin', 'super_admin', 'acc']">عملیات</td>
                 </tr>
                 <tr *ngFor="let order of orders; let i = index">
-                  <!--                  <td  *permissionIf="'admin'"> {{order.user.name}}</td>-->
+                  <!--                  <td  *permissionIf="'admin', 'super_admin'"> {{order.user.name}}</td>-->
                   <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
                   <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
 
@@ -207,7 +210,7 @@
                     <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
                   </td>
 
-                  <td *permissionAnyOf="['admin', 'acc']">
+                  <td *permissionAnyOf="['admin', 'super_admin', 'acc']">
                     <div class="btn-group btn-group-sm" role="group">
                       <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'" (click)="confirmOrder(order)">تایید</button>
                       <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
@@ -222,7 +225,7 @@
       </div>
     </div>
   </div>
-
+  <!--============================================= user command ==========================================================-->
   <div class="row" *permissionOnly="['user']">
    <div class="col-md-12">
      <div *ngIf="userCommandUnclearedList?.length > 0"  >
@@ -241,7 +244,7 @@
                  <td >ثبت</td>
                </tr>
                <tr *ngFor="let commandChild of userCommandUnclearedList; let i = index">
-                 <!--                  <td  *permissionIf="'admin'"> {{order.user.name}}</td>-->
+                 <!--                  <td  *permissionIf="'admin', 'super_admin'"> {{order.user.name}}</td>-->
                  <td *ngIf="commandChild.type === 'PAY'">پرداخت</td>
                  <td *ngIf="commandChild.type === 'RECEIVE'"> دریافت</td>
 
@@ -271,8 +274,8 @@
 
   </div>
 
-
-  <div class="row" *permissionAnyOf="['admin', 'acc']">
+  <!--============================================= admin set price ==========================================================-->
+  <div class="row" *permissionAnyOf="['admin', 'super_admin', 'acc']">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body" >
@@ -326,6 +329,8 @@
         </div>
       </div>
     </div>
+
+    <!--============================================= admin Orders ==========================================================-->
     <div *ngIf="orders?.length > 0"  >
       <div class="card">
         <div class="card-body">
@@ -339,10 +344,10 @@
                 <td>نرخ </td>
                 <td *ngIf="deviceService.isDesktop()">توضیحات</td>
                 <td>وضعیت</td>
-                <td *permissionAnyOf="['admin', 'acc']">عملیات</td>
+                <td *permissionAnyOf="['admin', 'super_admin', 'acc']">عملیات</td>
               </tr>
               <tr *ngFor="let order of orders; let i = index">
-                                  <td  *permissionIf="'admin'"> {{order.name}}</td>
+                                  <td  *permissionIf="'admin', 'super_admin'"> {{order.name}}</td>
                 <td *ngIf="order.type === 'SELL'">فروش </td>
                 <td *ngIf="order.type === 'BUY'">خرید </td>
 
@@ -356,7 +361,7 @@
                   <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
                 </td>
 
-                <td *permissionAnyOf="['admin', 'acc']">
+                <td *permissionAnyOf="['admin', 'super_admin', 'acc']">
                   <div class="btn-group btn-group-sm" role="group">
                     <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'"  (click)="confirmOrder(order)">تایید</button>
                     <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
@@ -375,9 +380,9 @@
 
 
 
-<!--**********************************
+<!--********************************************************************************************************************
                 modal
-***********************************-->
+***********************************************************************************************************************-->
 <ng-template #orderModel let-modal>
   <div class="modal-header">
     <h4 class="modal-title" *ngIf="orderForm.get('transaction_type').value === 'BUY'">درخواست خرید</h4>
@@ -399,7 +404,7 @@
 
           </p>
         </div>
-        <div class="col-md-12" *permissionAnyOf="['admin', 'acc']" >
+        <div class="col-md-12" *permissionAnyOf="['admin', 'super_admin', 'acc']" >
           <label  class="form-label">طرف حساب: </label>
           <ng-select [items]="persons"
                       (keydown)="checkLang($event)"
@@ -412,7 +417,7 @@
                      [loading]="personsLoading">
           </ng-select>
         </div>
-        <div class="col-md-12" *permissionAnyOf="['admin', 'acc']">
+        <div class="col-md-12" *permissionAnyOf="['admin', 'super_admin', 'acc']">
           <label for="fee" class="form-label">مظنه:</label>
           <input type="text" currencyMask   formControlName="fee" class="form-control"
                  id="fee">
@@ -436,7 +441,7 @@
               (click)="saveGoldOrder() ;modal.close() "
              class="btn btn-success btn-sm">ثبت درخواست
       </button>
-      <button type="submit" *permissionAnyOf="['admin', 'acc']"
+      <button type="submit" *permissionAnyOf="['admin', 'super_admin', 'acc']"
               (click)="saveAdminGoldOrder() ;modal.close() "
               class="btn btn-success btn-sm">ثبت دستی
       </button>
