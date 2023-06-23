@@ -195,11 +195,7 @@
         </button>
         <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
           <!-- item-->
-          <a href="javascript:void(0);" class="dropdown-item notify-item" *ngFor="let item of listLang"
-            (click)="setLanguage(item.text, item.lang, item.flag)" [ngClass]="{'active': cookieValue === item.lang}">
-            <img src="{{item.flag}}" alt="user-image" class="ms-1" height="12"> <span
-              class="align-middle">{{item.text}}</span>
-          </a>
+
           <!-- item-->
         </div>
       </div>

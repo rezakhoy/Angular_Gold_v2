@@ -15,7 +15,6 @@ import { RightsidebarComponent } from './rightsidebar/rightsidebar.component';
 import { HorizontalComponent } from './horizontal/horizontal.component';
 import { VerticalComponent } from './vertical/vertical.component';
 import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.component';
-import { LanguageService } from '../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
 import {PermissionModule} from "ng2-permission";
 import {NgxPersianModule} from "ngx-persian";
@@ -34,6 +33,5 @@ import {NgxPersianModule} from "ngx-persian";
         PermissionModule,
         NgxPersianModule
     ],
-  providers: [LanguageService]
 })
 export class LayoutsModule { }
