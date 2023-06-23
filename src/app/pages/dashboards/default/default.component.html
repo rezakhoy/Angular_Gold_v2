@@ -281,13 +281,13 @@
                 <div class="row">
                   <div class="d-flex justify-content-around">
                     <div class="form-check form-check-danger  mb-3">
-                      <input class="form-check-input" (click)="sellStatusChange($event.target)" [checked]="mas[0].activeSell" type="checkbox" id="formCheck1">
+                      <input class="form-check-input" (click)="sellStatusChange($event.target)" [checked]="mas[0]?.activeSell" type="checkbox" id="formCheck1">
                       <label class="form-check-label" for="formCheck1">
                         فروش
                       </label>
                     </div>
                     <div class="form-check form-check-success mb-3">
-                      <input class="form-check-input" [checked]="mas[0].activeBuy" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
+                      <input class="form-check-input" [checked]="mas[0]?.activeBuy" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
                       <label class="form-check-label" for="formCheck1">
                         خرید
                       </label>

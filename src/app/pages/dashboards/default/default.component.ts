@@ -116,13 +116,11 @@ export class DefaultComponent implements OnInit {
     this.getAdminBalance();
 
     this.reportService.myBalance().subscribe(res => {
-      console.log(res.body);
       this.myBalance = res.body;
       this.loadingMyBalance = false;
     });
     this.ws.price.subscribe(msg => {
       this.mas = msg;
-      console.log( this.mas);
     });
 
     this.ws.orders.subscribe(ord => {
@@ -130,9 +128,7 @@ export class DefaultComponent implements OnInit {
     });
 
     this.auth.getLastPriceList().subscribe(res => {
-      console.log(res.body);
       this.mas = res.body;
-      console.log("mas is", this.mas);
       this.setPriceForm.patchValue({
         price: this.mas[0].base,
       });
@@ -155,7 +151,6 @@ export class DefaultComponent implements OnInit {
     this.personsLoading = true;
     this.userService.getAllPersons().subscribe(res => {
       this.persons = res.body;
-      console.log(res.body);
       this.personsLoading = false;
     })
   }
@@ -177,7 +172,7 @@ export class DefaultComponent implements OnInit {
         if (mainObjectIndex !== -1) {
           // @ts-ignore
           if (self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'CONFIRM') {
-            console.log(ord);
+
             self.toastr.success(` درخواست ${ord.type === 'SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم  تایید و ثبت گردید`)
             self.reportService.myBalance().subscribe(res => {
               self.myBalance = res.body;
@@ -185,7 +180,7 @@ export class DefaultComponent implements OnInit {
           }
           // @ts-ignore
           if (self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'UNCONFIRM') {
-            console.log(ord);
+            // console.log(ord);
             self.toastr.error(` درخواست ${ord.type === 'SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم به دلیل  ${ord.description} تایید نشد `)
           }
           self.orders[mainObjectIndex] = ord;
@@ -218,7 +213,7 @@ export class DefaultComponent implements OnInit {
   }
 
   makeOrder(form, gid, s) {
-    console.log("-------gid----------", gid);
+    // console.log("-------gid----------", gid);
     let obj = this.mas.findIndex(x => x.priceGroupId === gid)
     if (s === 'SELL') {
       this.orderForm.patchValue({
@@ -231,7 +226,7 @@ export class DefaultComponent implements OnInit {
         quantity: '',
         description: ''
       });
-      console.log('-----------1-------------', this.orderForm.value);
+      // console.log('-----------1-------------', this.orderForm.value);
     }
 
     if (s === 'BUY') {
@@ -244,7 +239,7 @@ export class DefaultComponent implements OnInit {
         price: '',
         quantity: ''
       });
-      console.log('-----------2-------------', this.orderForm.value);
+
     }
 
     this.ws.price.subscribe(res => {
@@ -255,14 +250,14 @@ export class DefaultComponent implements OnInit {
           fee: prices[obj].sell,
           priceGroupId: gid
         });
-        console.log('-----------3-------------', this.orderForm.value);
+
       }
       if (s === 'BUY') {
         this.orderForm.patchValue({
           fee: prices[obj].buy,
           priceGroupId: gid
         });
-        console.log('-----------4-------------', this.orderForm.value);
+
       }
 
 
@@ -281,7 +276,7 @@ export class DefaultComponent implements OnInit {
       'baseProductId': 1,
       'description': ""
     })
-    console.log(order);
+
     this.ws.sendOrder(order);
   }
 
@@ -348,7 +343,7 @@ export class DefaultComponent implements OnInit {
   }
 
   changeSelectPerson($event: any) {
-    console.log($event);
+
     document.getElementById('amount').focus();
 
   }
@@ -377,7 +372,7 @@ export class DefaultComponent implements OnInit {
   }
 
   checkLang(e: KeyboardEvent) {
-    console.log(e.key);
+
     // console.log(e.);
     if(e.key === 'ی') {
       return 'ي'
@@ -395,7 +390,7 @@ export class DefaultComponent implements OnInit {
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
-    console.log(file);
+
     this.payInfoForm.patchValue({
       payImage: file
     });
@@ -410,7 +405,6 @@ export class DefaultComponent implements OnInit {
 
   submitForm() {
     var formData: any = new FormData();
-    console.log(this.payInfoForm.value);
     const payInfo = {
       amount: this.payInfoForm.get('amount').value,
       description: this.payInfoForm.get('description').value,
@@ -433,7 +427,7 @@ export class DefaultComponent implements OnInit {
 
           break;
         case HttpEventType.Response:
-          console.log('User successfully created!', event.body);
+
 
           break;
       }
