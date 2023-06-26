@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {MyTransaction} from "../../core/models/customer-transction.models";
+import {IMyTransaction, MyTransaction} from "../../core/models/customer-transction.models";
 import {Title} from "@angular/platform-browser";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ReportsService} from "../../core/services/reports.service";
@@ -18,7 +18,7 @@ import {IPageable} from "../../core/models/pageable.models";
 export class TransactionsComponent implements OnInit {
 
   displaySpinner = true;
-  transaction: MyTransaction[];
+  transaction: IMyTransaction[];
   pageable: IPageable;
   total: number;
   page:  number;
@@ -49,6 +49,7 @@ export class TransactionsComponent implements OnInit {
   private getMyTransactions(page, size, sort) {
     this.reportService.getTransactions(page,size,sort)
       .subscribe(data => {
+
           this.displaySpinner=false;
           this.transaction = data.body['content'];
           this.pageable = data.body['pageable'];

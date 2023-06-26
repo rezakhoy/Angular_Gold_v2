@@ -4,6 +4,8 @@ export class IMyTransaction {
   sh: string;
   v_bed: number;
   v_bes: number;
+  v_1: number;
+  ayar: number;
   balance_v: number;
   r_bed: number;
   r_bes: number;
@@ -17,6 +19,8 @@ export class MyTransaction implements IMyTransaction {
   public sh: string,
   public v_bed = 0,
   public v_bes = 0,
+  public v_1 = 0,
+  public ayar = 0,
   public balance_v = 0,
   public r_bed = 0,
   public r_bes = 0,

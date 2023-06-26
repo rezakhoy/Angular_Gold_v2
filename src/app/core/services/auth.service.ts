@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpEvent, HttpResponse} from "@angular/common/http";
 import {Router, RouterStateSnapshot} from "@angular/router";
 import {API_URL} from "../../../environments/environment";
+import {PermissionStore} from "ng2-permission";
+
 
 @Injectable({ providedIn: 'root' })
 
@@ -12,7 +14,7 @@ export class AuthenticationService {
     permissions: string[];
     user: IUser;
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private perService: PermissionStore) {
     }
 
     /**
@@ -54,6 +56,7 @@ export class AuthenticationService {
      */
   logout() {
     localStorage.removeItem('authorization');
+    this.perService.clearStore();
     this.router.navigate(['/account/login'], );
 
   }

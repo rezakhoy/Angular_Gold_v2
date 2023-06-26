@@ -3,15 +3,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ExtrapagesModule } from './extrapages/extrapages.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
-import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
 import {WebsocketService} from "./core/services/websocket.service";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {CURRENCY_MASK_CONFIG, CurrencyMaskConfig, CurrencyMaskModule} from "ng2-currency-mask";
@@ -28,7 +25,7 @@ document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "right",
   allowNegative: true,
-  decimal: ",",
+  decimal: ".",
   precision: 0,
   prefix: "",
   suffix: " ریال",
@@ -52,12 +49,10 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     LayoutsModule,
     AppRoutingModule,
     ExtrapagesModule,
-    CarouselModule,
     CurrencyMaskModule,
     NgbAccordionModule,
     NgImageFullscreenViewModule,
     NgSelectModule,
-    NgxNumberSpinnerModule,
     NgbNavModule,
     NgbTooltipModule,
     PermissionModule,

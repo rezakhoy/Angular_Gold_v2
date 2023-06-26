@@ -106,7 +106,6 @@ export class DefaultComponent implements OnInit {
     this.titleService.setTitle("داشبورد")
 
     this.ws.connect();
-
     if (this.permissionService.hasPermission('user')){
       this.commandService.getCommandChildrenUncleared().subscribe(res =>{
         this.userCommandUnclearedList = res.body;

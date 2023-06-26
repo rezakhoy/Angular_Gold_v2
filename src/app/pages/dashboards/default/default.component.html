@@ -164,9 +164,15 @@
 
                   <div class="row mt-3 "  *ngFor="let m of mas ">
                       <div class="d-flex justify-content-around">
-                      <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">خرید{{m.buy| number}}  </button></div>
+                      <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
+                        <span>  {{m.buy| number}}  </span>  <span class="font-size-8">ریال</span><br/>
+                        <span>خرید از ما  </span>
+                      </button></div>
                       <div >  <h5>{{m.priceGroupName}} </h5></div>
-                      <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">فروش{{m.sell| number}}  </button></div>
+                      <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
+                        <span>  {{m.sell| number}}  </span> <span class="font-size-8">ریال</span><br/>
+                        <span>فروش به ما  </span>
+                      </button></div>
                       </div>
                   </div>
                 </div>
@@ -319,13 +325,13 @@
                     <div class="d-flex justify-content-between">
                     <div> <button  class="btn  shadow " [ngClass]="m.activeBuy  ?  'btn-success' : 'btn-outline-success'"  (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
 
-                      <span> ریال {{m.buy| number}} </span><br/>
+                      <span>  {{m.buy| number}} </span><br/>
                       <span>خرید از ما </span>
 <!--                      <span>Delivery &amp; Pickup</span>-->
                     </button></div>
                     <div ><h5>{{m.priceGroupName}} -- {{m.priceGroupDescription}}</h5></div>
                     <div> <button  class="btn shadow " [ngClass]="m.activeSell  ?  'btn-danger' : 'btn-outline-danger'" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
-                      <span> ریال {{m.sell| number}} </span><br/>
+                      <span>  {{m.sell| number}} </span><br/>
                       <span>فروش به ما  </span>
                     </button></div>
                     </div>

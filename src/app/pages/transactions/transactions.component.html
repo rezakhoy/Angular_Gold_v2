@@ -53,7 +53,7 @@
                     <ngb-highlight [result]="table.tariz" ></ngb-highlight>
                   </td>
                   <td>
-                    <ngb-highlight [result]="table.sh" ></ngb-highlight>
+                    {{table.sh}} <span *ngIf="table.ayar !== 750"> وزن اول {{table.v_1}}به عیار{{table.ayar}}</span>
                   </td>
                   <td>
                     <ngb-highlight *ngIf="table.r_bes> 0" class="text-success" [result]="table.r_bes| number" ></ngb-highlight>
@@ -76,11 +76,6 @@
           <!-- End table -->
           <div class="row justify-content-md-between align-items-md-center mt-2">
             <div class="col-sm-12 col-md-5">
-<!--              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">Showing-->
-<!--                {{service.startIndex}} to-->
-<!--                {{service.endIndex}} of {{service.totalRecords}}-->
-<!--                entries-->
-<!--              </div>-->
             </div>
             <!-- Pagination -->
             <div class="col-sm-12 col-md-5">
@@ -114,7 +109,7 @@
         </div>
         <div class="row">
           <span>
-            شرح : {{table.sh}}
+            شرح : {{table.sh}} <span *ngIf="table.ayar !== 750"> وزن اول {{table.v_1}}به عیار{{table.ayar}}</span>
           </span>
         </div>
         <div class="row">

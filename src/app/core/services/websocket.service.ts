@@ -16,7 +16,7 @@ import {PermissionService} from "./permission.service";
 })
 export class WebsocketService {
 
-  private stompClient = null;
+  public stompClient = null;
   public  disabled = true;
   user: IUser;
 
@@ -46,9 +46,12 @@ export class WebsocketService {
     this.stompClient = Stomp.Stomp.over(function () {
       return new SockJS(`${API_URL}websocket`);
     });
-    // @ts-ignore
-    this.stompClient.reconnect_delay = 5000;
 
+    this.stompClient.reconnect_delay = 5000;
+    // console.log('', this.stompClient.status);
+    // this.stompClient.debug = f => {
+    //   console.log(f);
+    // };
     // tslint:disable-next-line:variable-name
     const _this = this;
     const prices = [];
