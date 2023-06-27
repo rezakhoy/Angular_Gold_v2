@@ -122,7 +122,7 @@ export class DefaultComponent implements OnInit {
       this.loadingMyBalance = false;
     });
     this.ws.price.subscribe(msg => {
-
+      console.log('in ws', msg);
       this.date =this.datePipe.transform(msg[0].dateTime, "hh:mm:ss");
       console.log('ddddddddddddddddddddddddddddddddddddddddddddddd', this.date);
       this.mas = msg
@@ -148,6 +148,7 @@ export class DefaultComponent implements OnInit {
   }
 public getLastPrices(){
   this.auth.getLastPriceList().subscribe(res => {
+    console.log('in rest', res.body);
     this.date =this.datePipe.transform(res.body[0].dateTime, "hh:mm:ss");
     this.mas = res.body
       .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
