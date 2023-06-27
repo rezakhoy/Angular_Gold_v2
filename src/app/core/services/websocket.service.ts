@@ -19,11 +19,12 @@ export class WebsocketService {
   public stompClient = null;
   public  disabled = true;
   user: IUser;
-
+  isConnect: Subject<boolean> = new Subject();
   price: Subject<IPrices[]> = new Subject();
   orders: Subject<IOrder[]> = new Subject();
 
   constructor(public authService: AuthenticationService, private permissionService: PermissionService,) {
+    this.isConnect.next(false);
     authService.getUser().subscribe(user => {
       this.user = user.body;
       const roles = user.body.groups.map(function(a) {return a.name;});
@@ -34,6 +35,11 @@ export class WebsocketService {
   }
 
   private setConnected(connected: boolean) {
+   if (connected === true){
+     this.isConnect.next(true)
+   }else {
+     this.isConnect.next(false)
+   }
     this.disabled = !connected;
   }
 
@@ -48,10 +54,7 @@ export class WebsocketService {
     });
 
     this.stompClient.reconnect_delay = 5000;
-    // console.log('', this.stompClient.status);
-    // this.stompClient.debug = f => {
-    //   console.log(f);
-    // };
+
     // tslint:disable-next-line:variable-name
     const _this = this;
     const prices = [];

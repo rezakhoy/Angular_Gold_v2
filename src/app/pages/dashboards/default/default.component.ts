@@ -20,6 +20,7 @@ import {CommandsService} from "../../../core/services/command.service";
 import {ICommandChild} from "../../../core/models/command-child.models";
 import {HttpEvent, HttpEventType} from "@angular/common/http";
 import {DeviceDetectorService} from "ngx-device-detector";
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class DefaultComponent implements OnInit {
   isActive: string;
   rejectComment: '';
   mas: IPrices[];
+  date;
   orders: IOrder[] = [];
   userCommandUnclearedList: ICommandChild[];
   requestedOrders: IOrder[] = [];
@@ -90,6 +92,7 @@ export class DefaultComponent implements OnInit {
               private titleService: Title,
               private reportService: ReportsService,
               private ws: WebsocketService,
+              private datePipe: DatePipe,
               private toastr: ToastrService,
               private userService: UserService,
               public deviceService: DeviceDetectorService,
@@ -106,6 +109,7 @@ export class DefaultComponent implements OnInit {
     this.titleService.setTitle("داشبورد")
 
     this.ws.connect();
+
     if (this.permissionService.hasPermission('user')){
       this.commandService.getCommandChildrenUncleared().subscribe(res =>{
         this.userCommandUnclearedList = res.body;
@@ -118,6 +122,9 @@ export class DefaultComponent implements OnInit {
       this.loadingMyBalance = false;
     });
     this.ws.price.subscribe(msg => {
+
+      this.date =this.datePipe.transform(msg[0].dateTime, "hh:mm:ss");
+      console.log('ddddddddddddddddddddddddddddddddddddddddddddddd', this.date);
       this.mas = msg
         .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
     });
@@ -126,12 +133,12 @@ export class DefaultComponent implements OnInit {
       this.manageOrders(ord)
     });
 
-    this.auth.getLastPriceList().subscribe(res => {
-      this.mas = res.body
-        .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
-      this.setPriceForm.patchValue({
-        price: this.mas[0].base,
-      });
+  this.getLastPrices();
+
+    this.ws.isConnect.subscribe(res => {
+      if (res){
+        this.getLastPrices()
+      }
     })
 
     this.orderService.getOrderToday().subscribe(res => {
@@ -139,7 +146,17 @@ export class DefaultComponent implements OnInit {
     })
     this.loadPersons()
   }
+public getLastPrices(){
+  this.auth.getLastPriceList().subscribe(res => {
+    this.date =this.datePipe.transform(res.body[0].dateTime, "hh:mm:ss");
+    this.mas = res.body
+      .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
+    this.setPriceForm.patchValue({
+      price: this.mas[0].base,
+    });
+  })
 
+}
   public getAdminBalance(){
   if (this.permissionService.hasPermission('admin') || this.permissionService.hasPermission('acc')){
     this.reportService.adminBalance().subscribe(res => {
