@@ -109,7 +109,6 @@ export class DefaultComponent implements OnInit {
     this.titleService.setTitle("داشبورد")
 
     this.ws.connect();
-
     if (this.permissionService.hasPermission('user')){
       this.commandService.getCommandChildrenUncleared().subscribe(res =>{
         this.userCommandUnclearedList = res.body;
@@ -122,9 +121,7 @@ export class DefaultComponent implements OnInit {
       this.loadingMyBalance = false;
     });
     this.ws.price.subscribe(msg => {
-      console.log('in ws', msg);
-      this.date =this.datePipe.transform(msg[0].dateTime, "hh:mm:ss");
-      console.log('ddddddddddddddddddddddddddddddddddddddddddddddd', this.date);
+      this.date =this.datePipe.transform(msg[0].dateTime, "hh:mm:ss", "UTC-5:00");
       this.mas = msg
         .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
     });
@@ -148,8 +145,7 @@ export class DefaultComponent implements OnInit {
   }
 public getLastPrices(){
   this.auth.getLastPriceList().subscribe(res => {
-    console.log('in rest', res.body);
-    this.date =this.datePipe.transform(res.body[0].dateTime, "hh:mm:ss");
+    this.date =this.datePipe.transform(res.body[0].dateTime, "hh:mm:ss","UTC-5:00");
     this.mas = res.body
       .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
     this.setPriceForm.patchValue({

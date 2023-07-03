@@ -25,7 +25,7 @@ export const MENU: MenuItem[] = [
     label: 'کاربران',
     icon: 'bx bxs-user-detail',
     link: '/users',
-    per: ['admin', 'super_admin']
+    per: ['admin', 'super_admin', 'acc']
   },
   {
     id: 4,

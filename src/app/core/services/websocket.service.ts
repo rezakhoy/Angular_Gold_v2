@@ -7,7 +7,6 @@ import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {AuthenticationService} from "./auth.service";
 import {IOrder} from "../models/order.models";
-import {RoleStore} from "ng2-permission";
 import {PermissionService} from "./permission.service";
 
 
@@ -135,7 +134,11 @@ export class WebsocketService {
         callUser();
       }
     });
+
+
   }
+
+
 
   public setPrice(price) {
     console.log(price);

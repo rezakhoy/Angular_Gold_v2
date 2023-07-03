@@ -161,16 +161,16 @@
             <div class="text-center">
               <div class="row ">
                 <div class="align-content-center">
-
+                      <p > مبالغ به ریال می باشد. آپدیت قیمت {{date }}</p>
                   <div class="row mt-3 "  *ngFor="let m of mas ">
                       <div class="d-flex justify-content-around">
                       <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
-                        <span>  {{m.buy| number}}  </span>  <span class="font-size-8">ریال</span><br/>
+                        <span class="font-size-20">  {{m.buy| number}}  </span>  <br/>
                         <span>خرید از ما  </span>
                       </button></div>
                       <div >  <h5>{{m.priceGroupName}} </h5></div>
                       <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
-                        <span>  {{m.sell| number}}  </span> <span class="font-size-8">ریال</span><br/>
+                        <span class="font-size-20">  {{m.sell| number}}  </span> <br/>
                         <span>فروش به ما  </span>
                       </button></div>
                       </div>
@@ -290,14 +290,14 @@
                 <div class="row">
                   <div class="d-flex justify-content-around">
                     <div class="form-check form-check-success mb-3">
-                      <input class="form-check-input" [checked]="mas[0]?.activeBuy" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
+                      <input class="form-check-input" *ngIf="mas" [checked]="mas[0]?.activeBuy" (click)="buyStatusChange($event.target)" type="checkbox" id="formCheck2">
                       <label class="form-check-label" for="formCheck1">
                         خرید
                       </label>
                     </div>
                     <div>{{date }}</div>
                     <div class="form-check form-check-danger  mb-3">
-                      <input class="form-check-input" (click)="sellStatusChange($event.target)" [checked]="mas[0]?.activeSell" type="checkbox" id="formCheck1">
+                      <input class="form-check-input" *ngIf="mas" (click)="sellStatusChange($event.target)" [checked]="mas[0]?.activeSell" type="checkbox" id="formCheck1">
                       <label class="form-check-label" for="formCheck1">
                         فروش
                       </label>
@@ -346,7 +346,33 @@
         </div>
       </div>
     </div>
+    <div class="col-md-6 text-center" *permissionAnyOf="['acc']">
+      <div class="card">
+        <div class="card-body">
+          <p class="text-muted mb-2"><i (click)="getAdminBalance()"
+                                        class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
 
+          <div class="row">
+            <div class="col-6">
+              <div>
+                <h5 class="text-success">{{adminBalance.today_sum_8x | number : '.2-2'}}</h5>
+                <h5 class="text-danger">{{adminBalance.today_sum_9x | number : '.2-2'}}</h5>
+                <p  ><span  class="badge font-size-14" [ngClass]="(adminBalance.today_sum_8x - adminBalance.today_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x | number : '.2-2' }} </span></p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div>
+                <h5 class="text-success">{{adminBalance.today_avg_maz_8x | number : '.0-0'}}</h5>
+                <h5 class="text-danger">{{adminBalance.today_avg_maz_9x | number : '.0-0'}}</h5>
+                <p  class="badge font-size-14 "
+                    [ngClass]="(adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'"
+                >{{adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x | number : '.0-0' }} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--============================================= admin Orders ==========================================================-->
     <div *ngIf="orders?.length > 0"  >
       <div class="card">
@@ -441,10 +467,10 @@
         </div>
         <div class="col-md-12">
           <label for="quantity" class="form-label">مقدار درخواست: </label>
-          <input type="number"  (keyup)="culcPrice()" formControlName="quantity" class="form-control" id="quantity">
+          <input type="number"  (keyup)="culcPrice()" formControlName="quantity" class="form-control" placeholder="وزن مورد نظر را وارد نمایید" id="quantity">
         </div>
         <div class="col-md-12">
-          <label for="price" class="form-label">مبلغ   :</label>
+          <label for="price" class="form-label">مبلغ قابل پرداخت  :</label>
           <input type="text" currencyMask   (keyup)="culcQuantity()"  formControlName="price" class="form-control"
                  id="price">
         </div>
