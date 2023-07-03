@@ -9,6 +9,7 @@ import {IMyTransaction, MyTransaction, SearchResult} from "../../core/models/cus
 import {ReportsService} from "../../core/services/reports.service";
 import {IUser, User, UserSearchResult} from "../../core/models/auth.models";
 import {AuthenticationService} from "../../core/services/auth.service";
+import {IPerson} from "../../core/models/person.models";
 
 interface State {
     page: number;
@@ -48,8 +49,10 @@ function sort(tables: IUser[], column: string, direction: string): User[] {
  * @param pipe
  */
 function matches(tables: User, term: string, pipe: PipeTransform) {
+
     return tables.username.toLowerCase().includes(term)
         || tables.username.toLowerCase().includes(term)
+
 }
 
 @Injectable({
