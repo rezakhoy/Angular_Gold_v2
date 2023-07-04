@@ -18,6 +18,7 @@ import { HorizontaltopbarComponent } from './horizontaltopbar/horizontaltopbar.c
 import { TranslateModule } from '@ngx-translate/core';
 import {PermissionModule} from "ng2-permission";
 import {NgxPersianModule} from "ngx-persian";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -31,7 +32,8 @@ import {NgxPersianModule} from "ngx-persian";
         UIModule,
         SimplebarAngularModule,
         PermissionModule,
-        NgxPersianModule
+        NgxPersianModule,
+        ReactiveFormsModule
     ],
 })
 export class LayoutsModule { }

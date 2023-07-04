@@ -46,6 +46,10 @@ export class AuthenticationService {
       const body = JSON.stringify({  'username': username, 'password': password });
       return this.http.post<IUser>(`${API_URL}login`, body);
     }
+
+  resetPasswordUser(body): Observable<IUser> {
+    return this.http.put<any>(`${API_URL}change-password`, body);
+  }
   refreshToken(refreshToken): Observable<HttpEvent<IRefreshToken>> {
     return this.http.post<IRefreshToken>(`${API_URL}refresh-token`,{  observe: 'response' }, refreshToken);
   }

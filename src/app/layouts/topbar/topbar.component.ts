@@ -5,6 +5,8 @@ import { AuthenticationService } from '../../core/services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import {PermissionService} from "../../core/services/permission.service";
 import {IUser} from "../../core/models/auth.models";
+import {FormBuilder, Validators} from "@angular/forms";
+import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-topbar',
@@ -23,8 +25,14 @@ export class TopbarComponent implements OnInit {
   countryName;
   valueset;
 
+  ngbModalOptions: NgbModalOptions = {
+    backdrop: 'static',
+    keyboard: false
+  };
   constructor(@Inject(DOCUMENT) private document: any,
               private router: Router,
+              private fb: FormBuilder,
+              private modalService: NgbModal,
               private authService: AuthenticationService,
               private permissionService: PermissionService,
               public _cookiesService: CookieService) {
@@ -44,7 +52,10 @@ export class TopbarComponent implements OnInit {
   ];
 
   openMobileMenu: boolean;
-
+  resetPasswordForm = this.fb.group({
+    oldPassword: [null, Validators.required],
+    newPassword: [null, Validators.required],
+  });
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
@@ -121,5 +132,21 @@ export class TopbarComponent implements OnInit {
         this.document.msExitFullscreen();
       }
     }
+  }
+
+  resetPassword(restForm) {
+    this.modalService.open(restForm, this.ngbModalOptions);
+  }
+
+  saveNewPassword() {
+    // const order = JSON.stringify({
+    //   'oldPassword': this.resetPasswordForm.get('oldPassword').value,
+    //   'newPassword': this.resetPasswordForm.get('newPassword').value,
+    // })
+    const order = this.resetPasswordForm.value;
+    console.log(order);
+    this.authService.resetPasswordUser(order).subscribe(res=> {
+      console.log(res);
+    })
   }
 }
