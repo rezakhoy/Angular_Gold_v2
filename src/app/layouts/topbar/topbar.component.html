@@ -264,27 +264,27 @@
       <div class="row mb-5">
         <div class="col-md-6">
           <label for="rejectTime" class="form-label"> انتظار تایید درخواست: </label>
-          <input type="text" formControlName="rejectTime" autocomplete="off"   ngbAutofocus class="form-control" id="rejectTime">
+          <input type="number" formControlName="rejectTime" autocomplete="off"   ngbAutofocus class="form-control" id="rejectTime">
         </div>
         <div class="col-md-6">
           <label for="payImageDirectory" class="form-label">آدرس ذخیره فیش ها: </label>
-          <input type="password" formControlName="payImageDirectory"    class="form-control" id="payImageDirectory">
+          <input type="text" formControlName="payImageDirectory"    class="form-control" id="payImageDirectory">
         </div>
         <div class="col-md-6">
           <label for="textMessageUsername" class="form-label">نام کاربری سامانه پیام:</label>
-          <input type="password" formControlName="textMessageUsername"    class="form-control" id="textMessageUsername">
+          <input type="text" formControlName="textMessageUsername"    class="form-control" id="textMessageUsername">
         </div>
         <div class="col-md-6">
           <label for="textMessagePassword" class="form-label">رمز سامانه پیام: </label>
-          <input type="password" formControlName="textMessagePassword"    class="form-control" id="textMessagePassword">
+          <input type="text" formControlName="textMessagePassword"    class="form-control" id="textMessagePassword">
         </div>
         <div class="col-md-12">
           <label for="textMessageNumber" class="form-label">شماره ارسال پیام: </label>
-          <input type="password" formControlName="textMessageNumber"    class="form-control" id="textMessageNumber">
+          <input type="text" formControlName="textMessageNumber"    class="form-control" id="textMessageNumber">
         </div>
       </div>
       <div class="row">
-        <button class="btn btn-info btn-block mt-2" (click)="saveNewPassword(); modal.close() "> ذخیره رمز جدید</button>
+        <button class="btn btn-info btn-block mt-2" (click)="saveSetting(); modal.close() "> ذخیره رمز جدید</button>
       </div>
     </form>
   </div>

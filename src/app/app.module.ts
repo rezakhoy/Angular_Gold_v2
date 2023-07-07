@@ -17,6 +17,7 @@ import {NgImageFullscreenViewModule} from "@jjbenitez/ng-image-fullscreen-view";
 import {ToastrModule} from "ngx-toastr";
 import {PermissionService} from "./core/services/permission.service";
 import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
+import {WebsocketService1} from "./core/services/ws.service";
 
 
 document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -63,6 +64,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy},
     WebsocketService,
+    WebsocketService1,
     PermissionService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }

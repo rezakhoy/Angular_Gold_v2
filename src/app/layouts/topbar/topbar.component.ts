@@ -7,6 +7,8 @@ import {PermissionService} from "../../core/services/permission.service";
 import {IUser} from "../../core/models/auth.models";
 import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {ConfigService} from "../../core/services/config.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-topbar',
@@ -33,6 +35,8 @@ export class TopbarComponent implements OnInit {
               private router: Router,
               private fb: FormBuilder,
               private modalService: NgbModal,
+              private toastr: ToastrService,
+              private configService: ConfigService,
               private authService: AuthenticationService,
               private permissionService: PermissionService,
               public _cookiesService: CookieService) {
@@ -158,6 +162,24 @@ export class TopbarComponent implements OnInit {
   }
 
   changeSetting(setting) {
-    this.modalService.open(setting, this.ngbModalOptions);
+    this.configService.systemSetting().subscribe(res => {
+      this.settingForm.patchValue({
+        rejectTime: res.body.rejectTime,
+        payImageDirectory: res.body.payImageDirectory,
+        textMessageUsername: res.body.textMessageUsername,
+        textMessagePassword: res.body.textMessagePassword,
+        textMessageNumber: res.body.textMessageNumber,
+      })
+
+      this.modalService.open(setting, this.ngbModalOptions);
+    })
+
+  }
+
+  saveSetting() {
+    const body = this.settingForm.value;
+    this.configService.resetPassword(body).subscribe(res =>{
+      this.toastr.success('تنظیمات سیستم با موفقیت ذخیره شد')
+    })
   }
 }
