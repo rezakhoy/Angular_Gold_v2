@@ -19,6 +19,7 @@ export class IOrder {
   status: string;
   type: Type;
   amount: number;
+  reyall: number;
   description: string;
   baseProductId: number;
   userId: number;

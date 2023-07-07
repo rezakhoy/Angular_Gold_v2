@@ -63,6 +63,7 @@ export class DefaultComponent implements OnInit {
     personId: [null],
     quantity: [null, [Validators.min(0),]],
     fee: [null, Validators.required],
+    reyall: [],
     priceGroupId: [],
     price: [null, Validators.required],
     userId: [null],
@@ -145,11 +146,13 @@ export class DefaultComponent implements OnInit {
   }
 public getLastPrices(){
   this.auth.getLastPriceList().subscribe(res => {
-    this.date =this.datePipe.transform(res.body[0].dateTime, "hh:mm:ss","UTC-5:00");
+    console.log(res);
+    this.date =this.datePipe.transform(res.body[0]?.dateTime, "hh:mm:ss","UTC-5:00");
     this.mas = res.body
       .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
+    console.log(this.mas);
     this.setPriceForm.patchValue({
-      price: this.mas[0].base,
+      price: this.mas[0]?.base,
     });
   })
 
@@ -286,6 +289,7 @@ public getLastPrices(){
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,
       'amount': this.orderForm.get('quantity').value,
+      'reyall': this.orderForm.get('price').value,
       'priceGroupId': this.orderForm.get('priceGroupId').value,
       'baseProductId': 1,
       'description': ""
@@ -300,12 +304,12 @@ public getLastPrices(){
       'price': this.orderForm.get('fee').value,
       'type': this.orderForm.get('transaction_type').value,
       'amount': this.orderForm.get('quantity').value,
+      'reyall': this.orderForm.get('price').value,
       'personId': this.orderForm.get('userId').value,
       'priceGroupId': this.orderForm.get('priceGroupId').value,
       'baseProductId': 1,
-      'description': "ثبت تلفنی"
+      'description': " تلفنی"
     })
-    console.log(order);
     this.ws.sendOrder(order);
   }
 
@@ -318,7 +322,7 @@ public getLastPrices(){
   }
 
   culcQuantity() {
-    const quantity =( this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3318).toFixed(2);
+    const quantity =( this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3318).toFixed(3);
     this.orderForm.patchValue({
       quantity
     });
@@ -332,7 +336,6 @@ public getLastPrices(){
     this.modalService.open(modal, this.ngbModalOptions);
   }
   confirmOrder(order: IOrder) {
-    order.description = this.rejectComment;
     this.ws.orderToConfirm(order)
     order.status = 'Waiting'
   }

@@ -196,7 +196,6 @@
                   <td>نرخ </td>
                   <td>توضیحات</td>
                   <td>وضعیت</td>
-                  <td *permissionAnyOf="['admin', 'super_admin', 'acc']">عملیات</td>
                 </tr>
                 <tr *ngFor="let order of orders; let i = index">
                   <!--                  <td  *permissionIf="'admin', 'super_admin'"> {{order.user.name}}</td>-->
@@ -207,7 +206,7 @@
                   <td>{{order.price | number}}</td>
                   <td>{{order.description}}</td>
                   <td >
-                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > در انتظار
+                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > <i  class="bx bxs-adjust bx-spin "></i> در انتظار
 
 
                     </span>
@@ -216,13 +215,6 @@
                     <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
                   </td>
 
-                  <td *permissionAnyOf="['admin', 'super_admin', 'acc']">
-                    <div class="btn-group btn-group-sm" role="group">
-                      <button class="btn btn-success  "  [disabled]="order.status != 'REQUEST'" (click)="confirmOrder(order)">تایید</button>
-                      <button class="btn  btn-danger"  [disabled]="order.status != 'REQUEST'" (click)="rejectOrder(order, reject)" >رد</button>
-                    </div>
-
-                  </td>
                 </tr>
               </table>
             </div>
@@ -456,7 +448,6 @@
                      bindLabel="name"
                      formControlName="userId"
                      bindValue="id"
-                     trans
                      [loading]="personsLoading">
           </ng-select>
         </div>
@@ -484,7 +475,7 @@
               (click)="saveGoldOrder() ;modal.close() "
              class="btn btn-success btn-sm">ثبت درخواست
       </button>
-      <button type="submit" *permissionAnyOf="['admin', 'super_admin', 'acc']"
+      <button type="submit"  [disabled]="!orderForm.valid" *permissionAnyOf="['admin', 'super_admin', 'acc']"
               (click)="saveAdminGoldOrder() ;modal.close() "
               class="btn btn-success btn-sm">ثبت دستی
       </button>
@@ -505,6 +496,7 @@
   </div>
   <div class="modal-body">
     <select class="form-select me-sm-2 wide" aria-label="Default select example" [(ngModel)]="rejectComment" id="rejectComment">
+      <option value="عدم فروش"> عدم فروش </option>
       <option value="با عرض پوزش به علت تغییر مظنه تایید نشد">  تغییر مظنه </option>
       <option value=" مقدار درخواست خارج از محدوده"> مقدار درخواست خارج از محدوده</option>
     </select>

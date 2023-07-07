@@ -56,6 +56,13 @@ export class TopbarComponent implements OnInit {
     oldPassword: [null, Validators.required],
     newPassword: [null, Validators.required],
   });
+  settingForm = this.fb.group({
+    rejectTime: [null, Validators.required],
+    payImageDirectory: [null, Validators.required],
+    textMessageUsername: [null, Validators.required],
+    textMessagePassword: [null, Validators.required],
+    textMessageNumber: [null, Validators.required],
+  });
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
@@ -148,5 +155,9 @@ export class TopbarComponent implements OnInit {
     this.authService.resetPasswordUser(order).subscribe(res=> {
       console.log(res);
     })
+  }
+
+  changeSetting(setting) {
+    this.modalService.open(setting, this.ngbModalOptions);
   }
 }

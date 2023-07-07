@@ -207,11 +207,11 @@
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-          <!-- item-->
-<!--          <a class="dropdown-item" routerLink="/contacts/profile"><i class="bx bx-user font-size-16 align-middle me-1"></i>-->
-<!--            {{ 'پروفایل' }}</a>-->
-          <a class="dropdown-item d-block" href="javascript: void(0);" (click)="resetPassword(resetPasswordModal)"><span
-              class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i>{{
+
+          <a class="dropdown-item d-block" *permissionAnyOf="['admin', 'super_admin']" href="javascript: void(0);" (click)="changeSetting(setting)"><i class="bx bx-cog font-size-16 align-middle me-1"></i>
+            تنظیمات </a>
+          <div class="dropdown-divider" *permissionAnyOf="['admin', 'super_admin']"></div>
+          <a class="dropdown-item d-block" href="javascript: void(0);" (click)="resetPassword(resetPasswordModal)"><i class="bx bx-key font-size-16 align-middle me-1"></i>{{
             'تغییر رمز ورود' }} </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item text-danger" href="javascript: void(0);" (click)="logout()"><i
@@ -241,6 +241,46 @@
         <div class="col-md-12">
           <label for="newPassword" class="form-label">رمز عبور جدید: </label>
           <input type="password" formControlName="newPassword"    class="form-control" id="newPassword">
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-info btn-block mt-2" (click)="saveNewPassword(); modal.close() "> ذخیره رمز جدید</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
+
+
+<ng-template #setting let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="settingForm" >
+      <div class="row mb-5">
+        <div class="col-md-6">
+          <label for="rejectTime" class="form-label"> انتظار تایید درخواست: </label>
+          <input type="text" formControlName="rejectTime" autocomplete="off"   ngbAutofocus class="form-control" id="rejectTime">
+        </div>
+        <div class="col-md-6">
+          <label for="payImageDirectory" class="form-label">آدرس ذخیره فیش ها: </label>
+          <input type="password" formControlName="payImageDirectory"    class="form-control" id="payImageDirectory">
+        </div>
+        <div class="col-md-6">
+          <label for="textMessageUsername" class="form-label">نام کاربری سامانه پیام:</label>
+          <input type="password" formControlName="textMessageUsername"    class="form-control" id="textMessageUsername">
+        </div>
+        <div class="col-md-6">
+          <label for="textMessagePassword" class="form-label">رمز سامانه پیام: </label>
+          <input type="password" formControlName="textMessagePassword"    class="form-control" id="textMessagePassword">
+        </div>
+        <div class="col-md-12">
+          <label for="textMessageNumber" class="form-label">شماره ارسال پیام: </label>
+          <input type="password" formControlName="textMessageNumber"    class="form-control" id="textMessageNumber">
         </div>
       </div>
       <div class="row">
