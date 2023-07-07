@@ -27,5 +27,6 @@ export class IOrder {
   createdDate: string;
   lastModifiedBy: string;
   lastModifiedDate: string;
+  time: string;
 }
 

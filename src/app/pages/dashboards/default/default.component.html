@@ -206,7 +206,7 @@
       </div>
     </div>
     <!--============================================= user orders ==========================================================-->
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="deviceService.isDesktop()">
       <div *ngIf="orders?.length > 0"  >
         <div class="card">
           <div class="card-body">
@@ -220,7 +220,7 @@
                   <td>توضیحات</td>
                   <td>وضعیت</td>
                 </tr>
-                <tr *ngFor="let order of orders; let i = index">
+                <tr *ngFor="let order of orders | slice:0:5; let i = index">
                   <!--                  <td  *permissionIf="'admin', 'super_admin'"> {{order.user.name}}</td>-->
                   <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
                   <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
@@ -229,10 +229,7 @@
                   <td>{{order.price | number}}</td>
                   <td>{{order.description}}</td>
                   <td >
-                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > <i  class="bx bxs-adjust bx-spin "></i> در انتظار
-
-
-                    </span>
+                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > <i  class="bx bxs-adjust bx-spin "></i> در انتظار</span>
                     <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-12 bg-danger p-1">تایید نشده</span>
                     <span *ngIf="order.status === 'REJECT'" class="badge font-size-12 bg-warning p-1">بدون پاسخ </span>
                     <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
@@ -245,7 +242,41 @@
         </div>
       </div>
     </div>
-  </div>
+    <div class="col-md-6" *ngIf="!deviceService.isDesktop()">
+      <div class="card p-1"  *ngFor="let order of orders; let i = index">
+
+          <div class="row border-bottom ">
+            <div class="d-flex justify-content-between">
+              <span>
+                  <p *ngIf="order.type === 'SELL'">فروش آبشده</p>
+                  <p *ngIf="order.type === 'BUY'">خرید آبشده</p>
+              </span>
+              <span>
+               {{order.time }}
+              </span>
+              <span>
+                    <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > <i  class="bx bxs-adjust bx-spin "></i> در انتظار</span>
+                    <span *ngIf="order.status === 'UNCONFIRM'" class="badge font-size-12 bg-danger p-1">تایید نشده</span>
+                    <span *ngIf="order.status === 'REJECT'" class="badge font-size-12 bg-warning p-1">بدون پاسخ </span>
+                    <span *ngIf="order.status === 'CONFIRM'" class="badge font-size-12 bg-success p-1">تایید شده</span>
+               </span>
+            </div>
+
+          </div>
+          <div class="row  ">
+            <div class="d-flex justify-content-between">
+              <span>   مظنه : {{order.price | number }} </span>
+              <span>  وزن :{{order.amount | number : '1.0-3'}} </span>
+              <span>مبلغ: {{order.reyall | number }} </span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
   <!--============================================= user command ==========================================================-->
   <div class="row" *permissionOnly="['user']">
    <div class="col-md-12">
@@ -404,8 +435,8 @@
                 <td>وضعیت</td>
                 <td *permissionAnyOf="['admin', 'super_admin', 'acc']">عملیات</td>
               </tr>
-              <tr *ngFor="let order of orders; let i = index">
-                                  <td  *permissionIf="'admin', 'super_admin'"> {{order.name}}</td>
+              <tr *ngFor="let order of orders  | slice:0:8; let i = index">
+                <td  *permissionAnyOf="['admin', 'super_admin']"> {{order.name}}</td>
                 <td *ngIf="order.type === 'SELL'">فروش </td>
                 <td *ngIf="order.type === 'BUY'">خرید </td>
 

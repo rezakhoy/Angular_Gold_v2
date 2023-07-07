@@ -175,6 +175,7 @@ public getLastPrices(){
   manageOrders(ords) {
     var self = this;
     ords.forEach(function (ord) {
+      ord.time = self.datePipe.transform(ord.createdDate, "hh:mm","UTC-5:00");
       if (ord.status === 'REQUEST'){
         let audio = new Audio();
         audio.src = "../../../assets/Notification.wav";
@@ -208,7 +209,8 @@ public getLastPrices(){
 
           self.orders.push(ord);
           if (self.orders.length > 5) {
-            self.orders.shift()
+            self.orders.slice(-1, 5)
+            self.orders.sort((a, b) => (a.lastModifiedDate < b.lastModifiedDate) ? 1 : -1);
           }
         }
       }
