@@ -64,7 +64,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy},
     WebsocketService,
-    WebsocketService1,
+    // WebsocketService1,
     PermissionService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }

@@ -162,19 +162,42 @@
               <div class="row ">
                 <div class="align-content-center">
                       <p > مبالغ به ریال می باشد. آپدیت قیمت {{date }}</p>
-                  <div class="row mt-3 "  *ngFor="let m of mas ">
-                      <div class="d-flex justify-content-around">
-                      <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
-                        <span class="font-size-20">  {{m.buy| number}}  </span>  <br/>
-                        <span>خرید از ما  </span>
-                      </button></div>
-                      <div >  <h5>{{m.priceGroupName}} </h5></div>
-                      <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
+                  <table class="table table-borderless">
+                    <tr *ngFor="let m of mas ">
+                      <td>
+                        <span>
+                          <button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
+                            <span class="font-size-20">  {{m.buy| number}}  </span>  <br/>
+                            <span>خرید از ما  </span>
+                          </button>
+                        </span>
+
+                      </td>
+                      <td><h5>{{m.priceGroupName}}</h5></td>
+                      <td>
+                        <span>
+                         <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
                         <span class="font-size-20">  {{m.sell| number}}  </span> <br/>
                         <span>فروش به ما  </span>
-                      </button></div>
-                      </div>
-                  </div>
+                      </button>
+                      </span>
+                       </td>
+                    </tr>
+
+                  </table>
+<!--                  <div class="row mt-3 "  *ngFor="let m of mas ">-->
+<!--                      <div class="d-flex justify-content-around">-->
+<!--                      <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">-->
+<!--                        <span class="font-size-20">  {{m.buy| number}}  </span>  <br/>-->
+<!--                        <span>خرید از ما  </span>-->
+<!--                      </button></div>-->
+<!--                      <div >  <h5>{{m.priceGroupName}} </h5></div>-->
+<!--                      <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">-->
+<!--                        <span class="font-size-20">  {{m.sell| number}}  </span> <br/>-->
+<!--                        <span>فروش به ما  </span>-->
+<!--                      </button></div>-->
+<!--                      </div>-->
+<!--                  </div>-->
                 </div>
               </div>
             </div>
