@@ -161,43 +161,20 @@
             <div class="text-center">
               <div class="row ">
                 <div class="align-content-center">
-                      <p > مبالغ به ریال می باشد. آپدیت قیمت {{date }}</p>
-                  <table class="table table-borderless">
-                    <tr *ngFor="let m of mas ">
-                      <td>
-                        <span>
-                          <button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
-                            <span class="font-size-20">  {{m.buy| number}}  </span>  <br/>
-                            <span>خرید از ما  </span>
-                          </button>
-                        </span>
 
-                      </td>
-                      <td><h5>{{m.priceGroupName}}</h5></td>
-                      <td>
-                        <span>
-                         <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
-                        <span class="font-size-20">  {{m.sell| number}}  </span> <br/>
+                  <div class="row mt-3 "  *ngFor="let m of mas ">
+                      <div class="d-flex justify-content-around">
+                      <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">
+                        <span>  {{m.buy| number}}  </span>  <span class="font-size-8">ریال</span><br/>
+                        <span>خرید از ما  </span>
+                      </button></div>
+                      <div >  <h5>{{m.priceGroupName}} </h5></div>
+                      <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">
+                        <span>  {{m.sell| number}}  </span> <span class="font-size-8">ریال</span><br/>
                         <span>فروش به ما  </span>
-                      </button>
-                      </span>
-                       </td>
-                    </tr>
-
-                  </table>
-<!--                  <div class="row mt-3 "  *ngFor="let m of mas ">-->
-<!--                      <div class="d-flex justify-content-around">-->
-<!--                      <div ><button class="btn btn-success btn-block " *ngIf="m.activeBuy" (click)="makeOrder(orderModel, m.priceGroupId, 'BUY')">-->
-<!--                        <span class="font-size-20">  {{m.buy| number}}  </span>  <br/>-->
-<!--                        <span>خرید از ما  </span>-->
-<!--                      </button></div>-->
-<!--                      <div >  <h5>{{m.priceGroupName}} </h5></div>-->
-<!--                      <div > <button class="btn btn-danger btn-block "*ngIf="m.activeSell" (click)="makeOrder(orderModel, m.priceGroupId, 'SELL')">-->
-<!--                        <span class="font-size-20">  {{m.sell| number}}  </span> <br/>-->
-<!--                        <span>فروش به ما  </span>-->
-<!--                      </button></div>-->
-<!--                      </div>-->
-<!--                  </div>-->
+                      </button></div>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -220,7 +197,7 @@
                   <td>توضیحات</td>
                   <td>وضعیت</td>
                 </tr>
-                <tr *ngFor="let order of orders | slice:0:5; let i = index">
+                <tr *ngFor="let order of orders ; let i = index">
                   <!--                  <td  *permissionIf="'admin', 'super_admin'"> {{order.user.name}}</td>-->
                   <td *ngIf="order.type === 'SELL'">فروش آبشده</td>
                   <td *ngIf="order.type === 'BUY'">خرید آبشد</td>
@@ -243,16 +220,16 @@
       </div>
     </div>
     <div class="col-md-6" *ngIf="!deviceService.isDesktop()">
-      <div class="card p-1"  *ngFor="let order of orders; let i = index">
+      <div class="card p-2 "  *ngFor="let order of orders; let i = index">
 
           <div class="row border-bottom ">
             <div class="d-flex justify-content-between">
               <span>
-                  <p *ngIf="order.type === 'SELL'">فروش آبشده</p>
-                  <p *ngIf="order.type === 'BUY'">خرید آبشده</p>
+                  <span *ngIf="order.type === 'SELL'"> فروش آبشده  - {{order.description}}</span>
+                  <span *ngIf="order.type === 'BUY'"> خرید آبشده -  {{order.description}} </span>
               </span>
               <span>
-               {{order.time }}
+              <i  class="bx bxs-watch "></i> {{order.time }}
               </span>
               <span>
                     <span *ngIf="order.status === 'REQUEST'" class="badge  font-size-12 bg-info p-1" > <i  class="bx bxs-adjust bx-spin "></i> در انتظار</span>
