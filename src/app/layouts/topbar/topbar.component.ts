@@ -9,6 +9,8 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ConfigService} from "../../core/services/config.service";
 import {ToastrService} from "ngx-toastr";
+import {ReportsService} from "../../core/services/reports.service";
+import {ISekeh} from "../../core/models/sekeh.models";
 
 @Component({
   selector: 'app-topbar',
@@ -36,6 +38,7 @@ export class TopbarComponent implements OnInit {
               private fb: FormBuilder,
               private modalService: NgbModal,
               private toastr: ToastrService,
+              private reportService: ReportsService,
               private configService: ConfigService,
               private authService: AuthenticationService,
               private permissionService: PermissionService,
@@ -56,6 +59,7 @@ export class TopbarComponent implements OnInit {
   ];
 
   openMobileMenu: boolean;
+  sekehs : ISekeh[];
   resetPasswordForm = this.fb.group({
     oldPassword: [null, Validators.required],
     newPassword: [null, Validators.required],
@@ -180,6 +184,13 @@ export class TopbarComponent implements OnInit {
     const body = this.settingForm.value;
     this.configService.resetPassword(body).subscribe(res =>{
       this.toastr.success('تنظیمات سیستم با موفقیت ذخیره شد')
+    })
+  }
+
+  getAdminSekeh(sekehModal) {
+    this.reportService.adminSekeh().subscribe(res => {
+      this.sekehs = res.body;
+      this.modalService.open(sekehModal, this.ngbModalOptions);
     })
   }
 }

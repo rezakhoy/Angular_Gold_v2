@@ -110,6 +110,11 @@
           <i class="bx bx-fullscreen"></i>
         </button>
       </div>
+      <div class="dropdown d-none d-lg-inline-block ms-1">
+        <button type="button" class="btn header-item noti-icon" data-toggle="fullscreen" (click)="getAdminSekeh(sekehModal)">
+          <i class="bx bx-voicemail"></i>
+        </button>
+      </div>
 
 <!--      <div class="dropdown d-inline-block" ngbDropdown>-->
 <!--        <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown"-->
@@ -287,6 +292,25 @@
         <button class="btn btn-info btn-block mt-2" (click)="saveSetting(); modal.close() "> ذخیره رمز جدید</button>
       </div>
     </form>
+  </div>
+
+</ng-template>
+
+
+<ng-template #sekehModal let-modal>
+  <div class="modal-header">
+
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <table class="table table-sm table-striped table-hover">
+        <tr *ngFor="let s of sekehs ">
+          <td>{{s.name_sekh}}</td>
+          <td>{{s.tedad}}</td>
+        </tr>
+      </table>
   </div>
 
 </ng-template>

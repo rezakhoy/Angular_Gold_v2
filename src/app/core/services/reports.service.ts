@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {MyTransaction} from "../models/customer-transction.models";
 import {Demand, IAdminDemand} from "../models/demand.models";
 import {IAdminBanks, IBank} from "../models/bank.models";
+import {ISekeh} from "../models/sekeh.models";
 
 
 @Injectable({
@@ -48,6 +49,10 @@ export class ReportsService {
 
   adminDemand(): Observable<HttpResponse<IAdminDemand>> {
     return this.http.get<any>(`${API_URL}admin-demands`, {  observe: 'response' });
+  }
+
+  adminSekeh(): Observable<HttpResponse<ISekeh[]>> {
+    return this.http.get<any>(`${API_URL}admin-sekeh`, {  observe: 'response' });
   }
 
   bankBalanceList(): Observable<HttpResponse<IBank[]>> {

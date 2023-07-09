@@ -6,6 +6,7 @@ export interface IPrices {
   priceGroupName?: string;
   priceGroupDescription?: string;
   sell?: number;
+  limit?: number;
   buy?: number;
   dateTime?: string;
   base?: number;

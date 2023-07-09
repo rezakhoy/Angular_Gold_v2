@@ -41,6 +41,7 @@ export class DefaultComponent implements OnInit {
   rejectComment: '';
   mas: IPrices[];
   date;
+  overOrder = false;
   orders: IOrder[] = [];
   userCommandUnclearedList: ICommandChild[];
   requestedOrders: IOrder[] = [];
@@ -68,6 +69,7 @@ export class DefaultComponent implements OnInit {
     price: [null, Validators.required],
     userId: [null],
     status: [],
+    limit:[],
     comment: [null]
   });
   goldRemitForm = this.fb.group({
@@ -231,8 +233,8 @@ public getLastPrices(){
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }
 
-  makeOrder(form, gid, s) {
-    // console.log("-------gid----------", gid);
+  makeOrder(form, gid, limit, s) {
+    console.log(limit);
     let obj = this.mas.findIndex(x => x.priceGroupId === gid)
     if (s === 'SELL') {
       this.orderForm.patchValue({
@@ -243,9 +245,9 @@ public getLastPrices(){
         fee: this.mas[obj].sell,
         price: '',
         quantity: '',
+        limit: limit,
         description: ''
       });
-      // console.log('-----------1-------------', this.orderForm.value);
     }
 
     if (s === 'BUY') {
@@ -256,6 +258,7 @@ public getLastPrices(){
         status: 'w',
         fee: this.mas[obj].buy,
         price: '',
+        limit: limit,
         quantity: ''
       });
 
@@ -317,6 +320,11 @@ public getLastPrices(){
 
 
   culcPrice() {
+    if(this.orderForm.get('limit').value < this.orderForm.get('quantity').value){
+     this.overOrder = true;
+    }else {
+      this.overOrder = false;
+    }
     const price = ((this.orderForm.get('fee').value / 4.3318) * this.orderForm.get('quantity').value).toFixed();
     this.orderForm.patchValue({
       price
@@ -324,11 +332,16 @@ public getLastPrices(){
   }
 
   culcQuantity() {
+
     const quantity =( this.orderForm.get('price').value / this.orderForm.get('fee').value * 4.3318).toFixed(3);
     this.orderForm.patchValue({
       quantity
     });
-
+    if(this.orderForm.get('limit').value < this.orderForm.get('quantity').value){
+      this.overOrder = true;
+    }else {
+      this.overOrder = false;
+    }
   }
   makePayInfo(child, modal){
 
