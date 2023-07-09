@@ -50,6 +50,7 @@
             </div>
           </form>
         </div>
+
       </div>
 
 
@@ -110,9 +111,9 @@
           <i class="bx bx-fullscreen"></i>
         </button>
       </div>
-      <div class="dropdown d-none d-lg-inline-block ms-1">
-        <button type="button" class="btn header-item noti-icon" data-toggle="fullscreen" (click)="getAdminSekeh(sekehModal)">
-          <i class="bx bx-voicemail"></i>
+      <div class="dropdown  d-lg-inline-block ms-1" *permissionAnyOf="['admin', 'super_admin', 'acc']">
+        <button type="button" class="btn header-item noti-icon" data-toggle="fullscreen" ngbTooltip="موجودی سکه" (click)="getAdminSekeh(sekehModal)">
+          <i class="bx bxl-mastercard"></i>
         </button>
       </div>
 

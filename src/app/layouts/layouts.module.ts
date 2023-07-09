@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SimplebarAngularModule } from 'simplebar-angular';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdownModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng-click-outside';
 
 import { UIModule } from '../shared/ui/ui.module';
@@ -33,7 +33,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         SimplebarAngularModule,
         PermissionModule,
         NgxPersianModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgbTooltipModule
     ],
 })
 export class LayoutsModule { }
