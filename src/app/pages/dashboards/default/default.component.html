@@ -473,7 +473,7 @@
         <div class="col-md-12" *permissionAnyOf="['admin', 'super_admin', 'acc']" >
           <label  class="form-label">طرف حساب: </label>
           <ng-select [items]="persons"
-                      (keydown)="checkLang($event)"
+                      (keyup)="checkLang($event)"
                      autofocus="true"
                      notFoundText = "مشتری با این نام وجود ندارد!"
                      bindLabel="name"

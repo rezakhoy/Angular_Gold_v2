@@ -148,11 +148,10 @@ export class DefaultComponent implements OnInit {
   }
 public getLastPrices(){
   this.auth.getLastPriceList().subscribe(res => {
-    console.log(res);
+
     this.date =this.datePipe.transform(res.body[0]?.dateTime, "hh:mm:ss","UTC-5:00");
     this.mas = res.body
       .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
-    console.log(this.mas);
     this.setPriceForm.patchValue({
       price: this.mas[0]?.base,
     });
@@ -200,7 +199,6 @@ public getLastPrices(){
           }
           // @ts-ignore
           if (self.orders[mainObjectIndex].status === 'REQUEST' && ord.status === 'UNCONFIRM') {
-            // console.log(ord);
             self.toastr.error(` درخواست ${ord.type === 'SELL' ? 'فروش' : 'خرید'} شما به مقدار ${ord.amount} گرم به دلیل  ${ord.description} تایید نشد `)
           }
           self.orders[mainObjectIndex] = ord;
@@ -234,7 +232,7 @@ public getLastPrices(){
   }
 
   makeOrder(form, gid, limit, s) {
-    console.log(limit);
+
     let obj = this.mas.findIndex(x => x.priceGroupId === gid)
     if (s === 'SELL') {
       this.orderForm.patchValue({
@@ -403,13 +401,13 @@ public getLastPrices(){
     this.ws.setPrice(this.setPriceForm.get('price').value);
   }
 
-  checkLang(e: KeyboardEvent) {
-
-    console.log(e.key);
+  checkLang(e) {
     if(e.key === 'ی') {
+       const word = e.target.value.slice(0, -1)
+      e.target.value = word + 'ي'
       return 'ي'
     }
-    let char = ['Backspace', ' ', 'Alt', 'Shift', 'Tab', 'Enter', 'ي']
+    let char = ['Backspace', ' ', 'Alt', 'Shift', 'Tab', 'Enter','ArrowDown' , 'ArrowUp','Escape' , 'ي']
 
     const mainObjectIndex = char.findIndex((mainObject) => mainObject === e.key);
     if (mainObjectIndex === -1) {
