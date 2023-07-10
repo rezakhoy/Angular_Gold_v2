@@ -12,6 +12,7 @@ import {CommandChildComponent} from "./command-child/command-child.component";
 import {PersonComponent} from "./person/person.component";
 import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
 import {TradesComponent} from "./trades/trades.component";
+import {DailyDemandComponent} from "./daily-demand/daily-demand.component";
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'demand-list',
     component: DemandComponent
+  },
+  {
+    path: 'daily-demand-list',
+    component: DailyDemandComponent
   },
   {
     path: 'command-list',

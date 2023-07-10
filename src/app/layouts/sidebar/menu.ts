@@ -42,6 +42,13 @@ export const MENU: MenuItem[] = [
     per: ['admin', 'acc', 'super_admin']
   },
   {
+    id: 7,
+    label: 'معامله گران روز',
+    icon: 'bx bxs-analyse',
+    link: '/daily-demand-list',
+    per: ['admin', 'acc', 'super_admin']
+  },
+  {
     id: 22,
     label: 'معاملات',
     icon: 'bx bx-sort',

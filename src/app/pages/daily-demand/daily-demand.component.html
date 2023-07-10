@@ -1,0 +1,127 @@
+<div class="container-fluid">
+<!--  <span class="loader" #loading></span>-->
+  <ng-template #loading ><div style="margin-top: 300px" class=" d-flex justify-content-center">
+    <span class="loader" ></span>
+  </div></ng-template>
+<div *ngIf="!displaySpinner; else loading" class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="row mb-5">
+              <div  class="d-flex flex-wrap">
+                <h4 class="card-title">لیست  معامله گران روز</h4>
+                <div  class="ms-auto mt-auto">
+                  <button class="btn btn-warning m-1" (click)="sendSmsToAll()">ارسال برای همه</button>
+                  <button class="btn btn-primary m-1" (click)="sendSmsToSelected()">ارسال برای منتخبین</button>
+                </div>
+
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table id="basic-datatable"
+                     class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+                <thead>
+                <tr>
+                  <th  > نام</th>
+                  <th>مانده وزنی</th>
+                  <th>مانده ریالی</th>
+                  <th> انتخاب</th>
+                  <th> مدیریت</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let table of demands ">
+                <tr>
+                  <td>
+                    <ngb-highlight [result]="table.name" ></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="table.balance_v.toString()"></ngb-highlight>
+                  </td>
+
+                  <td>
+                    <ngb-highlight [result]="table.balance_r.toString()"></ngb-highlight>
+                  </td>
+                  <td>
+                    <input [checked]="table.selected" (click)="demandl(table, $event.target?.checked ? 'on' : 'off')"  type="checkbox" id="formCheck2">
+                  </td>
+                  <td>
+                    <ul class="list-inline font-size-20 contact-links mb-0">
+                      <li class="list-inline-item px-2">
+                        <a class="text-primary" href="javascript: void(0);" (click)="sandSms(table)" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
+                      </li>
+                    </ul>
+                  </td>
+
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-right float-md-end pagination-rounded">
+                <ngb-pagination [collectionSize]="totalElements " [(page)]="pageable.pageNumber " [pageSize]="pageable.pageSize"
+                                [maxSize]="7" [rotate]="true" (pageChange)="selectPage($event)"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+          </div>
+          </div>
+
+
+</div>
+</div>
+
+<!--**********************************
+                modal
+***********************************-->
+<!--<ng-template #commandModal let-modal>-->
+<!--  <div class="modal-header">-->
+
+<!--    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">-->
+<!--      <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--  </div>-->
+<!--  <form name="editForm" role="form" novalidate  [formGroup]="commandForm">-->
+<!--    <div class="modal-body">-->
+
+<!--      <div class="row">-->
+<!--        <div class="col-md-12">-->
+<!--          <label for="amount" class="form-label">مبلغ : </label>-->
+<!--          <input type="text" formControlName="amount" currencyMask ngbAutofocus autocomplete="off"  class="form-control" id="amount">-->
+<!--        </div>-->
+
+<!--      <div class="col-md-12">-->
+<!--        <label for="accountNumber" class="form-label">شماره حساب: </label>-->
+<!--        <input type="text" formControlName="accountNumber" class="form-control" id="accountNumber">-->
+<!--      </div>-->
+<!--      <div class="col-md-6">-->
+<!--        <label for="bankName" class="form-label">بانک: </label>-->
+<!--        <input type="text" formControlName="bankName" class="form-control" id="bankName">-->
+<!--      </div>-->
+<!--      <div class="col-md-6">-->
+<!--        <label for="accountOwnerName" class="form-label">صاحب حساب: </label>-->
+<!--        <input type="text" formControlName="accountOwnerName" class="form-control" id="accountOwnerName">-->
+<!--      </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="modal-footer">-->
+<!--      <button type="button" class="btn btn-danger btn-sm"-->
+<!--              (click)="modal.close()">انصراف-->
+<!--      </button>-->
+<!--      <button type="button" *ngIf="commandForm.get('type').value === 'PAY' "-->
+<!--              (click)="saveCommand(); modal.close()"-->
+<!--              class="btn btn-info  btn-sm" [disabled]="!commandForm.valid"-->
+<!--              >ثبت دستور پرداخت-->
+<!--      </button>-->
+<!--      <button type="button" *ngIf="commandForm.get('type').value === 'RECEIVE' "-->
+<!--              (click)="saveCommand(); modal.close()"-->
+<!--              class="btn btn-success btn-sm" [disabled]="!commandForm.valid"-->
+<!--      >ثبت دستور دریافت-->
+<!--      </button>-->
+
+<!--    </div>-->
+<!--  </form>-->
+<!--</ng-template>-->

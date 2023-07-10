@@ -43,6 +43,9 @@ export class ReportsService {
   adminDemandList(page: number, size: number, sort: string): Observable<HttpResponse<MyTransaction[]>>{
     return this.http.get<any>(`${API_URL}admin-demands-list?page=${page-1}&size=${size}&sort=${sort}`, {  observe: 'response' });
   }
+  adminDemandsListToday(page: number, size: number, sort: string): Observable<HttpResponse<MyTransaction[]>>{
+    return this.http.get<any>(`${API_URL}admin-demands-list-today?page=${page-1}&size=${size}&sort=${sort}`, {  observe: 'response' });
+  }
   getRiskList(): Observable<HttpResponse<Demand[]>> {
     return this.http.get<any>(`${API_URL}get-risk-list`, {  observe: 'response' });
   }

@@ -42,6 +42,7 @@ import {PersonComponent} from "./person/person.component";
 import {PermissionModule} from "ng2-permission";
 import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
 import {TradesComponent} from "./trades/trades.component";
+import {DailyDemandComponent} from "./daily-demand/daily-demand.component";
 
 
 
@@ -57,6 +58,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     PriceGroupComponent,
     TradesComponent,
     DemandComponent,
+    DailyDemandComponent,
     BankComponent,
     PersonComponent,
     CommandChildListComponent,
