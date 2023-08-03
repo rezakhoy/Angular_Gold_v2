@@ -10,5 +10,7 @@ export class ISystemSetting {
   textMessageUsername: string;
   textMessagePassword: string;
   textMessageNumber: string;
+  sendMessageForOrderConfirm: boolean;
+  sendMessageForOrderConfirmAmount:number;
 }
 

@@ -414,8 +414,8 @@
               </tr>
               <tr *ngFor="let order of orders  | slice:0:8; let i = index">
                 <td  *permissionAnyOf="['admin', 'super_admin']"> {{order.name}}</td>
-                <td *ngIf="order.type === 'SELL'">فروش </td>
-                <td *ngIf="order.type === 'BUY'">خرید </td>
+                <td *ngIf="order.type === 'SELL'" class="badge font-size-12 p-2 badge-soft-danger" >فروش </td>
+                <td *ngIf="order.type === 'BUY'" class="badge font-size-12 p-2 badge-soft-success">خرید </td>
 
                 <td>{{order.amount | number : '1.0-3'}}</td>
                 <td>{{order.price | number}}</td>

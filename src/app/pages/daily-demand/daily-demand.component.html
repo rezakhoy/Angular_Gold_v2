@@ -40,7 +40,7 @@
                   </td>
 
                   <td>
-                    <ngb-highlight [result]="table.balance_r.toString()"></ngb-highlight>
+                    <ngb-highlight [result]="table.balance_r.toString() | number"></ngb-highlight>
                   </td>
                   <td>
                     <input [checked]="table.selected" (click)="demandl(table, $event.target?.checked ? 'on' : 'off')"  type="checkbox" id="formCheck2">
@@ -48,7 +48,7 @@
                   <td>
                     <ul class="list-inline font-size-20 contact-links mb-0">
                       <li class="list-inline-item px-2">
-                        <a class="text-primary" href="javascript: void(0);" (click)="sandSms(table)" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
+                        <a class="text-primary"  (click)="sandSms(table)" ngbTooltip="ارسال پیام"><i class="bx bx-message-square-dots"></i></a>
                       </li>
                     </ul>
                   </td>

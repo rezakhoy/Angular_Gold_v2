@@ -70,6 +70,8 @@ export class TopbarComponent implements OnInit {
     textMessageUsername: [null, Validators.required],
     textMessagePassword: [null, Validators.required],
     textMessageNumber: [null, Validators.required],
+    sendMessageForOrderConfirm: [null, Validators.required],
+    sendMessageForOrderConfirmAmount: [null, Validators.required],
   });
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
@@ -167,8 +169,11 @@ export class TopbarComponent implements OnInit {
 
   changeSetting(setting) {
     this.configService.systemSetting().subscribe(res => {
+      console.log(res.body);
       this.settingForm.patchValue({
         rejectTime: res.body.rejectTime,
+        sendMessageForOrderConfirm: res.body.sendMessageForOrderConfirm,
+        sendMessageForOrderConfirmAmount: res.body.sendMessageForOrderConfirmAmount,
         payImageDirectory: res.body.payImageDirectory,
         textMessageUsername: res.body.textMessageUsername,
         textMessagePassword: res.body.textMessagePassword,

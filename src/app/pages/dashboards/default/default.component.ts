@@ -8,7 +8,7 @@ import {ISetPrices} from "../../../core/models/set-price.models";
 import {IPrices} from "../../../core/models/price.models";
 import {AuthenticationService} from "../../../core/services/auth.service";
 import {ReportsService} from "../../../core/services/reports.service";
-import {AdminBalance, IAdminBalance, IMyBalance, MyBalance} from "../../../core/models/balance.models";
+import {AdminBalance, MyBalance} from "../../../core/models/balance.models";
 import {IOrder} from "../../../core/models/order.models";
 import {OrderService} from "../../../core/services/order.service";
 import {ToastrService} from "ngx-toastr";
