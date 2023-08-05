@@ -148,13 +148,27 @@ export class DefaultComponent implements OnInit {
   }
 public getLastPrices(){
   this.auth.getLastPriceList().subscribe(res => {
-
     this.date =this.datePipe.transform(res.body[0]?.dateTime, "hh:mm:ss","UTC-5:00");
     this.mas = res.body
       .sort((a, b) => (a.buy > b.buy) ? 1 : -1);
     this.setPriceForm.patchValue({
       price: this.mas[0]?.base,
     });
+    if (this.orderForm.get('priceGroupId').value) {
+      let obj = this.mas.findIndex(x => x.priceGroupId === this.orderForm.get('priceGroupId').value)
+
+      if (this.orderForm.get('transaction_type').value === 'SELL') {
+        this.orderForm.patchValue({
+          fee: res.body[obj].sell,
+        });
+
+      }
+      if (this.orderForm.get('transaction_type').value === 'BUY') {
+        this.orderForm.patchValue({
+          fee: res.body[obj].buy,
+        });
+      }
+    }
   })
 
 }
