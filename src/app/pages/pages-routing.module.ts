@@ -13,6 +13,7 @@ import {PersonComponent} from "./person/person.component";
 import {CommandChildListComponent} from "./command-child-list/command-child-list.component";
 import {TradesComponent} from "./trades/trades.component";
 import {DailyDemandComponent} from "./daily-demand/daily-demand.component";
+import {BalanceComponent} from "./balance/balance.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent
+  },
+  {
+    path: 'balance',
+    component: BalanceComponent
   },
   {
     path: 'persons',

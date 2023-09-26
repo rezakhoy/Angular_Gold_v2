@@ -45,18 +45,18 @@
             </div>
           </div>
 <!--============================================= Admin Balance ==========================================================-->
+
+
           <div class="row text-center "  *permissionAnyOf="['admin', 'super_admin', 'acc']">
-            <div class="col-sm-4 text-center">
+            <div class="col-sm-3 text-center">
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i (click)="getAdminBalance()"
-                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
+                                                class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> روزانه </p>
 
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.today_sum_8x | number : '.2-2'}}</h5>
-                        <h5 class="text-danger">{{adminBalance.today_sum_9x | number : '.2-2'}}</h5>
                         <p  ><span  class="badge font-size-14" [ngClass]="(adminBalance.today_sum_8x - adminBalance.today_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{adminBalance.today_sum_8x - adminBalance.today_sum_9x | number : '.2-2' }} </span></p>
                       </div>
                     </div>
@@ -64,26 +64,21 @@
                       <div>
                         <h5 class="text-success">{{adminBalance.today_avg_maz_8x | number : '.0-0'}}</h5>
                         <h5 class="text-danger">{{adminBalance.today_avg_maz_9x | number : '.0-0'}}</h5>
-                        <p  class="badge font-size-14 "
-                            [ngClass]="(adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'"
-                        >{{adminBalance.today_avg_maz_8x - adminBalance.today_avg_maz_9x | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i  (click)="getAdminBalance()"
-                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> هفتگی </p>
+                                                 class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> هفتگی </p>
 
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.week_sum_8x |  number : '.2-2'}} </h5>
-                        <h5 class="text-danger">{{adminBalance.week_sum_9x | number : '.2-2'}} </h5>
                         <p class="badge font-size-14 " [ngClass]="(adminBalance.week_sum_8x - adminBalance.week_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.week_sum_8x - adminBalance.week_sum_9x) | number : '.2-2' }} </p>
                       </div>
                     </div>
@@ -91,24 +86,21 @@
                       <div>
                         <h5 class="text-success">{{adminBalance.week_avg_maz_8x | number : '.0-0'}} </h5>
                         <h5 class="text-danger">{{adminBalance.week_avg_maz_9x | number : '.0-0'}}</h5>
-                        <p class="badge font-size-14 " [ngClass]="(adminBalance.week_avg_maz_8x - adminBalance.week_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.week_avg_maz_8x - adminBalance.week_avg_maz_9x) | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <div class="card">
                 <div class="card-body">
                   <p class="text-muted mb-2"><i  (click)="getAdminBalance()"
-                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> ماهانه </p>
+                                                 class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> ماهانه </p>
 
                   <div class="row">
                     <div class="col-6">
                       <div>
-                        <h5 class="text-success">{{adminBalance.month_sum_8x |  number : '.2-2'}} </h5>
-                        <h5 class="text-danger">{{adminBalance.month_sum_9x | number : '.2-2'}} </h5>
                         <p class="badge font-size-14" [ngClass]="(adminBalance.month_sum_8x - adminBalance.month_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.month_sum_8x - adminBalance.month_sum_9x) | number : '.2-2' }} </p>
                       </div>
                     </div>
@@ -116,39 +108,36 @@
                       <div>
                         <h5 class="text-success">{{adminBalance.month_avg_maz_8x | number : '.0-0'}} </h5>
                         <h5 class="text-danger">{{adminBalance.month_avg_maz_9x | number : '.0-0'}}</h5>
-                        <p class="badge font-size-14 " [ngClass]="(adminBalance.month_avg_maz_8x - adminBalance.month_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.month_avg_maz_8x - adminBalance.month_avg_maz_9x) | number : '.0-0' }} </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-<!--            <div class="col-sm-3">-->
-<!--              <div class="card">-->
-<!--                <div class="card-body">-->
-<!--                  <p class="text-muted mb-2"><i  (click)="getAdminBalance()"-->
-<!--                    class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> کل </p>-->
+            <div class="col-sm-3">
+              <div class="card">
+                <div class="card-body">
+                  <p class="text-muted mb-2"><i  (click)="getAdminBalance()"
+                                                 class="mdi mdi-calendar h2 text-primary align-middle mb-0 me-3"></i> کل </p>
 
-<!--                  <div class="row">-->
-<!--                    <div class="col-6">-->
-<!--                      <div>-->
-<!--                        <h5 class="text-success">{{adminBalance.total_sum_8x |  number : '.2-2'}} </h5>-->
-<!--                        <h5 class="text-danger">{{adminBalance.total_sum_9x | number : '.2-2'}} </h5>-->
-<!--                        <p class="badge font-size-14 " [ngClass]="(adminBalance.total_sum_8x - adminBalance.total_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_sum_8x - adminBalance.total_sum_9x) | number : '.2-2' }} </p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-6">-->
-<!--                      <div>-->
-<!--                        <h5 class="text-success">{{adminBalance.total_avg_maz_8x | number : '.0-0'}} </h5>-->
-<!--                        <h5 class="text-danger">{{adminBalance.total_avg_maz_9x | number : '.0-0'}}</h5>-->
-<!--                        <p class="badge font-size-14 " [ngClass]="(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_avg_maz_8x - adminBalance.total_avg_maz_9x) | number : '.0-0' }} </p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+                  <div class="row">
+                    <div class="col-6">
+                      <div>
+                        <p class="badge font-size-14 " [ngClass]="(adminBalance.total_sum_8x - adminBalance.total_sum_9x) > 0 ? ' bg-success ' : 'bg-danger'">{{(adminBalance.total_sum_8x - adminBalance.total_sum_9x) | number : '.2-2' }} </p>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div>
+                        <h5 class="text-success">{{adminBalance.total_avg_maz_8x | number : '.0-0'}} </h5>
+                        <h5 class="text-danger">{{adminBalance.total_avg_maz_9x | number : '.0-0'}}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
 
         </div>
     </div>
