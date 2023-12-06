@@ -42,7 +42,6 @@ export const MENU: MenuItem[] = [
     per: ['admin', 'acc', 'super_admin']
   },
   {
-
     id: 7,
     label: 'ریسک',
     icon: 'bx bx-info-circle',

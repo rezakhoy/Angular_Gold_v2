@@ -491,7 +491,7 @@
       <button type="button" class="btn btn-danger btn-sm"
               (click)="modal.close();  overOrder = false">انصراف
       </button>
-      <button type="submit" [disabled]="!orderForm.valid || overOrder" *permissionOnly="['user']"
+      <button type="submit" [disabled]="!orderForm.valid || overOrder || orderForm.get('quantity').value < 0.1" *permissionOnly="['user']"
               (click)="saveGoldOrder() ;modal.close() "
              class="btn btn-success btn-sm">ثبت درخواست
       </button>

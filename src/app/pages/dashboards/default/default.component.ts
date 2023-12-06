@@ -62,7 +62,7 @@ export class DefaultComponent implements OnInit {
     id: [],
     transaction_type: [null],
     personId: [null],
-    quantity: [null, [Validators.min(0),]],
+    quantity: [null, [Validators.min(0.1),]],
     fee: [null, Validators.required],
     reyall: [],
     priceGroupId: [],
