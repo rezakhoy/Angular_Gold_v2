@@ -9,6 +9,7 @@
 export const permission = 'user';
 export const owner = 'سکه و آبشده حمزه نژاد';
 export const API_URL = 'http://2.187.249.48:8080/';
+// export const API_URL = 'http://127.0.0.1:8080/';
 
 // export const owner = 'سکه و آبشده امینی';
 // export const API_URL = 'http://178.131.19.218:8080/';

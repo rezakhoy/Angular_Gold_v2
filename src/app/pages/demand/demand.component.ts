@@ -50,6 +50,7 @@ export class DemandComponent implements OnInit {
     audienceId:[],
     person:[],
     type: [],
+    cod: [],
     amount: [null, [Validators.min(10000)]],
     accountNumber: [null, Validators.required],
     bankName: [null, Validators.required],
@@ -139,10 +140,11 @@ export class DemandComponent implements OnInit {
   makeCommand(index, commandModal, pay: string) {
     console.log(index);
     this.selectedDemand = this.demands[index];
-    console.log(this.selectedDemand);
+
+    console.log('selected dimand', this.selectedDemand);
     this.modalService.open(commandModal, this.ngbModalOptions);
     this.commandForm.patchValue({
-      audienceId: this.selectedDemand.audienceId,
+      cod: this.selectedDemand.cod,
       type: pay
     })
   }

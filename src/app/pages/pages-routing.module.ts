@@ -14,6 +14,7 @@ import {CommandChildListComponent} from "./command-child-list/command-child-list
 import {TradesComponent} from "./trades/trades.component";
 import {DailyDemandComponent} from "./daily-demand/daily-demand.component";
 import {BalanceComponent} from "./balance/balance.component";
+import {RiskDemandComponent} from "./risk-demand/risk-demand.component";
 
 
 const routes: Routes = [
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'daily-demand-list',
     component: DailyDemandComponent
+  },
+  {
+    path: 'risk-demand',
+    component: RiskDemandComponent
   },
   {
     path: 'command-list',

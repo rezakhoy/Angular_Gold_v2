@@ -177,6 +177,7 @@ export class CommandComponent implements OnInit {
   getListChildCommand(id: number, modal) {
     const url = this.route.serializeUrl(
       this.route.createUrlTree(['/command/']));
+    console.log(url+'/'+id)
     window.open( url+'/'+id , '_blank');
   }
 

@@ -44,6 +44,7 @@ import {CommandChildListComponent} from "./command-child-list/command-child-list
 import {TradesComponent} from "./trades/trades.component";
 import {DailyDemandComponent} from "./daily-demand/daily-demand.component";
 import {BalanceComponent} from "./balance/balance.component";
+import {RiskDemandComponent} from "./risk-demand/risk-demand.component";
 
 
 
@@ -61,6 +62,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DemandComponent,
     BalanceComponent,
     DailyDemandComponent,
+    RiskDemandComponent,
     BankComponent,
     PersonComponent,
     CommandChildListComponent,

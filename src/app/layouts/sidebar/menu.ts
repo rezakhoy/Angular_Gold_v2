@@ -42,6 +42,14 @@ export const MENU: MenuItem[] = [
     per: ['admin', 'acc', 'super_admin']
   },
   {
+
+    id: 7,
+    label: 'ریسک',
+    icon: 'bx bx-info-circle',
+    link: '/risk-demand',
+    per: ['admin', 'acc', 'super_admin']
+  },
+  {
     id: 7,
     label: 'معامله گران روز',
     icon: 'bx bxs-analyse',
