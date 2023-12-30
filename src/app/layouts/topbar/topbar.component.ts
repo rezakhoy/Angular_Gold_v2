@@ -29,6 +29,13 @@ export class TopbarComponent implements OnInit {
   countryName;
   valueset;
 
+  messageForm = this.fb.group({
+    id: [],
+    message_type: [null],
+    title: [null],
+    body: [null]
+  });
+
   ngbModalOptions: NgbModalOptions = {
     backdrop: 'static',
     keyboard: false
@@ -197,5 +204,16 @@ export class TopbarComponent implements OnInit {
       this.sekehs = res.body;
       this.modalService.open(sekehModal, this.ngbModalOptions);
     })
+  }
+
+  makeMessage(makeMessageModal) {
+    this.reportService.adminSekeh().subscribe(res => {
+      this.sekehs = res.body;
+      this.modalService.open(makeMessageModal, this.ngbModalOptions);
+    })
+  }
+
+  sendMessage() {
+
   }
 }
