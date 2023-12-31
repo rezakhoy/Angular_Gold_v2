@@ -11,6 +11,7 @@ import {ConfigService} from "../../core/services/config.service";
 import {ToastrService} from "ngx-toastr";
 import {ReportsService} from "../../core/services/reports.service";
 import {ISekeh} from "../../core/models/sekeh.models";
+import {WebsocketService} from "../../core/services/websocket.service";
 
 @Component({
   selector: 'app-topbar',
@@ -31,7 +32,7 @@ export class TopbarComponent implements OnInit {
 
   messageForm = this.fb.group({
     id: [],
-    message_type: [null],
+    type: [null],
     title: [null],
     body: [null]
   });
@@ -42,6 +43,7 @@ export class TopbarComponent implements OnInit {
   };
   constructor(@Inject(DOCUMENT) private document: any,
               private router: Router,
+              private ws: WebsocketService,
               private fb: FormBuilder,
               private modalService: NgbModal,
               private toastr: ToastrService,
@@ -215,5 +217,13 @@ export class TopbarComponent implements OnInit {
 
   sendMessage() {
 
+    const msg = {
+      id: null,
+      title:  this.messageForm.get('title').value,
+      body: this.messageForm.get('body').value,
+      type: this.messageForm.get('type').value
+    }
+    console.log(msg);
+    this.ws.sendMessage(msg)
   }
 }

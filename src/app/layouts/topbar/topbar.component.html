@@ -299,12 +299,9 @@
       <div class="row">
         <div class="col-md-12">
           <label for="type" class="form-label">نوع پیام</label>
-          <select class="form-select me-sm-2 wide" aria-label="Default select example" formControlName="message_type" id="type">
-            <option value="alert-primary text-primary"> عمومی </option>
-            <option value="alert-success text-success"> موفقیت </option>
-            <option value="alert-danger text-danger"> خطر </option>
-            <option value="alert-warning text-warning"> احتیاط </option>
-            <option value="alert-info text-info"> اطلاعات </option>
+          <select class="form-select me-sm-2 wide" aria-label="Default select example" formControlName="type" id="type">
+            <option value="ALERT" class="alert-primary text-primary"> عمومی</option>
+            <option  value="MESSAGE" class="alert-warning text-success"> هشدار </option>
           </select>
         </div>
         <div class="col-md-12">

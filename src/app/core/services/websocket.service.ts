@@ -8,6 +8,7 @@ import * as SockJS from 'sockjs-client';
 import {AuthenticationService} from "./auth.service";
 import {IOrder} from "../models/order.models";
 import {PermissionService} from "./permission.service";
+import {IMessage} from "../models/message.models";
 
 
 @Injectable({
@@ -21,6 +22,7 @@ export class WebsocketService {
   isConnect: Subject<boolean> = new Subject();
   price: Subject<IPrices[]> = new Subject();
   orders: Subject<IOrder[]> = new Subject();
+  messages: Subject<IMessage[]> = new Subject();
 
   constructor(public authService: AuthenticationService, private permissionService: PermissionService,) {
     this.isConnect.next(false);
@@ -101,9 +103,15 @@ export class WebsocketService {
           _this.stompClient.subscribe('/gold/order', function (alert) {
             manageOrder(JSON.parse(alert.body))
           });
+          _this.stompClient.subscribe('/gold/message', function (alert) {
+            console.log(alert.body);
+          });
         }else {
           _this.stompClient.subscribe('/gold/my-order/' + user.id, function (alert) {
             manageOrder(JSON.parse(alert.body))
+          });
+          _this.stompClient.subscribe('/gold/message', function (alert) {
+            console.log(alert.body);
           });
         }
       })
@@ -119,6 +127,9 @@ export class WebsocketService {
         _this.stompClient.subscribe('/gold/order', function (alert) {
           manageOrder(JSON.parse(alert.body))
         });
+          _this.stompClient.subscribe('/gold/message', function (alert) {
+            console.log(alert.body);
+          });
         }else {
           _this.stompClient.subscribe('/gold/my-order/' + user.id, function (alert) {
             manageOrder(JSON.parse(alert.body))
@@ -157,6 +168,15 @@ export class WebsocketService {
       '/app/send-order-request',
       {},
       order,
+    )
+  }
+
+  public sendMessage(msg) {
+    this.stompClient.send(
+      // '/app/send-order-request',
+      '/send-message',
+      {},
+      msg,
     )
   }
   public orderToConfirm(order) {
