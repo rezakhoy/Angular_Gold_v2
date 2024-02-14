@@ -19,6 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import {PermissionModule} from "ng2-permission";
 import {NgxPersianModule} from "ngx-persian";
 import {ReactiveFormsModule} from "@angular/forms";
+import {CurrencyMaskModule} from "ng2-currency-mask";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
@@ -34,7 +36,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         PermissionModule,
         NgxPersianModule,
         ReactiveFormsModule,
-        NgbTooltipModule
+        NgbTooltipModule,
+        CurrencyMaskModule,
+        NgSelectModule
     ],
 })
 export class LayoutsModule { }

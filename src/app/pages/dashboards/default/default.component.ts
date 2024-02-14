@@ -477,6 +477,10 @@ public getLastPrices(){
       }
     })
   }
+
+  closeMassage() {
+
+  }
 }
 
 

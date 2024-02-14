@@ -112,10 +112,15 @@
         </button>
       </div>
       <div class="dropdown  d-lg-inline-block ms-1" *permissionAnyOf="['admin', 'super_admin', 'acc']">
-        <button type="button" class="btn header-item noti-icon " data-toggle="fullscreen" ngbTooltip="موجودی سکه" (click)="getAdminSekeh(sekehModal)">
+        <button type="button" class="btn header-item noti-icon "  ngbTooltip="موجودی سکه" (click)="makeMessage(sekehModal)">
           <i class="bx bxl-mastercard text-warning"></i>
         </button>
       </div>
+<!--      <div class="dropdown  d-lg-inline-block ms-1" *permissionAnyOf="['admin', 'super_admin', 'acc']">-->
+<!--        <button type="button" class="btn header-item noti-icon " data-toggle="fullscreen" ngbTooltip="ارسال  پیام" (click)="getAdminSekeh( makeMessageModal)">-->
+<!--          <i class="bx bxl-messenger "></i>-->
+<!--        </button>-->
+<!--      </div>-->
 
 <!--      <div class="dropdown d-inline-block" ngbDropdown>-->
 <!--        <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown"-->
@@ -125,84 +130,38 @@
 <!--        </button>-->
 <!--        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"-->
 <!--          aria-labelledby="page-header-notifications-dropdown" ngbDropdownMenu>-->
-<!--          <div class="p-3">-->
-<!--            <div class="row align-items-center">-->
-<!--              <div class="col">-->
-<!--                <h6 class="m-0">{{ 'HEADER.NOTIFICATIONS.TITLE' | translate}} </h6>-->
-<!--              </div>-->
-<!--              <div class="col-auto">-->
-<!--                <a href="javascript: void(0);" class="small">{{ 'HEADER.NOTIFICATIONS.VIEW_ALL' | translate}}</a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <ngx-simplebar style="position: relative; height: 230px;">-->
+<!--          <ngx-simplebar style="position: relative; ">-->
 <!--            <a href="javascript: void(0);" class="text-reset notification-item">-->
-<!--              <div class="media">-->
-<!--                <div class="avatar-xs me-3">-->
-<!--                  <span class="avatar-title bg-primary rounded-circle font-size-16">-->
-<!--                    <i class="bx bx-cart"></i>-->
-<!--                  </span>-->
-<!--                </div>-->
-<!--                <div class="media-body">-->
-<!--                  <h6 class="mt-0 mb-1">{{ 'HEADER.NOTIFICATIONS.FIRST.TITLE' | translate}}</h6>-->
-<!--                  <div class="font-size-12 text-muted">-->
-<!--                    <p class="mb-1">{{ 'HEADER.NOTIFICATIONS.FIRST.TEXT' | translate}}</p>-->
-<!--                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i>-->
-<!--                      {{ 'HEADER.NOTIFICATIONS.FIRST.TIME' | translate}}</p>-->
+<!--              <div class="media ">-->
+<!--                <div class="alert alert-success">-->
+<!--                  <div class="media-body">-->
+<!--                    <h6 class="mt-0 mb-1">FIRST.TITLE</h6>-->
+<!--                    <div class="font-size-12 text-muted">-->
+<!--                      <p class="mb-1">لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود.</p>-->
+<!--                    </div>-->
 <!--                  </div>-->
 <!--                </div>-->
+
 <!--              </div>-->
 <!--            </a>-->
-<!--            <a href="javascript: void(0);" class="text-reset notification-item">-->
-<!--              <div class="media">-->
-<!--                <img src="assets/images/users/avatar-3.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">-->
-<!--                <div class="media-body">-->
-<!--                  <h6 class="mt-0 mb-1">{{ 'HEADER.NOTIFICATIONS.SECOND.TITLE' | translate}}</h6>-->
-<!--                  <div class="font-size-12 text-muted">-->
-<!--                    <p class="mb-1">{{ 'HEADER.NOTIFICATIONS.SECOND.TEXT' | translate}}</p>-->
-<!--                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ 'HEADER.NOTIFICATIONS.SECOND.TIME' |-->
-<!--                      translate}}</p>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </a>-->
-<!--            <a href="javascript: void(0);" class="text-reset notification-item">-->
-<!--              <div class="media">-->
-<!--                <div class="avatar-xs me-3">-->
-<!--                  <span class="avatar-title bg-success rounded-circle font-size-16">-->
-<!--                    <i class="bx bx-badge-check"></i>-->
-<!--                  </span>-->
-<!--                </div>-->
-<!--                <div class="media-body">-->
-<!--                  <h6 class="mt-0 mb-1">{{ 'HEADER.NOTIFICATIONS.THIRD.TITLE' | translate}}</h6>-->
-<!--                  <div class="font-size-12 text-muted">-->
-<!--                    <p class="mb-1">{{ 'HEADER.NOTIFICATIONS.THIRD.TEXT' | translate}}</p>-->
-<!--                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ 'HEADER.NOTIFICATIONS.THIRD.TIME' |-->
-<!--                      translate}}</p>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </a>-->
-<!--            <a href="javascript: void(0);" class="text-reset notification-item">-->
-<!--              <div class="media">-->
-<!--                <img src="assets/images/users/avatar-4.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">-->
-<!--                <div class="media-body">-->
-<!--                  <h6 class="mt-0 mb-1">{{ 'HEADER.NOTIFICATIONS.FOUR.TITLE' | translate}}</h6>-->
-<!--                  <div class="font-size-12 text-muted">-->
-<!--                    <p class="mb-1">{{ 'HEADER.NOTIFICATIONS.FOUR.TEXT' | translate}}</p>-->
-<!--                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ 'HEADER.NOTIFICATIONS.FOUR.TIME' |-->
-<!--                      translate}}</p>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </a>-->
+
 <!--          </ngx-simplebar>-->
-<!--          <div class="p-2 border-top d-grid">-->
-<!--            <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">-->
-<!--              <i class="mdi mdi-arrow-right-circle me-1"></i> <span key="t-view-more">{{-->
-<!--                'HEADER.NOTIFICATIONS.LOAD_MORE' | translate}}</span>-->
+<!--          <ngx-simplebar style="position: relative; ">-->
+<!--            <a href="javascript: void(0);" class="text-reset notification-item">-->
+<!--              <div class="media ">-->
+<!--                <div class="alert alert-success">-->
+<!--                  <div class="media-body">-->
+<!--                    <h6 class="mt-0 mb-1">FIRST.TITLE</h6>-->
+<!--                    <div class="font-size-12 text-muted">-->
+<!--                      <p class="mb-1">لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود.</p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--              </div>-->
 <!--            </a>-->
-<!--          </div>-->
+
+<!--          </ngx-simplebar>-->
 <!--        </div>-->
 <!--      </div>-->
 
@@ -326,4 +285,46 @@
       </table>
   </div>
 
+</ng-template>
+
+<ng-template #makeMessageModal let-modal>
+  <div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click'); ">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="editForm" role="form" novalidate  [formGroup]="messageForm">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-12">
+          <label for="type" class="form-label">نوع پیام</label>
+          <select class="form-select me-sm-2 wide" aria-label="Default select example" formControlName="type" id="type">
+            <option value="ALERT" class="alert-primary text-primary"> عمومی</option>
+            <option  value="MESSAGE" class="alert-warning text-success"> هشدار </option>
+          </select>
+        </div>
+        <div class="col-md-12">
+          <label for="title" class="form-label">عنوان :</label>
+          <input type="text" formControlName="title" class="form-control"
+                 id="title">
+        </div>
+        <div class="col-md-12">
+          <label for="body" class="form-label">متن :</label>
+          <input type="text" formControlName="body" class="form-control"
+                 id="body">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="modal.close(); ">انصراف
+      </button>
+      <button type="submit"
+              (click)="sendMessage() ;modal.close() "
+              class="btn btn-success btn-sm">ارسال پیام
+      </button>
+
+    </div>
+  </form>
 </ng-template>
