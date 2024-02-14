@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   owner= owner;
   returnUrl: string;
 
-
+  SeePassword= false;
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private titleService: Title,

@@ -7,8 +7,9 @@
 // export const API_URL = 'http://2.187.249.48:8080/';
 // export const API_URL = 'http://89.37.12.242:8080/';
 export const permission = 'user';
-export const owner = 'سکه و آبشده حمزه نژاد';
-export const API_URL = 'http://2.187.249.48:8080/';
+export const owner = ' آبشده حمزه نژاد- قاسم زاده';
+export const API_URL = 'https://data.zartagold.ir:8080/';
+// export const API_URL = 'http://91.92.189.151:8080/';
 // export const API_URL = 'http://127.0.0.1:8080/';
 
 // export const owner = 'سکه و آبشده امینی';
